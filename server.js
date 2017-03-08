@@ -48,7 +48,7 @@ app.use(passport.session());          //persistent login
 app.use(flash());
 
 /*Route file*/
-//require('./app/routes.js')(app, passport);
+require('./app/routes.js')(app, passport);
 
 /*Launch server*/
 app.listen(port);
