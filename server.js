@@ -33,7 +33,7 @@ var configDB = require('./config/database.js');
 /*Configure database and connect*/
 mongoose.connect(configDB.url);
 
-//require('./config/passport')(passport); //pass passport configuration
+require('./config/passport')(passport); //pass passport configuration
 
 /*set up express*/
 app.use(morgan('dev'));         //Print every request to console
