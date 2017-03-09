@@ -13,12 +13,12 @@ module.exports = function(passport){
   /*Serialize user*/
   passport.serializeUser(function(user,done){
     console.log("I am at serialize");
-    done(null,user.username);
+    done(null,user.id);
   });
 
   /*Deserialize user*/
   passport.deserializeUser(function(user,done){
-    User.findById(username, function(err,user){
+    User.findById(id, function(err,user){
       console.log("I am at deserialize");
       done(err, user);
     });
@@ -28,19 +28,16 @@ module.exports = function(passport){
   passport.use('local-signup', new LocalStrategy({
     /*Use username only for login*/
     usernameField : 'username',
-    emailField : 'email',
     passwordField : 'password',
-    passReqToCalback : true
+    passReqToCallback : true
   },
-  function(req, username, email, password, done) {
+  function(req, username, password, done) {
     process.nextTick(function(){
 
-      console.log("Error after tick");
 
     /*Find user whose username is same as the forms username*/
-    User.findOne({'local.email': email, 'local.username' : username}, function(err,user) {
+    User.findOne({ 'local.username' : username}, function(err,user) {
 
-      console.log("Error find user");
 
       /*If there are errors, return errors*/
       if (err){
@@ -61,11 +58,11 @@ module.exports = function(passport){
 
         /*Get user login credentials*/
         newUser.local.username = username;
-        newUser.local.email = email;
+        newUser.local.email = req.email;
         newUser.local.password = newUser.generateHash(password);
 
         /*Save the user*/
-        newUser.save(function(err){
+        newUser.save(function(err,done){
           console.log("ERROR in saving user");
           if (err){
             throw err;
