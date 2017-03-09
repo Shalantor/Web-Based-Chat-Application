@@ -12,14 +12,12 @@ module.exports = function(passport){
 
   /*Serialize user*/
   passport.serializeUser(function(user,done){
-    console.log("I am at serialize");
     done(null,user.id);
   });
 
   /*Deserialize user*/
-  passport.deserializeUser(function(user,done){
+  passport.deserializeUser(function(id,done){
     User.findById(id, function(err,user){
-      console.log("I am at deserialize");
       done(err, user);
     });
   });
@@ -41,18 +39,15 @@ module.exports = function(passport){
 
       /*If there are errors, return errors*/
       if (err){
-        console.log("There was an error");
         return done(err);
       }
 
       /*Check if there is already a user with that username*/
       if (user){
-        console.log("Error check if user already exist");
         return done(null, false, req.flash('signupMessage', 'That username is already taken.'));
       }
       else{
 
-        console.log("Error create user");
         /*if there is no user with that username , create the user*/
         var newUser = new User();
 
@@ -62,8 +57,7 @@ module.exports = function(passport){
         newUser.local.password = newUser.generateHash(password);
 
         /*Save the user*/
-        newUser.save(function(err,done){
-          console.log("ERROR in saving user");
+        newUser.save(function(err){
           if (err){
             throw err;
           }
