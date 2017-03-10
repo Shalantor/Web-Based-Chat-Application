@@ -42,6 +42,11 @@ module.exports = function(passport){
         return done(err);
       }
 
+      /*Check if passwords in the two fields are the same*/
+      if ( req.body.password_reenter != password){
+        return done(null, false, req.flash('signupMessage', "Passwords don't match."));
+      }
+
       /*Check if there is already a user with that username*/
       if (user){
         return done(null, false, req.flash('signupMessage', "That username is already taken."));
