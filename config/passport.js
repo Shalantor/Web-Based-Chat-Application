@@ -53,20 +53,34 @@ module.exports = function(passport){
       }
       else{
 
-        /*if there is no user with that username , create the user*/
-        var newUser = new User();
+        /*Check if user with same email exists*/
+        User.findOne({ 'local.email' : req.body.email}, function(err,user){
 
-        /*Get user login credentials*/
-        newUser.local.username = username;
-        newUser.local.email = req.body.email;
-        newUser.local.password = newUser.generateHash(password);
-
-        /*Save the user*/
-        newUser.save(function(err){
+          /*If there are errors, return errors*/
           if (err){
-            throw err;
+            return done(err);
           }
-          return done(null, newUser);
+
+          if (user){
+            return done(null, false, req.flash('signupMessage', "That email is already taken."));
+          }
+
+          /*if there is no user with same credentials , create the user*/
+          var newUser = new User();
+
+          /*Get user login credentials*/
+          newUser.local.username = username;
+          newUser.local.email = req.body.email;
+          newUser.local.password = newUser.generateHash(password);
+
+          /*Save the user*/
+          newUser.save(function(err){
+            if (err){
+              throw err;
+            }
+            return done(null, newUser);
+          });
+
         });
 
       }
