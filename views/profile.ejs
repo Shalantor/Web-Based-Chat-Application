@@ -1,0 +1,41 @@
+<!doctype html>
+<html>
+
+<head>
+  <title> Temporary login page to verify login functionality </title>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="page-header text-center">
+      <h1>Temporary login page</h1>
+      <a href="/logout" class="btn btn-default btn-sm">Logout</a>
+    </div>
+
+    <div class="row">
+
+      <div class="col-sm-6">
+        <div class="well">
+          <h3>Local User Info</h3>
+
+          <p>
+            <strong>id</strong>: <%= user._id %><br>
+            <strong>username</strong>: <%= user.local.username %><br>
+            <strong>email</strong>: <%= user.local.email %><br>
+            <strong>password</strong>: <%= user.local.password %><br>
+          </p>
+
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+</body>
+
+</html>
