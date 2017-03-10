@@ -72,4 +72,37 @@ module.exports = function(passport){
 
   }));
 
+
+  /*LOCAL-LOGIN*/
+  passport.use('local-login', new LocalStrategy({
+    usernameField: 'username',
+    passwordField: 'password',
+    passReqToCallback : true            //Like before pass the request to the callback too
+  },
+  function(req, username, password, done) {
+
+    /*Find a user with the same username as the one in the input field*/
+    User.findOne({ 'local.username' : username }, function(err,user) {
+
+      /*If there are any errros , return the error*/
+      if (err){
+        return done(err);
+      }
+
+      /*If no such user was found , return a flash login message*/
+      if (!user){
+        return done(null,false, req.flash('loginMessage', 'No user found with that username.'));
+      }
+
+      /*If the user was found but the password is wrong*/
+      if (!user.validPassword(password)){
+        return done(null,false, req.flash('loginMessage', 'Wrong password!'));
+      }
+
+      /*All went well*/
+      return done(null,user);
+
+    });
+  }));
+
 };
