@@ -7,7 +7,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var User = require('../app/models/user');
 
 /*Load authentication variables*/
-var configAuth = require('/auth');
+var configAuth = require('./auth');
 
 /*Export function*/
 module.exports = function(passport){
@@ -156,8 +156,8 @@ module.exports = function(passport){
     /*Get app id,secret and callbackurl*/
     clientID  : configAuth.facebookAuth.clientID,
     clientSecret : configAuth.facebookAuth.clientSecret,
-    callbackURL : configAuth.facebookAuth.callbackURL
-
+    callbackURL : configAuth.facebookAuth.callbackURL,
+    profileFields: ['name', 'emails']
   },
 
   /*Facebook sends back token and profile of user*/
