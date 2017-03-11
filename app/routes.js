@@ -15,7 +15,7 @@ module.exports = function(app,passport) {
   app.post('/login', passport.authenticate('local-login',{
     successRedirect : '/profile',
     failureRedirect : '/login',
-    failureFlash : true 
+    failureFlash : true
   }));
 
   /*SIGNUP FORM*/
@@ -35,6 +35,16 @@ module.exports = function(app,passport) {
       user : req.user     //Get user , with his login data
     });
   });
+
+  /*Route for facebook authentication and login*/
+  app.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
+
+  /*handle callback after facebook hast authenticated user*/
+  app.get('/auth/facebook/callback',
+    passport.authenticate('facebook',{
+      successRedirect : '/profile',
+      failureRedirect : '/'
+    }));
 
   /*LOG OUT PAGE*/
   app.get('/logout', function(req,res){
