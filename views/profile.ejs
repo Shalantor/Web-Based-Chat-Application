@@ -20,6 +20,8 @@
 
       <div class="col-sm-6">
         <div class="well">
+
+          <!-- Local user login -->
           <h3>Local User Info</h3>
 
           <p>
@@ -29,6 +31,7 @@
             <strong>password</strong>: <%= user.local.password %><br>
           </p>
 
+          <!-- Facebook login -->
           <h3 class="text-primary"><span class="fa fa-facebook"></span> Facebook</h3>
 
             <p>
@@ -37,6 +40,16 @@
               <strong>email</strong>: <%= user.facebook.email %><br>
               <strong>name</strong>: <%= user.facebook.name %><br>
             </p>
+
+            <!-- Twitter login -->
+            <h3 class="text-primary"><span class="fa fa-twitter"></span> Twitter</h3>
+
+              <p>
+                <strong>id</strong>: <%= user.twitter.id %><br>
+                <strong>token</strong>: <%= user.twitter.token %><br>
+                <strong>email</strong>: <%= user.twitter.username %><br>
+                <strong>name</strong>: <%= user.twitter.displayName %><br>
+              </p>
 
         </div>
       </div>
