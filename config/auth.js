@@ -9,8 +9,8 @@ module.exports = {
 
   //TODO: Use actual data from twitter , temporary place holders for now
   'twitterAuth' : {
-    'consumerKey' : 'consumerkey',
-    'consumerSecret' :  'clientSecret',
+    'consumerKey' : ' rmosIzVaC50hevnoH2kJxz4XA',
+    'consumerSecret' :  ' 0BRQVmugnBeHYM74iJPyadvpHr59c4fdP9QbgMWzPmSg5dW459',
     'callbackURL'       : 'http://localhost:7331/auth/twitter/callback'
   },
 
