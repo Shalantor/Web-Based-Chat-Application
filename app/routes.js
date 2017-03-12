@@ -52,6 +52,16 @@ module.exports = function(app,passport) {
     res.redirect('/');
   });
 
+  /*route for twitter authentication and login*/
+  app.get('/auth/twitter', passport.authenticate('twitter'));
+
+  /*callback for twitter authentication*/
+  app.get('/auth/twitter/callback',
+    passport.authenticate('twitter',{
+      successRedirect : '/profile',
+      failureRedirect :'/'
+    }));
+
 };
 
 //Check if user is logged in
