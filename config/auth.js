@@ -7,14 +7,12 @@ module.exports = {
     'callbackURL' : 'http://localhost:7331/auth/facebook/callback'
   },
 
-  //TODO: Use actual data from twitter , temporary place holders for now
   'twitterAuth' : {
-    'consumerKey' : 'rmosIzVaC50hevnoH2kJxz4XA',
-    'consumerSecret' :  '0BRQVmugnBeHYM74iJPyadvpHr59c4fdP9QbgMWzPmSg5dW459',
+    'consumerKey' : 'zQp2FROkEdNCLm8DKDiPhh6aR',
+    'consumerSecret' :  '8n8FaYvmYgXd2mO2NIRR1N1O2KFunkK07pbVyKUzop4gKbI5GA',
     'callbackURL'       : 'http://localhost:7331/auth/twitter/callback'
   },
 
-  //TODO:Use actual data from google+ , temporary place holders for now
   'googleAuth' : {
     'clientID'      : '280841855576-as2jgn5l2diq1m7hc97sqb1tcm2b1135.apps.googleusercontent.com',
     'clientSecret'  : 'AVDWnNdZ7CXkfrPIPWnyF768 ',
