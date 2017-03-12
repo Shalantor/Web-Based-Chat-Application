@@ -3,7 +3,7 @@
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
-var GoogleStrategy = require('passport-google-oauth').Strategy;
+var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 /*User model*/
 var User = require('../app/models/user');
@@ -256,7 +256,7 @@ module.exports = function(passport){
   }));
 
   /*GOOGLE+ LOGIN*/
-  passport.use(New GoogleStrategy({
+  passport.use(new GoogleStrategy({
 
     clientID : configAuth.googleAuth.clientID,
     clientSecret : configAuth.googleAuth.clientSecret,
