@@ -3,7 +3,7 @@
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var TwitterStrategy = require('passport-twitter').Strategy;
-var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 /*User model*/
 var User = require('../app/models/user');
@@ -261,9 +261,9 @@ module.exports = function(passport){
     clientID : configAuth.googleAuth.clientID,
     clientSecret : configAuth.googleAuth.clientSecret,
     callbackURL : configAuth.googleAuth.callbackURL,
-
+    passReqToCallback : true
   },
-  function(token, refreshToken, profile, done) {
+  function(request, accessToken, refreshToken, profile, done) {
 
     process.nextTick(function() {
 
@@ -285,7 +285,7 @@ module.exports = function(passport){
 
           /*Store relevant information*/
           newUser.google.id = profile.id;
-          newUser.google.token = token;
+          newUser.google.token = accessToken;
           newUser.google.name = profile.displayName;
           newUser.google.email = profile.emails[0].value;
 
