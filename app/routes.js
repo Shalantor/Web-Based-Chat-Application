@@ -61,6 +61,39 @@ module.exports = function(app,passport) {
       failureRedirect : '/'
     }));
 
+  /*ROUTES FOR AUTHORIZATION, WHEN USER IS ALREADY LOGGED IN , USED FOR LINKING ACCOUNTS*/
+
+  /*LOCAL*/
+
+  app.get('/connect/local', function(req,res) {
+    res.render('connect-local.ejs', { message: req.flash('loginMessage') });
+  });
+
+  app.post('connect/local', passport.authenticate('local-signup', {
+    successRedirect : '/profile',
+    failureRedirect : 'connect/local',
+    failureFlash : true
+  }));
+
+  /*FACEBOOK*/
+  app.get('/connect/facebook', passport.authorize('facebook', { scope: 'email' }));
+
+  app.get('/connect/facebook/callback',
+    passport.authorize('facebook',{
+      successRedirect : '/profile',
+      failureRedirect : '/'
+    }));
+
+    /*GOOGLE */
+
+    app.get('/connect/google', passport.authorize('google', { scope : ['profile', 'email'] }));
+
+    app.get('/connect/google/callback',
+        passport.authorize('google', {
+            successRedirect : '/profile',
+            failureRedirect : '/'
+        }));
+
 };
 
 //Check if user is logged in
