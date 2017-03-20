@@ -1,4 +1,6 @@
 /*Load tools we need*/
+/*TODO:In signup check if email has a valid format, use regex preferably*/
+/*TODO:Add messages when fields are empty*/
 
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
