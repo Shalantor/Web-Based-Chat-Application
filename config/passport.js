@@ -7,7 +7,7 @@ var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 /*User model*/
-var User = require('../app/models/user');
+var Model = require('../app/models/user');
 
 /*Load authentication variables*/
 var configAuth = require('./auth');
@@ -24,7 +24,7 @@ module.exports = function(passport){
 
   /*Deserialize user*/
   passport.deserializeUser(function(id,done){
-    User.findById(id, function(err,user){
+    Model.User.findById(id, function(err,user){
       done(err, user);
     });
   });
@@ -41,7 +41,7 @@ module.exports = function(passport){
 
 
     /*Find user whose username is same as the forms username*/
-    User.findOne({ 'local.username' : username}, function(err,user) {
+    Model.User.findOne({ 'local.username' : username}, function(err,user) {
 
 
       /*If there are errors, return errors*/
@@ -61,7 +61,7 @@ module.exports = function(passport){
       else{
 
         /*Check if user with same email exists*/
-        User.findOne({ 'local.email' : req.body.email}, function(err,user){
+        Model.User.findOne({ 'local.email' : req.body.email}, function(err,user){
 
           /*If there are errors, return errors*/
           if (err){
@@ -73,7 +73,7 @@ module.exports = function(passport){
           }
 
           /*if there is no user with same credentials , create the user*/
-          var newUser = new User();
+          var newUser = new Model.User();
 
           /*Get user login credentials*/
           newUser.local.username = username;
@@ -110,7 +110,7 @@ module.exports = function(passport){
   function(req, username, password, done) {
 
     /*Find a user with the same username as the one in the input field*/
-    User.findOne({ 'local.username' : username }, function(err,user) {
+    Model.User.findOne({ 'local.username' : username }, function(err,user) {
 
       /*If there are any errros , return the error*/
       if (err){
@@ -121,7 +121,7 @@ module.exports = function(passport){
       if (!user){
         console.log('DIDNT FIND USER');
         /*Check if user entered email*/
-        User.findOne({ 'local.email' : username }, function(err,user) {
+        Model.User.findOne({ 'local.email' : username }, function(err,user) {
 
           /*If there are any errros , return the error*/
           if (err){
@@ -184,7 +184,7 @@ module.exports = function(passport){
     process.nextTick(function() {
 
       /*Find user in database using facebook id*/
-      User.findOne( { 'facebook.id' : profile.id}, function(err,user) {
+      Model.User.findOne( { 'facebook.id' : profile.id}, function(err,user) {
 
         /*If there is an error*/
         if (err){
@@ -204,7 +204,7 @@ module.exports = function(passport){
         }
         else{
           /*User with that id not found, so create him*/
-          var newUser = new User();
+          var newUser = new Model.User();
 
           /*Store all the information of the facebook user*/
           newUser.facebook.id = profile.id;
@@ -244,7 +244,7 @@ module.exports = function(passport){
     process.nextTick(function() {
 
       /*Check if user is already in database*/
-      User.findOne( {'google.id' : profile.id}, function(err,user) {
+      Model.User.findOne( {'google.id' : profile.id}, function(err,user) {
 
         /*If there is an error return it*/
         if(err){
@@ -264,7 +264,7 @@ module.exports = function(passport){
         }
         else{
           /*If user not in database create him*/
-          var newUser = new User();
+          var newUser = new Model.User();
 
           /*Store relevant information*/
           newUser.google.id = profile.id;

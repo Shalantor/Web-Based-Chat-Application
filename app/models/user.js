@@ -26,14 +26,17 @@ var userSchema = mongoose.Schema({
     name        : String,
     online      : String,
     socketID    : String
-  },
+  }
+});
+
+var messageSchema = mongoose.Schema({
   messages      : {
     fromUserType: String,
     fromUserID  : String,
-    fromUserName: String,
+    fromUsername: String,
     toUserType  : String,
     toUserID    : String,
-    toUserName  : String,
+    toUsername  : String,
     data        : String,
     timeStamp   : String
   }
@@ -52,4 +55,9 @@ userSchema.methods.validPassword = function(password) {
 };
 
 /* export */
-module.exports = mongoose.model('User', userSchema);
+var User = mongoose.model('User', userSchema);
+var Message = mongoose.model('Messages', messageSchema);
+module.exports = {
+  User : User,
+  Message : Message
+};
