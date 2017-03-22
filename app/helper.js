@@ -35,7 +35,8 @@ class Helper{
     }
   }
 
-  /*Check if given user is online*/
+  /*Method to check if given user is online*/
+  /*TODO:Needs to be tested, but seems to work*/
   isUserOnline(userReq){
     /*Check for type of user*/
     /*Local user*/
@@ -68,6 +69,35 @@ class Helper{
     }
   }
 
+  /*Method to update the socketID of a user*/
+  updateSocketID(userReq,socketID){
+    /*Check for type of user*/
+    /*Local user*/
+    if ( userReq.local.username ){
+      this.User.findOneAndUpdate({ 'local.username' : userReq.local.username }, {'local.socketID' : socketID } , function(err,user) {
+        /*If there are any errros , return the error*/
+        if (err){
+          return err;
+        }
+      });
+    }
+    else if ( userReq.facebook.id ){
+      this.User.findOneAndUpdate({ 'facebook.id' : userReq.facebook.id }, {'facebook.socketID' : socketID } , function(err,user) {
+        /*If there are any errros , return the error*/
+        if (err){
+          return err;
+        }
+      });
+    }
+    else if ( userReq.google.id  ){
+      this.User.findOneAndUpdate({ 'google.id' : userReq.google.id }, {'google.socketID' : socketID} , function(err,user) {
+        /*If there are any errros , return the error*/
+        if (err){
+          return err;
+        }
+      });
+    }
+  }
 
 }
 
