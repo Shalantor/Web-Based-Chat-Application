@@ -1,3 +1,5 @@
+var helper = require('./helper');
+
 /*Route configuration*/
 
 module.exports = function(app,passport) {
@@ -47,7 +49,10 @@ module.exports = function(app,passport) {
     }));
 
   /*LOG OUT PAGE*/
+  /*TODO:LOG out user, set online status to "N" */
   app.get('/logout', function(req,res){
+    console.log(req.user);
+    helper.setUserStatusOffline(req.user.local,req.user.facebook,req.user.google);
     req.logout();
     res.redirect('/');
   });
