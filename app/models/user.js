@@ -26,6 +26,16 @@ var userSchema = mongoose.Schema({
     name        : String,
     online      : String,
     socketID    : String
+  },
+  messages      : {
+    fromUserType: String,
+    fromUserID  : String,
+    fromUserName: String,
+    ToUserType  : String,
+    ToUserID    : String,
+    ToUserName  : String,
+    data        : String,
+    timeStamp   : String
   }
 });
 
