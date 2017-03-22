@@ -1,7 +1,7 @@
 class Helper{
 
   constructor(){
-    this.User = require('./models/user');
+    this.Model = require('./models/user');
   }
 
   /*Method to set user online status to N (means NO)*/
@@ -10,7 +10,7 @@ class Helper{
     /*Check for type of user*/
     /*Local user*/
     if ( localReq.username ){
-      this.User.findOneAndUpdate({ 'local.username' : localReq.username }, {'local.online' : "N"} , function(err,user) {
+      this.Model.User.findOneAndUpdate({ 'local.username' : localReq.username }, {'local.online' : "N"} , function(err,user) {
         /*If there are any errros , return the error*/
         if (err){
           throw err;
@@ -18,7 +18,7 @@ class Helper{
       });
     }
     else if ( facebookReq.id ){
-      this.User.findOneAndUpdate({ 'facebook.id' : facebookReq.id }, {'facebook.online' : "N"} , function(err,user) {
+      this.Model.User.findOneAndUpdate({ 'facebook.id' : facebookReq.id }, {'facebook.online' : "N"} , function(err,user) {
         /*If there are any errros , return the error*/
         if (err){
           throw err;
@@ -26,7 +26,7 @@ class Helper{
       });
     }
     else if ( googleReq.id  ){
-      this.User.findOneAndUpdate({ 'google.id' : googleReq.id }, {'google.online' : "N"} , function(err,user) {
+      this.Model.User.findOneAndUpdate({ 'google.id' : googleReq.id }, {'google.online' : "N"} , function(err,user) {
         /*If there are any errros , return the error*/
         if (err){
           throw err;
@@ -35,13 +35,14 @@ class Helper{
     }
   }
 
+
   /*Method to check if given user is online*/
   /*TODO:Needs to be tested, but seems to work*/
   isUserOnline(userReq){
     /*Check for type of user*/
     /*Local user*/
     if ( userReq.local.username ){
-      this.User.findOne({ 'local.username' : userReq.local.username } , function(err,user) {
+      this.Model.User.findOne({ 'local.username' : userReq.local.username } , function(err,user) {
         /*If there are any errros , return the error*/
         if (err){
           throw err;
@@ -50,7 +51,7 @@ class Helper{
       });
     }
     else if ( userReq.facebook.id ){
-      this.User.findOne({ 'facebook.id' : userReq.facebook.id } , function(err,user) {
+      this.Model.User.findOne({ 'facebook.id' : userReq.facebook.id } , function(err,user) {
         /*If there are any errros , return the error*/
         if (err){
           throw err;
@@ -59,7 +60,7 @@ class Helper{
       });
     }
     else if ( googleReq.id  ){
-      this.User.findOne({ 'google.id' : userReq.google.id }, function(err,user) {
+      this.Model.User.findOne({ 'google.id' : userReq.google.id }, function(err,user) {
         /*If there are any errros , return the error*/
         if (err){
           throw err;
@@ -69,12 +70,13 @@ class Helper{
     }
   }
 
+
   /*Method to update the socketID of a user*/
   updateSocketID(userReq,socketID){
     /*Check for type of user*/
     /*Local user*/
     if ( userReq.local.username ){
-      this.User.findOneAndUpdate({ 'local.username' : userReq.local.username }, {'local.socketID' : socketID } , function(err,user) {
+      this.Model.User.findOneAndUpdate({ 'local.username' : userReq.local.username }, {'local.socketID' : socketID } , function(err,user) {
         /*If there are any errros , return the error*/
         if (err){
           throw err;
@@ -82,7 +84,7 @@ class Helper{
       });
     }
     else if ( userReq.facebook.id ){
-      this.User.findOneAndUpdate({ 'facebook.id' : userReq.facebook.id }, {'facebook.socketID' : socketID } , function(err,user) {
+      this.Model.User.findOneAndUpdate({ 'facebook.id' : userReq.facebook.id }, {'facebook.socketID' : socketID } , function(err,user) {
         /*If there are any errros , return the error*/
         if (err){
           throw err;
@@ -90,7 +92,7 @@ class Helper{
       });
     }
     else if ( userReq.google.id  ){
-      this.User.findOneAndUpdate({ 'google.id' : userReq.google.id }, {'google.socketID' : socketID} , function(err,user) {
+      this.Model.User.findOneAndUpdate({ 'google.id' : userReq.google.id }, {'google.socketID' : socketID} , function(err,user) {
         /*If there are any errros , return the error*/
         if (err){
           throw err;
@@ -104,7 +106,7 @@ class Helper{
   /*Returs a list with the online users*/
   getOnlineUsers(){
     /*Query in database*/
-    this.User.find({ $or:[{'local.online' :"Y"}, {'facebook.online' : "Y"}, {'google.online' : "Y"}] } , function(err, users){
+    this.Model.User.find({ $or:[{'local.online' :"Y"}, {'facebook.online' : "Y"}, {'google.online' : "Y"}] } , function(err, users){
       /*If there is any error return it*/
       if(err){
         throw err;
@@ -117,7 +119,7 @@ class Helper{
   insertMessage(fromUser,toUser,messageData){
 
     /*TODO:Consider changing name of this variablet*/
-    var newMessage = new this.User();
+    var newMessage = new this.Model.Message();
     newMessage.messages.data = messageData;
     var currentdate = new Date();
     var datetime = "Last Sync: " + currentdate.getDate() + "/"
@@ -171,6 +173,29 @@ class Helper{
     });
 
   }
+
+
+  /*Get all stored messages between two specific users*/
+  /*Works fine*/
+  getMessages(fromUser,toUser){
+
+    var query = { $and : [{ $or : [ {'messages.fromUsername' : fromUser.local.username} ,
+                  {'messages.fromUserID' : fromUser.facebook.id} ,
+                  {'messages.fromUserID' : fromUser.google.id} ] },
+                  { $or : [ {'messages.toUsername' : toUser.local.username} ,
+                  {'messages.toUserID' : toUser.facebook.id} ,
+                  {'messages.toUserID' : toUser.google.id} ] }] };
+
+    this.Model.Message.find(query , function(err, data){
+      /*If there is any error return it*/
+      if(err){
+        throw err;
+      }
+      console.log("MESSAGES ARE " + data);
+    });
+
+  }
+
 
 }
 
