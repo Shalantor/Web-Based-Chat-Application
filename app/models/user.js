@@ -8,21 +8,24 @@ var userSchema = mongoose.Schema({
     email       : String,
     username    : String,
     password    : String,
-    online      : String
+    online      : String,
+    socketID    : String
   },
   facebook      : {
     id          : String,
     token       : String,
     email       : String,
     name        : String,
-    online      : String
+    online      : String,
+    socketID    : String
   },
   google        : {
     id          : String,
     token       : String,
     email       : String,
     name        : String,
-    online      : String
+    online      : String,
+    socketID    : String
   }
 });
 
