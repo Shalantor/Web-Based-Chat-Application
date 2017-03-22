@@ -13,7 +13,7 @@ class Helper{
       this.User.findOneAndUpdate({ 'local.username' : localReq.username }, {'local.online' : "N"} , function(err,user) {
         /*If there are any errros , return the error*/
         if (err){
-          return err;
+          throw err;
         }
       });
     }
@@ -21,7 +21,7 @@ class Helper{
       this.User.findOneAndUpdate({ 'facebook.id' : facebookReq.id }, {'facebook.online' : "N"} , function(err,user) {
         /*If there are any errros , return the error*/
         if (err){
-          return err;
+          throw err;
         }
       });
     }
@@ -29,7 +29,7 @@ class Helper{
       this.User.findOneAndUpdate({ 'google.id' : googleReq.id }, {'google.online' : "N"} , function(err,user) {
         /*If there are any errros , return the error*/
         if (err){
-          return err;
+          throw err;
         }
       });
     }
@@ -44,7 +44,7 @@ class Helper{
       this.User.findOne({ 'local.username' : userReq.local.username } , function(err,user) {
         /*If there are any errros , return the error*/
         if (err){
-          return err;
+          throw err;
         }
         return user.local.online === "Y";
       });
@@ -53,7 +53,7 @@ class Helper{
       this.User.findOne({ 'facebook.id' : userReq.facebook.id } , function(err,user) {
         /*If there are any errros , return the error*/
         if (err){
-          return err;
+          throw err;
         }
         return user.facebook.online === "Y";
       });
@@ -62,7 +62,7 @@ class Helper{
       this.User.findOne({ 'google.id' : userReq.google.id }, function(err,user) {
         /*If there are any errros , return the error*/
         if (err){
-          return err;
+          throw err;
         }
         return user.google.online === "Y";
       });
@@ -77,7 +77,7 @@ class Helper{
       this.User.findOneAndUpdate({ 'local.username' : userReq.local.username }, {'local.socketID' : socketID } , function(err,user) {
         /*If there are any errros , return the error*/
         if (err){
-          return err;
+          throw err;
         }
       });
     }
@@ -85,7 +85,7 @@ class Helper{
       this.User.findOneAndUpdate({ 'facebook.id' : userReq.facebook.id }, {'facebook.socketID' : socketID } , function(err,user) {
         /*If there are any errros , return the error*/
         if (err){
-          return err;
+          throw err;
         }
       });
     }
@@ -93,10 +93,23 @@ class Helper{
       this.User.findOneAndUpdate({ 'google.id' : userReq.google.id }, {'google.socketID' : socketID} , function(err,user) {
         /*If there are any errros , return the error*/
         if (err){
-          return err;
+          throw err;
         }
       });
     }
+  }
+
+
+  /*Method to get online users, will later be changed to online friends only*/
+  /*Returs a list with the online users*/
+  getOnlineUsers(){
+    /*Query in database*/
+    this.User.find({ $or:[{'local.online' :"Y"}, {'facebook.online' : "Y"}, {'google.online' : "Y"}] } , function(err, users){
+      /*If there is any error return it*/
+      if(err){
+        throw err;
+      }
+    });
   }
 
 }
