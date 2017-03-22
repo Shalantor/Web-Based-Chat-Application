@@ -79,6 +79,7 @@ module.exports = function(passport){
           newUser.local.username = username;
           newUser.local.email = req.body.email;
           newUser.local.password = newUser.generateHash(password);
+          newUser.local.online = "Y";
 
           /*Save the user*/
           newUser.save(function(err){
@@ -136,7 +137,13 @@ module.exports = function(passport){
           }
 
           /*All went well*/
-          return done(null,user);
+          user.local.online = "Y";
+          user.save(function(err){
+            if (err){
+              throw err;
+            }
+            return done(null, user);
+          });
 
         });
       }
@@ -147,7 +154,14 @@ module.exports = function(passport){
         }
 
         /*All went well*/
-        return done(null,user);
+        /*Save the user*/
+        user.local.online = "Y";
+        user.save(function(err){
+          if (err){
+            throw err;
+          }
+          return done(null, user);
+        });
       }
 
     });
@@ -178,7 +192,14 @@ module.exports = function(passport){
 
         /*If user is found then log in*/
         if (user){
-          return done(null,user);
+          user.facebook.online = "Y";
+          /*Save the user*/
+          user.save(function(err){
+            if (err){
+              throw err;
+            }
+            return done(null, user);
+          });
         }
         else{
           /*User with that id not found, so create him*/
@@ -189,6 +210,7 @@ module.exports = function(passport){
           newUser.facebook.token = token;
           newUser.facebook.name = profile.name.givenName + ' ' + profile.name.familyName;
           newUser.facebook.email = profile.emails[0].value;
+          newUser.facebook.online = "Y";
 
           /*Save user to database*/
           newUser.save(function(err) {
@@ -229,7 +251,14 @@ module.exports = function(passport){
 
         if(user){
           /*User found, return him*/
-          return done(null,user);
+          /*Save the user status*/
+          user.google.online = "Y";
+          user.save(function(err){
+            if (err){
+              throw err;
+            }
+            return done(null, user);
+          });
         }
         else{
           /*If user not in database create him*/
@@ -240,6 +269,7 @@ module.exports = function(passport){
           newUser.google.token = accessToken;
           newUser.google.name = profile.displayName;
           newUser.google.email = profile.emails[0].value;
+          newUser.google.online = "Y"
 
           /*Store user in database*/
           newUser.save(function(err) {
