@@ -31,9 +31,9 @@ var userSchema = mongoose.Schema({
     fromUserType: String,
     fromUserID  : String,
     fromUserName: String,
-    ToUserType  : String,
-    ToUserID    : String,
-    ToUserName  : String,
+    toUserType  : String,
+    toUserID    : String,
+    toUserName  : String,
     data        : String,
     timeStamp   : String
   }

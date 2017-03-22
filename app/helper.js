@@ -112,6 +112,66 @@ class Helper{
     });
   }
 
+
+  /*Inserts a message into the database*/
+  insertMessage(fromUser,toUser,messageData){
+
+    /*TODO:Consider changing name of this variablet*/
+    var newMessage = new this.User();
+    newMessage.messages.data = messageData;
+    var currentdate = new Date();
+    var datetime = "Last Sync: " + currentdate.getDate() + "/"
+                + (currentdate.getMonth()+1)  + "/"
+                + currentdate.getFullYear() + " @ "
+                + currentdate.getHours() + ":"
+                + currentdate.getMinutes() + ":"
+                + currentdate.getSeconds();
+    newMessage.messages.timeStamp = datetime;
+
+    /*Get fromUser type and store it into the message data*/
+    if (fromUser.local.username){
+      newMessage.messages.fromUserType = "local";
+      newMessage.messages.fromUserID = "";
+      newMessage.messages.fromUserName = fromUser.local.username;
+    }
+    else if (fromUser.facebook.id){
+      newMessage.messages.fromUserType = "facebook";
+      newMessage.messages.fromUserID = fromUser.facebook.id;
+      newMessage.messages.fromUserName = "";
+    }
+    else if (fromUser.google.id){
+      newMessage.messages.fromUserType = "google";
+      newMessage.messages.fromUserID = fromUser.google.id;
+      newMessage.messages.fromUserName = "";
+    }
+
+    /*Get toUser type*/
+    if (toUser.local.username){
+      newMessage.messages.toUserType = "local";
+      newMessage.messages.toUserID = "";
+      newMessage.messages.toUserName = toUser.local.username;
+    }
+    else if (fromUser.facebook.id){
+      newMessage.messages.toUserType = "facebook";
+      newMessage.messages.toUserID = toUser.facebook.id;
+      newMessage.messages.toUserName = "";
+    }
+    else if (fromUser.google.id){
+      newMessage.messages.toUserType = "google";
+      newMessage.messages.toUserID = toUser.google.id;
+      newMessage.messages.toUserName = "";
+    }
+
+    /*Save message*/
+    newMessage.save(function(err){
+      if (err){
+        throw err;
+      }
+      return;
+    });
+
+  }
+
 }
 
 module.exports = new Helper();
