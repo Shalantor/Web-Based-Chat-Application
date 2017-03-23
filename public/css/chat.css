@@ -16,10 +16,16 @@
     float: left;;
     width: 25%;
     height: 100%;
-    overflow-y: scroll;
     border-style: solid;
     border-right: thick double #B1D9E5;
     border-left: thick double #B1D9E5;
+    display: flex;
+    flex-direction:column;
+}
+
+.find_window{
+    overflow-y: scroll;
+    flex-grow: 1;
 }
 
 .middle {
@@ -53,4 +59,20 @@
 
 .chatform form button{
   width: 20%;
+}
+
+.findUserForm{
+  width : 100%;
+}
+
+.findUserForm form{
+  width : 100%;
+}
+
+.findUserForm form button{
+  width : 35%;
+}
+
+.findUserForm form input{
+  width : 65%;
 }
