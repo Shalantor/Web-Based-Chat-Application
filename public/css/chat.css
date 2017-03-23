@@ -1,27 +1,56 @@
-.content {
-    height: 98%;
+.content,body,html {
+    height: 95%;
 }
 
 .left {
     float: left;
     width: 25%;
-    background: red;
     height: 100%;
     overflow-y: scroll;
+    border-style: solid;
+    border-right: thick double #B1D9E5;
+    border-left: thick double #B1D9E5;
 }
 
 .right {
     float: left;;
     width: 25%;
-    background: blue;
     height: 100%;
     overflow-y: scroll;
+    border-style: solid;
+    border-right: thick double #B1D9E5;
+    border-left: thick double #B1D9E5;
 }
 
 .middle {
+  position: relative;
   float : left;
   width : 50%;
-  background : green;
   height : 100%;
-  overflow-y: scroll;
+  border-style: solid;
+  border-right: thick double #B1D9E5;
+  border-left: thick double #B1D9E5;
+}
+
+.chat_window{
+    overflow-y: scroll;
+}
+
+.chatform{
+  position: absolute;
+  bottom : 0;
+  background : blue;
+  width : 100%;
+}
+
+.chatform form{
+  width: 100%;
+}
+
+.chatform form input{
+  width: 80%;
+}
+
+.chatform form button{
+  width: 20%;
 }
