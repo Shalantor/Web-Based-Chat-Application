@@ -73,7 +73,7 @@ class Helper{
 
 
   /*Method to update the socketID of a user*/
-  updateSocketID(userReq,socketID){
+  updateSocketID(userReq,socketID,callback){
     /*Check for type of user*/
     /*Local user*/
     if ( userReq.local.username ){
@@ -82,6 +82,7 @@ class Helper{
         if (err){
           throw err;
         }
+        callback(error,user);
       });
     }
     else if ( userReq.facebook.id ){
@@ -90,6 +91,7 @@ class Helper{
         if (err){
           throw err;
         }
+        callback(error,user);
       });
     }
     else if ( userReq.google.id  ){
@@ -98,6 +100,7 @@ class Helper{
         if (err){
           throw err;
         }
+        callback(error,user);
       });
     }
   }
@@ -105,19 +108,20 @@ class Helper{
 
   /*Method to get online users, will later be changed to online friends only*/
   /*Returs a list with the online users*/
-  getOnlineUsers(){
+  getOnlineUsers(callback){
     /*Query in database*/
     this.Model.User.find({ $or:[{'local.online' :"Y"}, {'facebook.online' : "Y"}, {'google.online' : "Y"}] } , function(err, users){
       /*If there is any error return it*/
       if(err){
         throw err;
       }
+      callback(err,users);
     });
   }
 
 
   /*Inserts a message into the database*/
-  insertMessage(fromUser,toUser,messageData){
+  insertMessage(fromUser,toUser,messageData,callback){
 
     /*TODO:Consider changing name of this variablet*/
     var newMessage = new this.Model.Message();
@@ -172,6 +176,8 @@ class Helper{
       }
       return;
     });
+
+    callback();
 
   }
 
