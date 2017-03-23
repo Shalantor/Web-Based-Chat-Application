@@ -5,7 +5,7 @@ class Helper{
   }
 
   /*Method to set user online status to N (means NO)*/
-  setUserStatusOffline(localReq,facebookReq,googleReq){
+  setUserStatusOffline(localReq,facebookReq,googleReq,callback){
 
     /*Check for type of user*/
     /*Local user*/
@@ -33,6 +33,7 @@ class Helper{
         }
       });
     }
+    callback();
   }
 
 
@@ -194,6 +195,37 @@ class Helper{
       console.log("MESSAGES ARE " + data);
     });
 
+  }
+
+  /*Method to get user info of particulat user*/
+  getUserInfo(userReq,callback){
+    if ( userReq.local.username ){
+      this.Model.User.findOne({ 'local.username' : userReq.local.username },  function(err,user) {
+        /*If there are any errros , return the error*/
+        if (err){
+          throw err;
+        }
+        callback(err,user);
+      });
+    }
+    else if ( userReq.facebook.id ){
+      this.Model.User.findOne({ 'facebook.id' : userReq.facebook.id }, function(err,user) {
+        /*If there are any errros , return the error*/
+        if (err){
+          throw err;
+        }
+        callback(err,user);
+      });
+    }
+    else if ( userReq.google.id  ){
+      this.Model.User.findOne({ 'google.id' : userReq.google.id },  function(err,user) {
+        /*If there are any errros , return the error*/
+        if (err){
+          throw err;
+        }
+        callback(err,user);
+      });
+    }
   }
 
 
