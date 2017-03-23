@@ -5,10 +5,12 @@
   <title> Temporary login page to verify login functionality </title>
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/chat.css">
 </head>
 
 <body>
 
+  <!-- Navigation bar -->
   <div class="container">
 
     <nav class="navbar navbar-default">
@@ -24,20 +26,18 @@
 
   </div>
 
-  <ul id="messages"></ul>
-  <form action="">
-    <input id="m" autocomplete="off" /><button>Send</button>
-  </form>
+  <div class = "content">
+    <div class = "left">
+      <p>Example content</p>
+    </div>
+    <div class = "middle">
+      <p>Example content</p>
+    </div>
+    <div class = "right">
+      <p>Example content</p>
+    </div>
+  </div>
 
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
-  <script>
-    $(function () {
-      socket.on('chat message', function(msg){
-        $('#messages').append($('<li>').text(msg));
-      });
-    });
-  </script>
 
 </body>
 

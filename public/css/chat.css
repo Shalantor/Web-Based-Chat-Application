@@ -1,0 +1,27 @@
+.content {
+    height: 98%;
+}
+
+.left {
+    float: left;
+    width: 25%;
+    background: red;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.right {
+    float: left;;
+    width: 25%;
+    background: blue;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.middle {
+  float : left;
+  width : 50%;
+  background : green;
+  height : 100%;
+  overflow-y: scroll;
+}

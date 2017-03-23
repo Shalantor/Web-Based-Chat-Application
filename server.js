@@ -50,6 +50,7 @@ app.use(session({secret: 'random'}));  //TODO:Change secret later
 app.use(passport.initialize());
 app.use(passport.session());          //persistent login
 app.use(flash());
+app.use(express.static(__dirname + '/public'));
 
 /*Route file*/
 require('./app/routes.js')(app, passport);
