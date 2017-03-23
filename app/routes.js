@@ -1,5 +1,3 @@
-var helper = require('./helper');
-
 /*Route configuration*/
 
 module.exports = function(app,passport) {
@@ -50,11 +48,8 @@ module.exports = function(app,passport) {
 
   /*LOG OUT PAGE*/
   app.get('/logout', function(req,res){
-    //helper.getMessages(req.user,req.user);
-    helper.setUserStatusOffline(req.user.local,req.user.facebook,req.user.google,function(){
-      req.logout();
-      res.redirect('/');
-    });
+    req.logout();
+    res.redirect('/');
   });
 
   /*Route for google+ authentication*/
