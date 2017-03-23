@@ -5,15 +5,10 @@
 /*Expressjs framework*/
 var express = require('express');
 var app = express();
-var http = require('http');
-var socketio = require('socket.io');
+var path = require('path');
 
-http = http.Server(this.app)
-var socket = socketio(http);
-
-/*TODO:Uncomment below lines after creating files*/
-//var socketEvents = require('./app/socket')
-//var config = require('./config/settings')
+/*For socket*/
+var ioServer = require('./app/socket')(app);
 
 /*If not running on a server that listens on specific port, use port 7331*/
 var port = process.env.PORT || 7331;
@@ -39,13 +34,6 @@ var session = require('express-session');
 /*Variable for configuring database*/
 var configDB = require('./config/database.js');
 
-/*CORS*/
-var cors = require('cors');
-
-/*Socket events*/
-/*TODO:Uncomment below line*/
-//new socketEvents(socket).socketConfig();
-
 /*Configure database and connect*/
 mongoose.connect(configDB.url);
 
@@ -54,16 +42,7 @@ require('./config/passport')(passport); //pass passport configuration
 /*set up express*/
 app.use(morgan('dev'));         //Print every request to console
 app.use(cookieParser());        //read Cookies
-//TODO:Check if bodyParser.json() is better choice
 app.use(bodyParser());          //Get data from html forms
-
-/**/
-
-/*Use cors*/
-app.use(cors())
-
-/*TODO:Uncomment below line*/
-//new config(this.app)
 
 app.set('view engine','ejs');   //User ejs views
 
@@ -76,5 +55,5 @@ app.use(flash());
 require('./app/routes.js')(app, passport);
 
 /*Launch server*/
-app.listen(port);
+ioServer.listen(port);
 console.log('App started at port ' + port);
