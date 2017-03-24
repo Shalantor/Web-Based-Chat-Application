@@ -9,17 +9,21 @@ var init = function(app){
 
   io.on('connection', function(socket){
 
-    /*The logs just exist for testing the application*/
-    console.log(socket.client.request);
+    var data = {};
+    socket.emit('ehlo',data);
 
-    /*When user connects store his socket.id in database, for future socket operations*/
-    helper.addSocketId(socket.request.user,socket,function(user,err){
-      if (err){
-        console.log('An error occurred');
-      }
-      else{
-        console.log('Everything is ok!');
-      }
+    socket.on('ehlo-response',function(data){
+      console.log("DATA IS :");
+      console.log(data);
+      /*When user connects store his socket.id in database, for future socket operations*/
+      /*helper.addSocketId(socket.request.user,socket,function(user,err){
+        if (err){
+          console.log('An error occurred');
+        }
+        else{
+          console.log('Everything is ok!');
+        }
+      });*/
     });
 
     socket.on('disconnect',function(){
