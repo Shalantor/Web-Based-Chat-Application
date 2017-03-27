@@ -9,7 +9,11 @@ var userSchema = mongoose.Schema({
     username    : String,
     password    : String,
     online      : String,
-    socketID    : String
+    socketID    : String,
+    friends     : [{
+      id        : String,
+      username  : String
+    }]
   },
   facebook      : {
     id          : String,
@@ -17,7 +21,11 @@ var userSchema = mongoose.Schema({
     email       : String,
     name        : String,
     online      : String,
-    socketID    : String
+    socketID    : String,
+    friends     : [{
+      id        : String,
+      username  : String
+    }]
   },
   google        : {
     id          : String,
@@ -25,7 +33,11 @@ var userSchema = mongoose.Schema({
     email       : String,
     name        : String,
     online      : String,
-    socketID    : String
+    socketID    : String,
+    friends     : [{
+      id        : String,
+      username  : String
+    }]
   }
 });
 
