@@ -13,17 +13,15 @@ var init = function(app){
     socket.emit('ehlo',data);
 
     socket.on('ehlo-response',function(data){
-      console.log("DATA IS :");
-      console.log(data);
       /*When user connects store his socket.id in database, for future socket operations*/
-      /*helper.addSocketId(socket.request.user,socket,function(user,err){
+      helper.addSocketId(data,socket,function(user,socket,err){
         if (err){
           console.log('An error occurred');
         }
         else{
           console.log('Everything is ok!');
         }
-      });*/
+      });
     });
 
     socket.on('disconnect',function(){

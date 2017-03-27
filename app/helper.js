@@ -3,14 +3,15 @@
 class Helper{
 
   constructor(){
-    var Model = require('./models/user');
+    this.Model = require('./models/user');
   }
 
   /*Add a socket id to specific user*/
   addSocketId(user,socket,callback){
+    console.log(socket.id);
     /*Check type of user*/
-    if (user.local.username){
-      Model.User.findOneAndUpdate({ 'local.username' : user.local.username},{'local.socketID' : socket.id}, function(err,user) {
+    if (user.local){
+      this.Model.User.findOneAndUpdate({ 'local.username' : user.local.username},{'local.socketID' : socket.id}, function(err,user) {
         /*Throw any error that happened*/
         if (err){
           throw err;
@@ -18,8 +19,8 @@ class Helper{
         callback(user,err);
       });
     }
-    else if (user.facebook.id){
-      Model.User.findOneAndUpdate({ 'facebook.id' : user.facebook.id},{'facebook.socketID' : socket.id}, function(err,user) {
+    else if (user.facebook){
+      this.Model.User.findOneAndUpdate({ 'facebook.id' : user.facebook.id},{'facebook.socketID' : socket.id}, function(err,user) {
         /*Throw any error that happened*/
         if (err){
           throw err;
@@ -27,8 +28,8 @@ class Helper{
         callback(user,err);
       });
     }
-    else if (user.google.id){
-      Model.User.findOneAndUpdate({ 'google.id' : user.google.id},{'google.socketID' : socket.id}, function(err,user) {
+    else if (user.google){
+      this.Model.User.findOneAndUpdate({ 'google.id' : user.google.id},{'google.socketID' : socket.id}, function(err,user) {
         /*Throw any error that happened*/
         if (err){
           throw err;

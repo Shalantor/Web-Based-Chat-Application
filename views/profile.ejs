@@ -82,7 +82,7 @@
     });
   });*/
   socket.on('ehlo',function(msg){
-    socket.emit('ehlo-response',<%- JSON.stringify(user._id) %>);
+    socket.emit('ehlo-response',<%- JSON.stringify(user) %>);
   });
 </script>
 
