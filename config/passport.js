@@ -81,6 +81,7 @@ module.exports = function(passport){
           newUser.local.password = newUser.generateHash(password);
           newUser.local.online = "Y";
           newUser.local.socketID = "";
+          newUser.local.friends = [];
 
           /*Save the user*/
           newUser.save(function(err){
@@ -213,6 +214,7 @@ module.exports = function(passport){
           newUser.facebook.email = profile.emails[0].value;
           newUser.facebook.online = "Y";
           newUser.facebook.socketID = "";
+          newUser.facebook.friends = [];
 
           /*Save user to database*/
           newUser.save(function(err) {
@@ -273,6 +275,7 @@ module.exports = function(passport){
           newUser.google.email = profile.emails[0].value;
           newUser.google.online = "Y";
           newUser.google.socketID = "";
+          newUser.google.friends = [];
 
           /*Store user in database*/
           newUser.save(function(err) {

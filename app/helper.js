@@ -65,10 +65,8 @@ class Helper{
         if (err){
           throw err;
         }
-        console.log(user);
         user.facebook.socketID = '';
         user.facebook.online = 'N';
-        console.log(user);
 
         user.save(function(err){
           if (err){
