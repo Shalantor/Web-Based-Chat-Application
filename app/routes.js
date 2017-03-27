@@ -1,3 +1,5 @@
+var helper = require('./helper');
+
 /*Route configuration*/
 
 module.exports = function(app,passport) {
@@ -48,8 +50,10 @@ module.exports = function(app,passport) {
 
   /*LOG OUT PAGE*/
   app.get('/logout', function(req,res){
-    req.logout();
-    res.redirect('/');
+    helper.logoutUser(req.user,function(){
+      req.logout();
+      res.redirect('/');
+    });
   });
 
   /*Route for google+ authentication*/

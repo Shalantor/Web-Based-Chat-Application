@@ -8,7 +8,6 @@ class Helper{
 
   /*Add a socket id to specific user*/
   addSocketId(user,socket,callback){
-    console.log(socket.id);
     /*Check type of user*/
     if (user.local){
       this.Model.User.findOneAndUpdate({ 'local.username' : user.local.username},{'local.socketID' : socket.id}, function(err,user) {
@@ -39,6 +38,66 @@ class Helper{
     }
   }
 
+  /*Log out user from database*/
+  logoutUser(userReq,callback){
+    /*Check type of user*/
+    if (userReq.local.username){
+      this.Model.User.findOne({ 'local.username' : userReq.local.username}, function(err,user) {
+        /*Throw any error that happened*/
+        if (err){
+          throw err;
+        }
+        user.local.socketID = '';
+        user.local.online = 'N';
+
+        user.save(function(err){
+          if (err){
+            throw err;
+          }
+        });
+
+        callback(user,err);
+      });
+    }
+    else if (userReq.facebook.id){
+      this.Model.User.findOne({ 'facebook.id' : userReq.facebook.id}, function(err,user) {
+        /*Throw any error that happened*/
+        if (err){
+          throw err;
+        }
+        console.log(user);
+        user.facebook.socketID = '';
+        user.facebook.online = 'N';
+        console.log(user);
+
+        user.save(function(err){
+          if (err){
+            throw err;
+          }
+        });
+
+        callback(user,err);
+      });
+    }
+    else if (userReq.google.id){
+      this.Model.User.findOne({ 'google.id' : userReq.google.id}, function(err,user) {
+        /*Throw any error that happened*/
+        if (err){
+          throw err;
+        }
+        user.google.socketID = '';
+        user.google.online = 'N';
+
+        user.save(function(err){
+          if (err){
+            throw err;
+          }
+        });
+
+        callback(user,err);
+      });
+    }
+  }
 
 }
 
