@@ -68,21 +68,22 @@
 
 <!-- Script to send server a request to look for friends-->
 <script src="/socket.io/socket.io.js"></script>
+<script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
   var socket = io();
-  /*$(function () {
+  socket.on('ehlo',function(msg){
+    socket.emit('ehlo-response',<%- JSON.stringify(user) %>);
+  });
+  $(function () {
     var socket = io();
-    $(".findUserForm").submit(function(){
+    $('.right .findUserForm form').submit(function(){
       socket.emit('find-user', $('#search').val());
       $('#search').val('');
       return false;
     });
     socket.on('find-user-response', function(msg){
-      $('#messages').append($('<li>').text(msg));
+      $('.right .find_window #users_found').append($('<li>').text(msg));
     });
-  });*/
-  socket.on('ehlo',function(msg){
-    socket.emit('ehlo-response',<%- JSON.stringify(user) %>);
   });
 </script>
 
