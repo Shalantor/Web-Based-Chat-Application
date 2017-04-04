@@ -25,9 +25,8 @@ var init = function(app){
     });
 
     /*User wants to add a friend*/
-    socket.on('find-user',function(data){
-      console.log('DATA IS ');
-      console.log(data);
+    socket.on('find-user',function(name){
+      helper.findUsers(name);
     });
 
     socket.on('disconnect',function(){

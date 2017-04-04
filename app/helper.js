@@ -97,6 +97,21 @@ class Helper{
     }
   }
 
+  /*Find user by name, return all users with that name*/
+  findUsers(name){
+    /*Search all 3 user types*/
+    this.Model.User.find({ $or:[{ 'local.username': name},
+                                   { 'facebook.name': name },
+                                   { 'google.name': name}] }, function(err,users) {
+
+      /*If there is any error, throw it */
+      if (err){
+        throw err;
+      }
+      console.log(users);
+    });
+  }
+
 }
 
 module.exports = new Helper();
