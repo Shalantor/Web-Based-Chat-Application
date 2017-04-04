@@ -81,8 +81,10 @@
       $('#search').val('');
       return false;
     });
-    socket.on('find-user-response', function(msg){
-      $('.right .find_window #users_found').append($('<li>').text(msg));
+    socket.on('find-user-response', function(users){
+      $.each(users,function(index,user){
+          $('.right .find_window #users_found').append('<li> <div class="found_user_item"><span class="fa fa-user"></span>' + user.name + '<button>Add Friend</button>' + '</div></li>');
+      });
     });
   });
 </script>
