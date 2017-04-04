@@ -83,13 +83,14 @@
     });
     socket.on('find-user-response', function(users){
       $.each(users,function(index,user){
-          $('.right .find_window #users_found').append('<li> <div class="found_user_item"><span class="fa fa-user"></span>' + user.name + '<button>Add Friend</button><p>' + user.id +  '</p></div></li>');
+          $('.right .find_window #users_found').append('<li> <div class="found_user_item"><span class="fa fa-user"></span>' + user.name + '<button>Add Friend</button><p class="id">' + user.id +  '</p></div></li>');
       });
     });
   });
-  /*Send server a specific friend to add*/
+  /*Send server a specific friend id to add*/
   $(function() {
     $('.right .find_window #users_found').on('click','.found_user_item button',function(){
+      socket.emit('add-user', $(this).siblings('.id').text() );
       $('.right .find_window #users_found').empty();
     });
   });

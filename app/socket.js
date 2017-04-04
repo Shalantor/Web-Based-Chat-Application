@@ -37,9 +37,10 @@ var init = function(app){
 
     /*The user wants to search for another user based on the name he typed
     So search the database for the name and return the users that were found*/
-    socket.on('find-user', function(msg){
-      io.emit('chat message', msg);
+    socket.on('add-user', function(info){
+      console.log('ADD USER MESSAGE ' + info);
     });
+
   });
 
   return server;
