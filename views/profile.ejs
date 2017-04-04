@@ -74,8 +74,8 @@
   socket.on('ehlo',function(msg){
     socket.emit('ehlo-response',<%- JSON.stringify(user) %>);
   });
+  /*Function to send server request for a friend*/
   $(function () {
-    var socket = io();
     $('.right .findUserForm form').submit(function(){
       socket.emit('find-user', $('#search').val());
       $('#search').val('');
@@ -83,10 +83,11 @@
     });
     socket.on('find-user-response', function(users){
       $.each(users,function(index,user){
-          $('.right .find_window #users_found').append('<li> <div class="found_user_item"><span class="fa fa-user"></span>' + user.name + '<button>Add Friend</button>' + '</div></li>');
+          $('.right .find_window #users_found').append('<li> <div class="found_user_item"><span class="fa fa-user"></span>' + user.name + '<button>Add Friend</button><p>' + user.id +  '</p></div></li>');
       });
     });
   });
+  /*Send server a specific friend to add*/
 </script>
 
 </body>

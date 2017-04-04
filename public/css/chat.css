@@ -87,3 +87,11 @@
   overflow-y: scroll;
   border-bottom: thick solid #B1D9E5;
 }
+
+#usersFound li {
+  display: inline-block;
+}
+
+#usersFound li p{
+  display: block;
+}
