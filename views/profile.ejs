@@ -30,7 +30,7 @@
     <div class = "left">
       <div class="friendsWindow">
         <p>Friends</p>
-        <ul>
+        <ul id="friends">
         <ul/>
       </div>
       <div class="groupsWindow">
@@ -76,22 +76,23 @@
   });
   /*Function to send server request for a friend*/
   $(function () {
-    $('.right .findUserForm form').submit(function(){
+    $('.findUserForm form').submit(function(){
       socket.emit('find-user', $('#search').val());
       $('#search').val('');
       return false;
     });
     socket.on('find-user-response', function(users){
       $.each(users,function(index,user){
-          $('.right .find_window #users_found').append('<li> <div class="found_user_item"><span class="fa fa-user"></span>' + user.name + '<button>Add Friend</button><p class="id">' + user.id +  '</p></div></li>');
+          $('#users_found').append('<li> <div class="found_user_item"><span class="fa fa-user"></span>' + user.name + '<button>Add Friend</button><p class="id">' + user.id +  '</p></div></li>');
       });
     });
   });
   /*Send server a specific friend id to add*/
   $(function() {
-    $('.right .find_window #users_found').on('click','.found_user_item button',function(){
+    $('#users_found').on('click','.found_user_item button',function(){
       socket.emit('add-user', $(this).siblings('.id').text() );
-      $('.right .find_window #users_found').empty();
+      $('#friends').append('<li>Hello</li>');
+      $('#users_found').empty();
     });
   });
 </script>
