@@ -98,7 +98,7 @@ class Helper{
   }
 
   /*Find user by name, return all users with that name*/
-  findUsers(name){
+  findUsers(name,callback){
     /*Search all 3 user types*/
     this.Model.User.find({ $or:[{ 'local.username': name},
                                    { 'facebook.name': name },
@@ -108,7 +108,25 @@ class Helper{
       if (err){
         throw err;
       }
-      console.log(users);
+
+      /*Info to send back to client*/
+      var foundUsers = [];
+
+      /*Fill above array with each users info*/
+      users.forEach(function(element){
+        if (element.local.username){
+          foundUsers.push({'id':element._id,'name':element.local.username});
+        }
+        else if(element.facebook.id){
+          foundUsers.push({'id':element._id,'name':element.facebook.name});
+        }
+        else if(element.google.id){
+          foundUsers.push({'id':element._id,'name':element.google.name});
+        }
+      });
+
+      callback(foundUsers);
+
     });
   }
 
