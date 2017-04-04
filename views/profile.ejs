@@ -91,7 +91,7 @@
   $(function() {
     $('#users_found').on('click','.found_user_item button',function(){
       socket.emit('add-user', $(this).siblings('.id').text() );
-      $('#friends').append('<li>Hello</li>');
+      $('#friends').append($(this).closest('li'));
       $('#users_found').empty();
     });
   });
