@@ -83,14 +83,18 @@
     });
     socket.on('find-user-response', function(users){
       $.each(users,function(index,user){
-          $('#users_found').append('<li> <div class="found_user_item"><span class="fa fa-user"></span>' + user.name + '<button>Add Friend</button><p class="id">' + user.id +  '</p></div></li>');
+          $('#users_found').append('<li> <div class="found_user_item"><span class="fa fa-user"></span><p class="name">' + user.name + '</p><button>Add Friend</button><p class="id">' + user.id +  '</p></div></li>');
       });
     });
   });
   /*Send server a specific friend id to add*/
   $(function() {
     $('#users_found').on('click','.found_user_item button',function(){
-      socket.emit('add-user', $(this).siblings('.id').text() );
+      var info = {};
+      info.otherUser =  $(this).siblings('.id').text();
+      info.thisUser = <%- JSON.stringify(user._id) %>;
+      info.otherUserName = $(this).siblings('.name').text();
+      socket.emit('add-user', info );
       $('#friends').append($(this).closest('li'));
       $('#users_found').empty();
     });
