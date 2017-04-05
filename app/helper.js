@@ -191,6 +191,40 @@ class Helper{
 
   }
 
+  /*Function to sort out users that the user sending the request has already in his friends list*/
+  sortOutExistingFriends(friendList,userId,callback){
+    this.Model.User.findOne({'_id' : userId} , function(err,user){
+
+      /*if there is any error throw it*/
+      if (err){
+        throw err;
+      }
+
+      /*Get friends user already has*/
+      var userFriendList = user.friends;
+
+      console.log("FRIENDS OF USER: " + userFriendList);
+      console.log("FRIENDS FOUND WITH THAT NAME :" + friendList.toString());
+
+      userFriendList.forEach(function(element){
+        for(var i=0; i< friendList.length; i++){
+          console.log("ELEMENT ID IS : " + element.id);
+          console.log("ARRAY ID IS : " + friendList[i].id);
+          if(element.id == friendList[i].id){
+            console.log("FOUND MATCH");
+            friendList = friendList.splice(i,1);
+            break;
+          }
+        }
+      });
+
+
+      console.log("FINAL FRIENDLIST :" + friendList.toString());
+      callback(friendList);
+
+    });
+  }
+
 }
 
 module.exports = new Helper();

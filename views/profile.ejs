@@ -77,7 +77,7 @@
   /*Function to send server request for a friend*/
   $(function () {
     $('.findUserForm form').submit(function(){
-      socket.emit('find-user', $('#search').val());
+      socket.emit('find-user', { 'id': <%- JSON.stringify(user._id) %> , 'name': $('#search').val() });
       $('#search').val('');
       return false;
     });
