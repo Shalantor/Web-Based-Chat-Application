@@ -83,7 +83,7 @@
     });
     socket.on('find-user-response', function(users){
       $.each(users,function(index,user){
-          $('#users_found').append('<li> <div class="found_user_item"><span class="fa fa-user"></span><p class="name">' + user.name + '</p><button>Add Friend</button><p class="id">' + user.id +  '</p></div></li>');
+          $('#users_found').append('<li><div class="found_user_item"><span class="fa fa-user"></span><p class="name">' + user.name + '</p><button>Add Friend</button><p class="id">' + user.id +  '</p></div></li>');
       });
     });
   });
@@ -95,8 +95,10 @@
       info.thisUser = <%- JSON.stringify(user) %>;
       info.otherUserName = $(this).siblings('.name').text();
       socket.emit('add-user', info );
-      $('#friends').append($(this).closest('li'));
       $('#users_found').empty();
+    });
+    socket.on('add-user-response',function(user){
+      $('#friends').append('<li><div class="found_user_item"><span class="fa fa-user"></span><p class="name">' + user.name + '</p><button>Add Friend</button><p class="id">' + user.id +  '</p></div></li>');
     });
   });
 </script>

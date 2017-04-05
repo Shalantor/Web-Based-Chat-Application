@@ -133,7 +133,7 @@ class Helper{
   /*Add two users to each others friends list*/
   /*TODO:Check if users are already friends before adding them
   OR Do that before sending user available friends to add, second option might be better*/
-  addFriends(requestUser,otherUserId,otherUserName){
+  addFriends(requestUser,otherUserId,otherUserName,callback){
 
     /*First find this user and update his friends list*/
     this.Model.User.findOne({'_id' : requestUser._id} , function(err,user){
@@ -186,6 +186,8 @@ class Helper{
       });
 
     });
+
+    callback();
 
   }
 
