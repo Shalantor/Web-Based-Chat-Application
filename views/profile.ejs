@@ -73,6 +73,9 @@
   var socket = io();
   socket.on('ehlo',function(msg){
     socket.emit('ehlo-response',<%- JSON.stringify(user) %>);
+    $.each(<%- JSON.stringify(user.friends) %>,function(key,friend){
+        $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + friend.username + '<p>' + friend.id +  '</p></div></li>');
+    });
   });
   /*Function to send server request for a friend*/
   $(function () {
