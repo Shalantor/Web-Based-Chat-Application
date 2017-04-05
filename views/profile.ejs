@@ -98,7 +98,7 @@
       $('#users_found').empty();
     });
     socket.on('add-user-response',function(user){
-      $('#friends').append('<li><div class="found_user_item"><span class="fa fa-user"></span><p class="name">' + user.name + '</p><button>Add Friend</button><p class="id">' + user.id +  '</p></div></li>');
+      $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + user.name + '<p>' + user.id +  '</p></div></li>');
     });
   });
 </script>
