@@ -92,7 +92,7 @@
     $('#users_found').on('click','.found_user_item button',function(){
       var info = {};
       info.otherUser =  $(this).siblings('.id').text();
-      info.thisUser = <%- JSON.stringify(user._id) %>;
+      info.thisUser = <%- JSON.stringify(user) %>;
       info.otherUserName = $(this).siblings('.name').text();
       socket.emit('add-user', info );
       $('#friends').append($(this).closest('li'));

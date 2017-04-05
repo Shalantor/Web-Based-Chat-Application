@@ -38,7 +38,7 @@ var init = function(app){
     /*The user wants to search for another user based on the name he typed
     So search the database for the name and return the users that were found*/
     socket.on('add-user', function(info){
-      console.log(info.otherUserName);
+      helper.addFriends(info.thisUser,info.otherUser,info.otherUserName);
     });
 
   });

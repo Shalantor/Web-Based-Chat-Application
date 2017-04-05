@@ -130,6 +130,65 @@ class Helper{
     });
   }
 
+  /*Add two users to each others friends list*/
+  /*TODO:Check if users are already friends before adding them
+  OR Do that before sending user available friends to add, second option might be better*/
+  addFriends(requestUser,otherUserId,otherUserName){
+
+    /*First find this user and update his friends list*/
+    this.Model.User.findOne({'_id' : requestUser._id} , function(err,user){
+
+      /*If there was any error throw it*/
+      if (err){
+        throw err;
+      }
+
+      /*Add to array of friends*/
+      user.friends.push({'id' : otherUserId,'username' : otherUserName});
+
+      /*Store back into database*/
+      user.save(function(err){
+        if (err){
+          throw err;
+        }
+
+      });
+    });
+
+    /*Update the other users friends list*/
+    /*Get his name*/
+    var thisUserName ;
+    if (requestUser.local){
+      thisUserName = requestUser.local.username;
+    }
+    else if(requestUser.facebook){
+      thisUserName = requestUser.facebook.name;
+    }
+    else if(requestUser.google){
+      thisUserName = requestUser.google.name;
+    }
+
+    /*Find other user in database*/
+    this.Model.User.findOne({'_id' : otherUserId} , function(err,otherUser){
+
+      /*If there is any error throw it*/
+      if (err){
+        throw err;
+      }
+
+      otherUser.friends.push({'id' : requestUser._id,'username' : thisUserName});
+
+      /*Store into database*/
+      otherUser.save(function(err){
+        if (err){
+          throw err;
+        }
+      });
+
+    });
+
+  }
+
 }
 
 module.exports = new Helper();

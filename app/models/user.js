@@ -1,3 +1,5 @@
+/*TODO: IMPORTANT: Consider changing user schema , too much time gets lost on searching user type*/
+
 /*Load encryption module and database */
 var mongoose = require('mongoose');
 var bcrypt = require('bcrypt-nodejs');
@@ -10,10 +12,6 @@ var userSchema = mongoose.Schema({
     password    : String,
     online      : String,
     socketID    : String,
-    friends     : [{
-      id        : String,
-      username  : String
-    }]
   },
   facebook      : {
     id          : String,
@@ -22,10 +20,6 @@ var userSchema = mongoose.Schema({
     name        : String,
     online      : String,
     socketID    : String,
-    friends     : [{
-      id        : String,
-      username  : String
-    }]
   },
   google        : {
     id          : String,
@@ -34,11 +28,11 @@ var userSchema = mongoose.Schema({
     name        : String,
     online      : String,
     socketID    : String,
-    friends     : [{
-      id        : String,
-      username  : String
-    }]
-  }
+  },
+  friends     : [{
+    id        : String,
+    username  : String
+  }]
 });
 
 var messageSchema = mongoose.Schema({
