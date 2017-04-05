@@ -70,6 +70,7 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
+  /*Set up user data*/
   var socket = io();
   socket.on('ehlo',function(msg){
     socket.emit('ehlo-response',<%- JSON.stringify(user) %>);
@@ -102,6 +103,13 @@
     });
     socket.on('add-user-response',function(user){
       $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + user.name + '<p>' + user.id +  '</p></div></li>');
+    });
+  });
+  /*Make the clicked friend, the active one the user is chatting with*/
+  $(function(){
+    $('#friends').on('click','li',function(){
+      $('.active_friend').removeClass('active_friend');
+      $(this).addClass('active_friend');
     });
   });
 </script>

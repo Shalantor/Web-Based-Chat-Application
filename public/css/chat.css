@@ -95,3 +95,11 @@
 #usersFound li p{
   display: block;
 }
+
+#friends li {
+  cursor: pointer;
+}
+
+.active_friend{
+  background:  #B1D9E5;
+}
