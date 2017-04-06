@@ -131,8 +131,6 @@ class Helper{
   }
 
   /*Add two users to each others friends list*/
-  /*TODO:Check if users are already friends before adding them
-  OR Do that before sending user available friends to add, second option might be better*/
   addFriends(requestUser,otherUserId,otherUserName,callback){
 
     /*First find this user and update his friends list*/
@@ -230,11 +228,22 @@ class Helper{
 
       /*Check if it is this user who sent message, used to differentiate in client*/
       var from;
+      var socketID;
       if (isSendingUser){
         from = 'me';
+        socketID = null;
       }
       else{
         from = 'not_me';
+        if (user.local.username){
+          socketID = user.local.socketID;
+        }
+        else if (user.facebook.id){
+          socketID = user.facebook.socketID;
+        }
+        else if (user.google.id){
+          socketID = user.google.socketID;
+        }
       }
 
       /*Add to list of messages*/
@@ -249,7 +258,7 @@ class Helper{
         if (err){
           throw err;
         }
-        callback();
+        callback(socketID);
       });
 
     });

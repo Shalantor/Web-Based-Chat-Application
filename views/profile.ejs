@@ -123,6 +123,11 @@
       $('#message').val('');
       return false;
     });
+    socket.on('send-message-response',function(data){
+      if (data != null){
+        $('.chat_history').append('<li>' + data + '</li>');
+      }
+    });
   });
 </script>
 
