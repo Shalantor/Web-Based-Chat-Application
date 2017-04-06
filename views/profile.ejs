@@ -140,6 +140,8 @@
       var message = $('#message').val();
       socket.emit('send-message',{ 'thisUser' : thisUser, 'otherUser' : otherUser, 'message' : message });
       $('.chat_history').append('<li class="my_message"><p>' + message + '</p></li>');
+      var log = $('.chat_window');
+      log.animate({ scrollTop: log.prop('scrollHeight')}, 0);
       $('#message').val('');
       return false;
     });
@@ -147,6 +149,8 @@
       if (data != null){
         $('.chat_history').append('<li class="other_message"><p>' + data + '</p></li>');
       }
+      var log = $('.chat_window');
+      log.animate({ scrollTop: log.prop('scrollHeight')}, 0);
     });
   });
 </script>
