@@ -217,6 +217,44 @@ class Helper{
     });
   }
 
+  /*TODO: Doesnt work when friend was just added , check what is error,
+  seems that '' usedId gets sent */
+  /*Store message , to keep chat history between two users*/
+  storeAndSendMessage(userId,friendId,isSendingUser,message,callback){
+    this.Model.User.findOne({'_id' : userId} , function(err,user){
+
+      /*If there is any error throw it*/
+      if (err){
+        throw err;
+      }
+
+      /*Check if it is this user who sent message, used to differentiate in client*/
+      var from;
+      if (isSendingUser){
+        from = 'me';
+      }
+      else{
+        from = 'not_me';
+      }
+
+      /*Add to list of messages*/
+      user.friends.forEach(function(element){
+        if (element.id == friendId){
+          element.messages.push({ 'from' : from, 'message' : message });
+        }
+      });
+
+      /*Store into database*/
+      user.save(function(err){
+        if (err){
+          throw err;
+        }
+        callback();
+      });
+
+    });
+  }
+
 }
 
 module.exports = new Helper();

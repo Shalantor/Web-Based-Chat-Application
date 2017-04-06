@@ -47,6 +47,17 @@ var init = function(app){
       });
     });
 
+    /*The user wants to send a message to another user*/
+    socket.on('send-message',function(data){
+      console.log(data);
+      helper.storeAndSendMessage(data.thisUser,data.otherUser,true,data.message,function(){
+        helper.storeAndSendMessage(data.otherUser,data.thisUser,false,data.message,function(){
+          /*Send back to verify that message was sent*/
+          socket.emit('send-message-response',null);
+        });
+      });
+    });
+
   });
 
   return server;

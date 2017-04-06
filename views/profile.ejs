@@ -43,7 +43,7 @@
 
     <div class = "middle">
       <div class="chat_window">
-        <ul>
+        <ul class="chat_history">
         <ul/>
       </div>
 
@@ -119,6 +119,7 @@
       var otherUser = $('.active_friend #friendId').text();
       var message = $('#message').val();
       socket.emit('send-message',{ 'thisUser' : thisUser, 'otherUser' : otherUser, 'message' : message });
+      $('.chat_history').append('<li>' + message + '</li>');
       $('#message').val('');
       return false;
     });

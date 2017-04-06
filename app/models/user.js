@@ -31,7 +31,11 @@ var userSchema = mongoose.Schema({
   },
   friends     : [{
     id        : String,
-    username  : String
+    username  : String,
+    messages  : [{
+      from    : String,
+      message : String
+    }]
   }]
 });
 
