@@ -73,6 +73,8 @@
   /*Set up user data*/
   var socket = io();
   socket.on('ehlo',function(msg){
+    /*Disable form if no friend selected to chat with*/
+    $('.chatForm :input').prop('disabled', true);
     socket.emit('ehlo-response',<%- JSON.stringify(user) %>);
     $.each(<%- JSON.stringify(user.friends) %>,function(key,friend){
         $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + friend.username + '<p id = friendId>' + friend.id +  '</p></div></li>');
@@ -108,6 +110,7 @@
   /*Make the clicked friend, the active one the user is chatting with*/
   $(function(){
     $('#friends').on('click','li',function(){
+      $('.chatForm :input').prop('disabled', false);
       $('.active_friend').removeClass('active_friend');
       $(this).addClass('active_friend');
     });
