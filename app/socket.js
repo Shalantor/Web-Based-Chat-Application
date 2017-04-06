@@ -60,6 +60,9 @@ var init = function(app){
       });
     });
 
+    /*Send chat history of user with a specific friend, to display in browser*/
+    
+
   });
 
   return server;

@@ -122,13 +122,13 @@
       var otherUser = $('.active_friend #friendId').text();
       var message = $('#message').val();
       socket.emit('send-message',{ 'thisUser' : thisUser, 'otherUser' : otherUser, 'message' : message });
-      $('.chat_history').append('<li>' + message + '</li>');
+      $('.chat_history').append('<li class="my_message"><p>' + message + '</p></li>');
       $('#message').val('');
       return false;
     });
     socket.on('send-message-response',function(data){
       if (data != null){
-        $('.chat_history').append('<li>' + data + '</li>');
+        $('.chat_history').append('<li class="other_message"><p>' + data + '</p></li>');
       }
     });
   });

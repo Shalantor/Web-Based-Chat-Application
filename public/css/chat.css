@@ -103,3 +103,19 @@
 .active_friend{
   background:  #B1D9E5;
 }
+
+.chat_history {
+  list-style-type: none;
+}
+
+.my_message{
+  float : right;
+  display: block;
+  clear: both;
+}
+
+.other_message{
+  float : left;
+  display: block;
+  clear: both;
+}
