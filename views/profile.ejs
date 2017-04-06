@@ -107,12 +107,27 @@
       $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + user.name + '<p>' + user.id +  '</p></div></li>');
     });
   });
-  /*Make the clicked friend, the active one the user is chatting with*/
+  /*Make the clicked friend, the active one the user is chatting with and also show chat history*/
   $(function(){
     $('#friends').on('click','li',function(){
       $('.chatForm :input').prop('disabled', false);
       $('.active_friend').removeClass('active_friend');
       $(this).addClass('active_friend');
+      $('.chat_history').empty();
+      var data = {};
+      data.userId = <%- JSON.stringify(user._id) %>;
+      data.friendId = $('.active_friend #friendId').text();
+      socket.emit('get-chat-history',data);
+    });
+    socket.on('get-chat-history-response',function(messages){
+      $.each(messages,function(index,message){
+        if (message.from == 'me'){
+          $('.chat_history').append('<li class="my_message"><p>' + message + '</p></li>');
+        }
+        else if (message.from == 'not_me'){
+          $('.chat_history').append('<li class="other_message"><p>' + message + '</p></li>');
+        }
+      });
     });
   });
   /*Function so send message to server from chat window*/

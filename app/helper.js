@@ -216,7 +216,7 @@ class Helper{
   }
 
   /*TODO: Doesnt work when friend was just added , check what is error,
-  seems that '' usedId gets sent */
+  seems that '' userId gets sent */
   /*Store message , to keep chat history between two users*/
   storeAndSendMessage(userId,friendId,isSendingUser,message,callback){
     this.Model.User.findOne({'_id' : userId} , function(err,user){

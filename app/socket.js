@@ -49,19 +49,19 @@ var init = function(app){
 
     /*The user wants to send a message to another user*/
     socket.on('send-message',function(data){
-      console.log(data);
       helper.storeAndSendMessage(data.thisUser,data.otherUser,true,data.message,function(socketID){
         helper.storeAndSendMessage(data.otherUser,data.thisUser,false,data.message,function(socketID){
           /*Send back to verify that message was sent*/
           socket.emit('send-message-response',null);
-          console.log(data.message);
           io.to(socketID).emit('send-message-response', data.message);
         });
       });
     });
 
-    /*Send chat history of user with a specific friend, to display in browser*/
-    
+    /*Get user chat history*/
+    socket.on('get-chat-history',function(data){
+      console.log(data);
+    });
 
   });
 
