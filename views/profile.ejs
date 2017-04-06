@@ -47,7 +47,7 @@
         <ul/>
       </div>
 
-      <div class = "chatform">
+      <div class = "chatForm">
         <form action= "" >
           <input id="message" autocomplete="off" /><button>Send</button>
         </form>
@@ -75,7 +75,7 @@
   socket.on('ehlo',function(msg){
     socket.emit('ehlo-response',<%- JSON.stringify(user) %>);
     $.each(<%- JSON.stringify(user.friends) %>,function(key,friend){
-        $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + friend.username + '<p>' + friend.id +  '</p></div></li>');
+        $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + friend.username + '<p id = friendId>' + friend.id +  '</p></div></li>');
     });
   });
   /*Function to send server request for a friend*/
@@ -110,6 +110,17 @@
     $('#friends').on('click','li',function(){
       $('.active_friend').removeClass('active_friend');
       $(this).addClass('active_friend');
+    });
+  });
+  /*Function so send message to server from chat window*/
+  $(function () {
+    $('.chatForm form').submit(function(){
+      var thisUser = <%- JSON.stringify(user._id) %>;
+      var otherUser = $('.active_friend #friendId').text();
+      var message = $('#message').val();
+      socket.emit('send-message',{ 'thisUser' : thisUser, 'otherUser' : otherUser, 'message' : message });
+      $('#message').val('');
+      return false;
     });
   });
 </script>

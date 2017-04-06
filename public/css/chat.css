@@ -41,22 +41,22 @@
     overflow-y: scroll;
 }
 
-.chatform{
+.chatForm{
   position: absolute;
   bottom : 0;
   background : blue;
   width : 100%;
 }
 
-.chatform form{
+.chatForm form{
   width: 100%;
 }
 
-.chatform form input{
+.chatForm form input{
   width: 80%;
 }
 
-.chatform form button{
+.chatForm form button{
   width: 20%;
 }
 
