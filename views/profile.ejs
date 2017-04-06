@@ -120,12 +120,12 @@
       socket.emit('get-chat-history',data);
     });
     socket.on('get-chat-history-response',function(messages){
-      $.each(messages,function(index,message){
-        if (message.from == 'me'){
-          $('.chat_history').append('<li class="my_message"><p>' + message + '</p></li>');
+      $.each(messages,function(index,info){
+        if (info.from == 'me'){
+          $('.chat_history').append('<li class="my_message"><p>' + info.message + '</p></li>');
         }
-        else if (message.from == 'not_me'){
-          $('.chat_history').append('<li class="other_message"><p>' + message + '</p></li>');
+        else if (info.from == 'not_me'){
+          $('.chat_history').append('<li class="other_message"><p>' + info.message + '</p></li>');
         }
       });
     });

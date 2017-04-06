@@ -264,6 +264,30 @@ class Helper{
     });
   }
 
+  /*Return chat messages between two users*/
+  getChatHistory(userId,friendId,callback){
+
+    /*find user*/
+    this.Model.User.findOne({'_id' : userId} , function(err,user){
+
+      /*If there is any error throw it*/
+      if(err){
+        throw err;
+      }
+
+      var messages = [];
+      /*Find friend*/
+      user.friends.forEach(function(element){
+        if (element.id == friendId){
+          messages = element.messages;
+        }
+      });
+
+      callback(messages);
+
+    });
+  }
+
 }
 
 module.exports = new Helper();

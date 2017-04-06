@@ -60,7 +60,9 @@ var init = function(app){
 
     /*Get user chat history*/
     socket.on('get-chat-history',function(data){
-      console.log(data);
+      helper.getChatHistory(data.userId,data.friendId,function(messages){
+        socket.emit('get-chat-history-response',messages);
+      });
     });
 
   });
