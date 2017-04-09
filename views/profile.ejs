@@ -168,6 +168,19 @@
       }
     });
   });
+  /*Click listener for create group button*/
+  $(function () {
+    $('#open_group_menu').click(function(){
+      if ( $(this).text() === 'Create Group' ){
+        $('.group_menu').show();
+        $(this).text('Close');
+      }
+      else{
+        $('.group_menu').hide();
+        $(this).text('Create Group');   
+      }
+    });
+  });
 </script>
 
 </body>
