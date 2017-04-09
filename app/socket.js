@@ -26,7 +26,7 @@ var init = function(app){
 
     /*User wants to add a friend*/
     socket.on('find-user',function(info){
-      helper.findUsers(info.name,function(foundNames){
+      helper.findUsers(info.id,info.name,function(foundNames){
         helper.sortOutExistingFriends(foundNames,info.id,function(finalList){
           socket.emit('find-user-response',finalList);
         });
