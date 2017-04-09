@@ -188,6 +188,16 @@
       $('#open_group_menu').show();
     });
   });
+  /*listener for button that send server request to find specific
+  *User and add to list of members in a group that gets created*/
+  $(function () {
+    $('.search_for_group button').click(function(){
+      var username = $('.search_for_group input').val();
+      var id = <%- JSON.stringify(user._id) %>;
+      $('.search_for_group input').val('');
+      socket.emit('add-user-group',{'id': id, 'name' : username });
+    });
+  });
 </script>
 
 </body>

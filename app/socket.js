@@ -33,6 +33,11 @@ var init = function(app){
       });
     });
 
+    /*User wants to get name for a group, can only add people that are in users friends list*/
+    socket.on('add-user-group',function(data){
+      console.log(data);
+    });
+
     socket.on('disconnect',function(){
       console.log('user disconnected');
     });
