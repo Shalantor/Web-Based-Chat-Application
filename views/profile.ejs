@@ -104,7 +104,7 @@
       $('#users_found').empty();
     });
     socket.on('add-user-response',function(user){
-      $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + user.name + '<p>' + user.id +  '</p></div></li>');
+      $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + user.name + '<p id = friendId>' + user.id +  '</p></div></li>');
     });
   });
   /*Make the clicked friend, the active one the user is chatting with and also show chat history*/
