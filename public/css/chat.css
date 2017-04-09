@@ -164,3 +164,18 @@
 .group_menu{
   display: none;
 }
+
+.group_menu_buttons{
+  text-align: center;
+  display: none;
+}
+
+#close_group_menu{
+  margin: auto;
+  display: inline-block;
+}
+
+#create_group{
+  margin: auto;
+  display: inline-block;
+}

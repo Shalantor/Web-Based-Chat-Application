@@ -64,6 +64,10 @@
       </div>
       <div class = "createGroup">
         <button id="open_group_menu">Create Group</button>
+          <div class = "group_menu_buttons">
+            <button id="close_menu">Close</button>
+            <button id="create_group">Create Group</button>
+          </div>
           <div class = "group_menu">
           <form class = "group_name" action= "" >
             <p>Group Name:</p><input autocomplete="off" />
@@ -168,17 +172,20 @@
       }
     });
   });
-  /*Click listener for create group button*/
+  /*Click listener for create group button, to open menu*/
   $(function () {
     $('#open_group_menu').click(function(){
-      if ( $(this).text() === 'Create Group' ){
-        $('.group_menu').show();
-        $(this).text('Close');
-      }
-      else{
-        $('.group_menu').hide();
-        $(this).text('Create Group');   
-      }
+      $('.group_menu').show();
+      $('.group_menu_buttons').show()
+      $(this).hide();
+    });
+  });
+  /*Close the group menu*/
+  $(function () {
+    $('#close_menu').click(function(){
+      $('.group_menu').hide();
+      $('.group_menu_buttons').hide()
+      $('#open_group_menu').show();
     });
   });
 </script>
