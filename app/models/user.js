@@ -40,6 +40,7 @@ var userSchema = mongoose.Schema({
 });
 
 var groupSchema = mongoose.Schema({
+  name      : String,
   users     : [String],
   messages  : [{
     from    : String,
