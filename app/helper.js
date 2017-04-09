@@ -178,6 +178,18 @@ class Helper{
 
       otherUser.friends.push({'id' : requestUser._id,'username' : thisUserName});
 
+      /*Get user socketID*/
+      var socketID;
+      if (otherUser.local.username){
+        socketID = otherUser.local.socketID;
+      }
+      else if (otherUser.facebook.id){
+        socketID = otherUser.facebook.socketID;
+      }
+      else if(otherUser.google.id){
+        socketID = otherUser.google.socketID;
+      }
+
       /*Store into database*/
       otherUser.save(function(err){
         if (err){
@@ -185,9 +197,9 @@ class Helper{
         }
       });
 
-    });
+      callback(thisUserName,requestUser._id,socketID);
 
-    callback();
+    });
 
   }
 
