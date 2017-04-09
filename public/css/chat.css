@@ -145,3 +145,22 @@
 .createGroup form button{
   width : 35%;
 }
+
+.createGroup form p{
+  width: 35%;
+  display: inline-block;
+}
+
+#open_group_menu {
+  margin: auto;
+  width: 35%;
+  display: block;
+}
+
+.group_name {
+  margin-top: 10px;
+}
+
+.group_menu{
+  display: none;
+}

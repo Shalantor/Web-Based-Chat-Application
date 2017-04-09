@@ -63,9 +63,15 @@
         <ul/>
       </div>
       <div class = "createGroup">
-        <form action= "" >
-          <input id="searchUser" autocomplete="off" /><button>Create Group</button>
-        </form>
+        <button id="open_group_menu">Create Group</button>
+          <div class = "group_menu">
+          <form class = "group_name" action= "" >
+            <p>Group Name:</p><input autocomplete="off" />
+          </form>
+          <form class = "search_for_group" action= "" >
+            <input autocomplete="off" /><button>Add</button>
+          </form>
+        </div>
         <ul id="user_for_group">
         <ul/>
       </div>
