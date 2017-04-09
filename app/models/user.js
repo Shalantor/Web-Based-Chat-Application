@@ -39,17 +39,12 @@ var userSchema = mongoose.Schema({
   }]
 });
 
-var messageSchema = mongoose.Schema({
-  messages      : {
-    fromUserType: String,
-    fromUserID  : String,
-    fromUsername: String,
-    toUserType  : String,
-    toUserID    : String,
-    toUsername  : String,
-    data        : String,
-    timeStamp   : String
-  }
+var groupSchema = mongoose.Schema({
+  users     : [String],
+  messages  : [{
+    from    : String,
+    message : String
+  }]
 });
 
 /*Methods to use*/
@@ -66,8 +61,8 @@ userSchema.methods.validPassword = function(password) {
 
 /* export */
 var User = mongoose.model('User', userSchema);
-var Message = mongoose.model('Messages', messageSchema);
+var Groups = mongoose.model('Groups', groupSchema);
 module.exports = {
   User : User,
-  Message : Message
+  Groups : Groups
 };
