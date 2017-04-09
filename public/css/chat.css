@@ -113,10 +113,18 @@
   float : right;
   display: block;
   clear: both;
+  word-wrap: break-word;
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  max-width:80%;
 }
 
 .other_message{
   float : left;
   display: block;
   clear: both;
+  word-wrap: break-word;
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  max-width:80%;
 }
