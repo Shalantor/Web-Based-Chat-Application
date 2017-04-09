@@ -33,9 +33,12 @@ var init = function(app){
       });
     });
 
-    /*User wants to get name for a group, can only add people that are in users friends list*/
-    socket.on('add-user-group',function(data){
-      console.log(data);
+    /*TODO:As of now , user can add anyone to chat with. Change to friends only*/
+    socket.on('add-user-group',function(info){
+      console.log(info);
+      helper.findUsers(info.id,info.name,function(foundNames){
+        socket.emit('add-user-group-response',foundNames);
+      });
     });
 
     socket.on('disconnect',function(){

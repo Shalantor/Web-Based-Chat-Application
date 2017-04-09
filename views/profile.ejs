@@ -104,7 +104,7 @@
     });
     socket.on('find-user-response', function(users){
       $.each(users,function(index,user){
-          $('#users_found').append('<li><div class="found_user_item"><span class="fa fa-user"></span><p class="name">' + user.name + '</p><button>Add Friend</button><p class="id">' + user.id +  '</p></div></li>');
+          $('#users_found').append('<li><div class="found_user_item"><span class="fa fa-user"></span><p class="name">' + user.name + '</p><button>Delete</button><p class="id">' + user.id +  '</p></div></li>');
       });
     });
   });
@@ -196,6 +196,11 @@
       var id = <%- JSON.stringify(user._id) %>;
       $('.search_for_group input').val('');
       socket.emit('add-user-group',{'id': id, 'name' : username });
+    });
+    socket.on('add-user-group-response', function(users){
+      $.each(users,function(index,user){
+          $('#user_for_group').append('<li><div class="found_user_item"><span class="fa fa-user"></span><p class="name">' + ' ' + user.name + ' </p><button>Delete</button><p class="id">' + user.id +  '</p></div></li>');
+      });
     });
   });
 </script>

@@ -179,3 +179,7 @@
   margin: auto;
   display: inline-block;
 }
+
+#user_for_group p,span{
+  display: inline;
+}
