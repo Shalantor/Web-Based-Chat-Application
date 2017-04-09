@@ -58,7 +58,8 @@ var init = function(app){
         helper.storeAndSendMessage(data.otherUser,data.thisUser,false,data.message,function(socketID){
           /*Send back to verify that message was sent*/
           socket.emit('send-message-response',null);
-          io.to(socketID).emit('send-message-response', data.message);
+          var sendData = {'fromId': data.thisUser, 'message': data.message};
+          io.to(socketID).emit('send-message-response', sendData);
         });
       });
     });

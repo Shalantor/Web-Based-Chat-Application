@@ -146,11 +146,15 @@
       return false;
     });
     socket.on('send-message-response',function(data){
-      if (data != null){
-        $('.chat_history').append('<li class="other_message"><p>' + data + '</p></li>');
+      /*Data is null for user that sent data*/
+      /*Also if the user that send this message is not the selected one don't show text*/
+      var activeFriend = JSON.stringify($('.active_friend #friendId').text());
+      var fromUser = JSON.stringify(data.fromId);
+      if (data != null && activeFriend === fromUser){
+        $('.chat_history').append('<li class="other_message"><p>' + data.message + '</p></li>');
+        var log = $('.chat_window');
+        log.animate({ scrollTop: log.prop('scrollHeight')}, 0);
       }
-      var log = $('.chat_window');
-      log.animate({ scrollTop: log.prop('scrollHeight')}, 0);
     });
   });
 </script>
