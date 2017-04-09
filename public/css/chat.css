@@ -39,11 +39,11 @@
 
 .chat_window{
   overflow-y: scroll;
-  height : 100%;
+  height : 95%;
 }
 
 .chatForm{
-  position: absolute;
+  position: relative;
   bottom : 0;
   background : blue;
   width : 100%;
