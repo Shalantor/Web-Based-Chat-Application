@@ -86,7 +86,15 @@ var init = function(app){
           helper.addGroupToUser(element,groupId,function(){
             usersProcessed ++;
             if (usersProcessed == data.users.length){
-              socket.emit('create-group-response',{'id' : groupId,'name':data.groupName});
+              /*Get Socket ids of users*/
+              helper.getSocketIds(data.users,function(socketIDs){
+                var dataToSend = {'id': groupId, 'name' : data.groupName};
+                socketIDs.forEach(function(element){
+                  if(element !== ''){
+                    io.to(element).emit('create-group-response', dataToSend);
+                  }
+                });
+              });
             }
           });
         });

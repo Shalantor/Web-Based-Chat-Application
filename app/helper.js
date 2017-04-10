@@ -343,6 +343,38 @@ class Helper{
     });
   }
 
+  /*Get socketIDs of array of users*/
+  getSocketIds(userIds,callback){
+
+    var socketIDs = [];
+    var model = this.Model.User;
+
+    userIds.forEach(function(element,index){
+      model.findOne({'_id' : element} , function(err,user){
+          if(err){
+            throw err;
+          }
+
+          if(user.local.username){
+            socketIDs.push(user.local.socketID);
+          }
+          else if(user.facebook.id){
+            socketIDs.push(user.facebook.socketID);
+          }
+          else if(user.google.id){
+            socketIDs.push(user.google.socketID);
+          }
+
+          if(index === (userIds.length - 1)){
+            callback(socketIDs);
+          }
+
+      });
+    });
+
+
+  }
+
 }
 
 module.exports = new Helper();
