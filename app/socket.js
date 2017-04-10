@@ -86,7 +86,7 @@ var init = function(app){
           helper.addGroupToUser(element,groupId,function(){
             usersProcessed ++;
             if (usersProcessed == data.users.length){
-              console.log('ALL DONE!');
+              socket.emit('create-group-response',{'id' : groupId,'name':data.groupName});
             }
           });
         });
