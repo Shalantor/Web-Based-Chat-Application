@@ -79,7 +79,9 @@ var init = function(app){
         });
       }
       else{
-        console.log('IS GROUP');
+        helper.getChatHistoryForGroup(data.groupId,function(messages){
+          socket.emit('get-chat-history-response',messages);
+        });
       }
     });
 

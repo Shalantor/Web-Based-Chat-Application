@@ -371,8 +371,16 @@ class Helper{
 
       });
     });
+  }
 
-
+  /*Get chat history for a group chat*/
+  getChatHistoryForGroup(groupId,callback){
+    this.Model.Groups.findOne({'_id' : groupId} , function(err,group){
+      if(err){
+        throw err;
+      }
+      callback(group.messages);
+    });
   }
 
 }

@@ -148,6 +148,7 @@
       $('.chat_history').empty();
       var data = {};
       data.isGroup = true;
+      data.groupId = $('.active_chat .id').text();
       socket.emit('get-chat-history',data);
     });
     socket.on('get-chat-history-response',function(messages){
