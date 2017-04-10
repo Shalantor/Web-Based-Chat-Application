@@ -80,8 +80,9 @@ var init = function(app){
 
     /*User wants to create group chat*/
     socket.on('create-group',function(data){
-      console.log('HELLO');
-      console.log(data);
+      helper.createGroup(data.groupName,data.users,function(){
+        console.log('ALRIGHT NOW');
+      });
     });
 
   });

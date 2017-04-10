@@ -303,6 +303,25 @@ class Helper{
     });
   }
 
+  /*Add group to database*/
+  createGroup(groupName,groupMembers,callback){
+
+    /*Create new group*/
+    var group = new this.Model.Groups({
+      name : groupName,
+      users : groupMembers,
+      messages : []
+    });
+
+    group.save(function(err){
+      if(err){
+        throw err;
+      }
+      callback();
+    });
+
+  }
+
 }
 
 module.exports = new Helper();
