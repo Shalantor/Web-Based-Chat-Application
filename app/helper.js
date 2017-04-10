@@ -322,7 +322,7 @@ class Helper{
   }
 
   /*Add group id to user that is part of it*/
-  addGroupToUser(userId,groupId,callback){
+  addGroupToUser(userId,groupName,groupId,callback){
     this.Model.User.findOne({'_id' : userId} , function(err,user){
 
       /*If there was an error throw it*/
@@ -331,7 +331,7 @@ class Helper{
       }
 
       /*Update array of groups that user is a member of*/
-      user.groups.push(groupId);
+      user.groups.push({'id' : groupId, 'name' : groupName});
 
       user.save(function(err){
         if(err){

@@ -83,7 +83,7 @@ var init = function(app){
       helper.createGroup(data.groupName,data.users,function(groupId){
         var usersProcessed = 0;
         data.users.forEach(function(element){
-          helper.addGroupToUser(element,groupId,function(){
+          helper.addGroupToUser(element,data.groupName,groupId,function(){
             usersProcessed ++;
             if (usersProcessed == data.users.length){
               /*Get Socket ids of users*/

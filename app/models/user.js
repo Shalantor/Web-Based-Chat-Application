@@ -37,7 +37,10 @@ var userSchema = mongoose.Schema({
       message : String
     }]
   }],
-  groups      : [String]
+  groups      : [{
+    id        : String,
+    name      : String
+  }]
 });
 
 var groupSchema = mongoose.Schema({
