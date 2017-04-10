@@ -80,8 +80,16 @@ var init = function(app){
 
     /*User wants to create group chat*/
     socket.on('create-group',function(data){
-      helper.createGroup(data.groupName,data.users,function(){
-        console.log('ALRIGHT NOW');
+      helper.createGroup(data.groupName,data.users,function(groupId){
+        var usersProcessed = 0;
+        data.users.forEach(function(element){
+          helper.addGroupToUser(element,groupId,function(){
+            usersProcessed ++;
+            if (usersProcessed == data.users.length){
+              console.log('ALL DONE!');
+            }
+          });
+        });
       });
     });
 
