@@ -188,10 +188,15 @@
   color: red;
 }
 
-#groups li {
-  display: inline-block;
+#groups{
+  list-style: none;
 }
 
-#groups li p{
-  display: inline;
+#groups p{
+  display: block;
+}
+
+#groups li{
+  border-top: thick double #B1D9E5;
+  border-bottom: thick double #B1D9E5;
 }
