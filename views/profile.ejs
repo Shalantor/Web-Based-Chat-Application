@@ -108,7 +108,7 @@
     });
     socket.on('find-user-response', function(users){
       $.each(users,function(index,user){
-          $('#users_found').append('<li><div class="found_user_item"><span class="fa fa-user"></span><p class="name">' + user.name + '</p><button>Delete</button><p class="id">' + user.id +  '</p></div></li>');
+          $('#users_found').append('<li><div class="found_user_item"><span class="fa fa-user"></span><p class="name">' + user.name + '</p><button>Add</button><p class="id">' + user.id +  '</p></div></li>');
       });
     });
   });
@@ -128,16 +128,26 @@
     });
   });
 
-  /*Make the clicked friend, the active one the user is chatting with and also show chat history*/
+  /*Make the clicked group or friend the active one the user is chatting with and also show chat history*/
   $(function(){
     $('#friends').on('click','li',function(){
       $('.chatForm :input').prop('disabled', false);
-      $('.active_friend').removeClass('active_friend');
-      $(this).addClass('active_friend');
+      $('.active_chat').removeClass('active_chat');
+      $(this).addClass('active_chat');
       $('.chat_history').empty();
       var data = {};
       data.userId = <%- JSON.stringify(user._id) %>;
-      data.friendId = $('.active_friend #friendId').text();
+      data.friendId = $('.active_chat #friendId').text();
+      data.isGroup = false;
+      socket.emit('get-chat-history',data);
+    });
+    $('#groups').on('click','li',function(){
+      $('.chatForm :input').prop('disabled', false);
+      $('.active_chat').removeClass('active_chat');
+      $(this).addClass('active_chat');
+      $('.chat_history').empty();
+      var data = {};
+      data.isGroup = true;
       socket.emit('get-chat-history',data);
     });
     socket.on('get-chat-history-response',function(messages){
@@ -158,7 +168,7 @@
   $(function () {
     $('.chatForm form').submit(function(){
       var thisUser = <%- JSON.stringify(user._id) %>;
-      var otherUser = $('.active_friend #friendId').text();
+      var otherUser = $('.active_chat #friendId').text();
       var message = $('#message').val();
       socket.emit('send-message',{ 'thisUser' : thisUser, 'otherUser' : otherUser, 'message' : message });
       $('.chat_history').append('<li class="my_message"><p>' + message + '</p></li>');
@@ -170,7 +180,7 @@
     socket.on('send-message-response',function(data){
       /*Data is null for user that sent data*/
       /*Also if the user that send this message is not the selected one don't show text*/
-      var activeFriend = JSON.stringify($('.active_friend #friendId').text());
+      var activeFriend = JSON.stringify($('.active_chat #friendId').text());
       var fromUser = JSON.stringify(data.fromId);
       if (data != null && activeFriend === fromUser){
         $('.chat_history').append('<li class="other_message"><p>' + data.message + '</p></li>');

@@ -73,9 +73,14 @@ var init = function(app){
 
     /*Get user chat history*/
     socket.on('get-chat-history',function(data){
-      helper.getChatHistory(data.userId,data.friendId,function(messages){
-        socket.emit('get-chat-history-response',messages);
-      });
+      if(data.isGroup === false){
+        helper.getChatHistory(data.userId,data.friendId,function(messages){
+          socket.emit('get-chat-history-response',messages);
+        });
+      }
+      else{
+        console.log('IS GROUP');
+      }
     });
 
     /*User wants to create group chat*/
