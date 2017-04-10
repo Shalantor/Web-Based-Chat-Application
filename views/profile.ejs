@@ -35,7 +35,7 @@
       </div>
       <div class="groupsWindow">
         <p>Groups</p>
-        <ul>
+        <ul id=groups>
         <ul/>
       </div>
     </div>
@@ -246,6 +246,9 @@
         $('#user_for_group').empty();
         socket.emit('create-group',data);
       }
+    });
+    socket.on('create-group-response', function(data){
+      $('#groups').append('<li><div class="group_item"><span class="fa fa-user"></span><p class="name">' + ' ' + data.name + ' </p><button id="delete_button">Delete</button><p class="id">' + data.id +  '</p></div></li>');
     });
   });
 

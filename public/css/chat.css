@@ -187,3 +187,11 @@
 .warning {
   color: red;
 }
+
+#groups li {
+  display: inline-block;
+}
+
+#groups li p{
+  display: inline;
+}
