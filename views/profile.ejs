@@ -199,10 +199,17 @@
     });
     socket.on('add-user-group-response', function(users){
       $.each(users,function(index,user){
-          $('#user_for_group').append('<li><div class="found_user_item"><span class="fa fa-user"></span><p class="name">' + ' ' + user.name + ' </p><button>Delete</button><p class="id">' + user.id +  '</p></div></li>');
+          $('#user_for_group').append('<li><div class="found_user_item"><span class="fa fa-user"></span><p class="name">' + ' ' + user.name + ' </p><button id="delete_button">Delete</button><p class="id">' + user.id +  '</p></div></li>');
       });
     });
   });
+  /*Listener for button to delete user from group , on creation time*/
+  $(function () {
+    $('#user_for_group').on('click','#delete_button',function(){
+      $(this).closest('li').remove();
+    });
+  });
+
 </script>
 
 </body>
