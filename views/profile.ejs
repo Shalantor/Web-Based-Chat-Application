@@ -236,11 +236,12 @@
       else if ( !($('#user_for_group li').length === 0) ){
         var data = {};
         data.groupName = $('.group_name input').val();
+        $('.group_name input').val('')
         data.users = [];
         data.users.push( <%- JSON.stringify(user._id) %> );
         $('#user_for_group li').each(function(index){
           var userToAdd = $(this).find('.id').text();
-          data.users.push(JSON.stringify(userToAdd));
+          data.users.push(userToAdd);
         });
         $('#user_for_group').empty();
         socket.emit('create-group',data);
