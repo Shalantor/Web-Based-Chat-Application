@@ -95,6 +95,7 @@
         $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + friend.username + '<p id = friendId>' + friend.id +  '</p></div></li>');
     });
   });
+
   /*Function to send server request for a friend*/
   $(function () {
     $('.findUserForm form').submit(function(){
@@ -108,6 +109,7 @@
       });
     });
   });
+
   /*Send server a specific friend id to add*/
   $(function() {
     $('#users_found').on('click','.found_user_item button',function(){
@@ -122,6 +124,7 @@
       $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + user.name + '<p id = friendId>' + user.id +  '</p></div></li>');
     });
   });
+
   /*Make the clicked friend, the active one the user is chatting with and also show chat history*/
   $(function(){
     $('#friends').on('click','li',function(){
@@ -147,6 +150,7 @@
       log.animate({ scrollTop: log.prop('scrollHeight')}, 0);
     });
   });
+
   /*Function so send message to server from chat window*/
   $(function () {
     $('.chatForm form').submit(function(){
@@ -172,6 +176,7 @@
       }
     });
   });
+
   /*Click listener for create group button, to open menu*/
   $(function () {
     $('#open_group_menu').click(function(){
@@ -180,6 +185,7 @@
       $(this).hide();
     });
   });
+
   /*Close the group menu*/
   $(function () {
     $('#close_menu').click(function(){
@@ -188,6 +194,7 @@
       $('#open_group_menu').show();
     });
   });
+
   /*listener for button that send server request to find specific
   *User and add to list of members in a group that gets created*/
   $(function () {
@@ -203,10 +210,41 @@
       });
     });
   });
+
   /*Listener for button to delete user from group , on creation time*/
   $(function () {
     $('#user_for_group').on('click','#delete_button',function(){
       $(this).closest('li').remove();
+    });
+  });
+
+  /*Remove warning class from input in group form, so that it wont be red*/
+  $(function (){
+    $('.group_name input').click(function(){
+      $('.group_name input').removeClass('warning');
+      $('.group_name input').attr('placeholder','');
+    });
+  });
+
+  /*Send server data for group to be created*/
+  $(function (){
+    $('#create_group').click(function(){
+      if ( $('.group_name input').val() === '' ){
+        $('.group_name input').attr('placeholder','Group name can\'t be empty');
+        $('.group_name input').addClass('warning');
+      }
+      else if ( !($('#user_for_group li').length === 0) ){
+        var data = {};
+        data.groupName = $('.group_name input').val();
+        data.users = [];
+        data.users.push( <%- JSON.stringify(user._id) %> );
+        $('#user_for_group li').each(function(index){
+          var userToAdd = $(this).find('.id').text();
+          data.users.push(JSON.stringify(userToAdd));
+        });
+        $('#user_for_group').empty();
+        socket.emit('create-group',data);
+      }
     });
   });
 
