@@ -199,4 +199,5 @@
 #groups li{
   border-top: thick double #B1D9E5;
   border-bottom: thick double #B1D9E5;
+  cursor: pointer;
 }
