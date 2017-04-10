@@ -35,7 +35,6 @@ var init = function(app){
 
     /*TODO:As of now , user can add anyone to chat with. Change to friends only*/
     socket.on('add-user-group',function(info){
-      console.log(info);
       helper.findUsers(info.id,info.name,function(foundNames){
         socket.emit('add-user-group-response',foundNames);
       });
@@ -77,6 +76,12 @@ var init = function(app){
       helper.getChatHistory(data.userId,data.friendId,function(messages){
         socket.emit('get-chat-history-response',messages);
       });
+    });
+
+    /*User wants to create group chat*/
+    socket.on('create-group',function(data){
+      console.log('HELLO');
+      console.log(data);
     });
 
   });
