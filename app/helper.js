@@ -390,7 +390,9 @@ class Helper{
         throw err;
       }
       group.messages.push({'from':fromUser, 'message': message});
-      callback();
+      group.save(function(err){
+        callback();
+      });
     });
   }
 
