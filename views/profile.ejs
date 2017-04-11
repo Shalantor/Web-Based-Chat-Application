@@ -171,7 +171,13 @@
       var thisUser = <%- JSON.stringify(user._id) %>;
       var otherUser = $('.active_chat #friendId').text();
       var message = $('#message').val();
-      socket.emit('send-message',{ 'thisUser' : thisUser, 'otherUser' : otherUser, 'message' : message });
+      if (otherUser !== ''){
+        socket.emit('send-message',{ 'thisUser' : thisUser, 'otherUser' : otherUser, 'message' : message, 'isGroup' : false });
+      }
+      else{
+        var groupId = $('.active_chat .id').text();
+        socket.emit('send-message',{ 'thisUser' : thisUser, 'group' : groupId, 'message' : message, 'isGroup' : true });
+      }
       $('.chat_history').append('<li class="my_message"><p>' + message + '</p></li>');
       var log = $('.chat_window');
       log.animate({ scrollTop: log.prop('scrollHeight')}, 0);

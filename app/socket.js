@@ -61,14 +61,19 @@ var init = function(app){
 
     /*The user wants to send a message to another user*/
     socket.on('send-message',function(data){
-      helper.storeAndSendMessage(data.thisUser,data.otherUser,true,data.message,function(socketID){
-        helper.storeAndSendMessage(data.otherUser,data.thisUser,false,data.message,function(socketID){
-          /*Send back to verify that message was sent*/
-          socket.emit('send-message-response',null);
-          var sendData = {'fromId': data.thisUser, 'message': data.message};
-          io.to(socketID).emit('send-message-response', sendData);
+      if (data.isGroup === false){
+        helper.storeAndSendMessage(data.thisUser,data.otherUser,true,data.message,function(socketID){
+          helper.storeAndSendMessage(data.otherUser,data.thisUser,false,data.message,function(socketID){
+            /*Send back to verify that message was sent*/
+            socket.emit('send-message-response',null);
+            var sendData = {'fromId': data.thisUser, 'message': data.message};
+            io.to(socketID).emit('send-message-response', sendData);
+          });
         });
-      });
+      }
+      else{
+        console.log(data);
+      }
     });
 
     /*Get user chat history*/
