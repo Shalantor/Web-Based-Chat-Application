@@ -383,6 +383,32 @@ class Helper{
     });
   }
 
+  /*Store group message*/
+  storeAndSendGroupMessage(groupId,fromUser,message,callback){
+    this.Model.Groups.findOne({'_id' : groupId} , function(err,group){
+      if(err){
+        throw err;
+      }
+      group.messages.push({'from':fromUser, 'message': message});
+      callback();
+    });
+  }
+
+  /*Get users for specific group id, filter out user that sent the message*/
+  getUsers(userId,groupId,callback){
+    this.Model.Groups.findOne({'_id' : groupId} , function(err,group){
+      if(err){
+        throw err;
+      }
+      for(var i=0; i < group.users.length; i++){
+          if(group.users[i] === userId){
+            group.users.splice(i,1);
+            callback(group.users);
+          }
+      }
+    });
+  }
+
 }
 
 module.exports = new Helper();

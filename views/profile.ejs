@@ -187,12 +187,25 @@
     socket.on('send-message-response',function(data){
       /*Data is null for user that sent data*/
       /*Also if the user that send this message is not the selected one don't show text*/
-      var activeFriend = JSON.stringify($('.active_chat #friendId').text());
-      var fromUser = JSON.stringify(data.fromId);
-      if (data != null && activeFriend === fromUser){
-        $('.chat_history').append('<li class="other_message"><p>' + data.message + '</p></li>');
-        var log = $('.chat_window');
-        log.animate({ scrollTop: log.prop('scrollHeight')}, 0);
+      if (data.isGroup === false){
+        var activeFriend = JSON.stringify($('.active_chat #friendId').text());
+        var fromUser = JSON.stringify(data.fromId);
+        if (data != null && activeFriend === fromUser){
+          $('.chat_history').append('<li class="other_message"><p>' + data.message + '</p></li>');
+          var log = $('.chat_window');
+          log.animate({ scrollTop: log.prop('scrollHeight')}, 0);
+        }
+      }
+      else{
+        var userThatSent = JSON.stringify(data.userThatSent);
+        var groupId = JSON.stringify(data.group);
+        var thisUser = <%- JSON.stringify(user._id) %>;
+        var activeChat = JSON.stringify($('.active_chat .id').text());
+        if (userThatSent !== thisUser && activeChat !== ''){
+          $('.chat_history').append('<li class="other_message"><p>' + data.message + '</p></li>');
+          var log = $('.chat_window');
+          log.animate({ scrollTop: log.prop('scrollHeight')}, 0);
+        }
       }
     });
   });

@@ -66,13 +66,28 @@ var init = function(app){
           helper.storeAndSendMessage(data.otherUser,data.thisUser,false,data.message,function(socketID){
             /*Send back to verify that message was sent*/
             socket.emit('send-message-response',null);
-            var sendData = {'fromId': data.thisUser, 'message': data.message};
+            var sendData = {'fromId': data.thisUser, 'message': data.message, 'isGroup': false};
             io.to(socketID).emit('send-message-response', sendData);
           });
         });
       }
       else{
-        console.log(data);
+        helper.storeAndSendGroupMessage(data.group,data.thisUser,data.message,function(){
+          helper.getUsers(data.thisUser,data.group,function(users){
+            helper.getSocketIds(users,function(socketIDs){
+              socketIDs.forEach(function(element){
+                if(element !== ''){
+                  var dataToSend = {};
+                  dataToSend.fromId = data.group;
+                  dataToSend.message = data.message;
+                  dataToSend.isGroup = true;
+                  data.userThatSent = data.thisUser;
+                  io.to(element).emit('send-message-response', dataToSend);
+                }
+              });
+            });
+          });
+        });
       }
     });
 
