@@ -201,3 +201,19 @@
   border-bottom: thick double #B1D9E5;
   cursor: pointer;
 }
+
+.notif {
+  position: relative;
+  display: block;
+  height: 50px;
+  width: 50px;
+  text-decoration: none;
+}
+
+.num {
+  position: absolute;
+  right: 11px;
+  top: 6px;
+  color: white;
+  background: red;
+}
