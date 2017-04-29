@@ -411,6 +411,32 @@ class Helper{
     });
   }
 
+  /*Find friends with specific name to add to group chat*/
+  findFriends(userId,name,callback){
+    /*Search all 3 user types*/
+    this.Model.User.findOne({'_id' : userId} , function(err,user){
+
+      /*If there is any error, throw it */
+      if (err){
+        throw err;
+      }
+
+      /*Info to send back to client*/
+      var foundUsers = []
+
+      /*Check if users with that name is list*/
+      user.friends.forEach(function(element){
+        if(element.username === name){
+          foundUsers.push({'id':element.id,'name':element.username});
+        }
+      });
+
+      callback(foundUsers);
+
+    });
+
+  }
+
 }
 
 module.exports = new Helper();

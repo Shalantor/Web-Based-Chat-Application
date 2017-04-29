@@ -35,7 +35,7 @@ var init = function(app){
 
     /*TODO:As of now , user can add anyone to chat with. Change to friends only*/
     socket.on('add-user-group',function(info){
-      helper.findUsers(info.id,info.name,function(foundNames){
+      helper.findFriends(info.id,info.name,function(foundNames){
         socket.emit('add-user-group-response',foundNames);
       });
     });
