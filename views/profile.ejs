@@ -21,8 +21,15 @@
           </a>
         </div>
         <ul class="nav navbar-nav navbar-right">
-          <span class = "fa fa-bell navbar-brand notif"><span class="badge num">2</span></span>
-          <a href="/logout" class="btn btn-default navbar-btn" href="/logout">Logout</a>
+            <div class="dropdown">
+              <span class = "fa fa-bell navbar-brand notif navbar-right" ><span class="badge num">2</span></span>
+               <div class="dropdown-content">
+                 <a href="#">Link 1</a>
+                 <a href="#">Link 2</a>
+                 <a href="#">Link 3</a>
+               </div>
+            </div>
+          <a href="/logout" class="btn btn-default navbar-btn navbar-right" href="/logout">Logout</a>
         </ul>
       </div>
     </nav>
@@ -296,6 +303,20 @@
       $('#groups').append('<li><div class="group_item"><p class="name">' + ' ' + data.name + ' </p><p class="id">' + data.id +  '</p></div></li>');
     });
   });
+
+  /*Toggle dropdown menu*/
+  $(function (){
+    $('.notif').click(function(){
+      if ($('.dropdown-content').css('display') == 'block'){
+        $('.dropdown-content').css('display','none');
+      }
+      else{
+        $('.dropdown-content').css('display','block');
+      }
+    });
+    
+  });
+
 
 </script>
 
