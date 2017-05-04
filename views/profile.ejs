@@ -22,7 +22,7 @@
         </div>
         <ul class="nav navbar-nav navbar-right">
             <div class="dropdown">
-              <span class = "fa fa-bell navbar-brand notif navbar-right" ><span class="badge num">2</span></span>
+              <span class = "fa fa-bell navbar-brand notif navbar-right" ><span class="badge num">0</span></span>
                <ul class="dropdown-content">
                  <li><a href="#">No new notifications</a></li>
                </ul>
@@ -111,6 +111,8 @@
     var request_list = <%- JSON.stringify(user.friendRequests) %>;
     if (request_list.length > 0){
       $('.dropdown-content').empty();
+      $('.num').css('visibility','visible');
+      $('.num').text(JSON.stringify(request_list.length));
       $.each(request_list,function(key,request){
           $('.dropdown-content').append('<li><p>' + ' <div class="name_request">' + request.fromName + '</div> wants to add you to his friends list.' + ' </p><p class="id_request">' + request.fromId +  '</p><button class = "accept">Accept</button><button class="ignore">Ignore</button></li>');
       });
