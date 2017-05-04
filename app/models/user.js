@@ -40,6 +40,10 @@ var userSchema = mongoose.Schema({
   groups      : [{
     id        : String,
     name      : String
+  }],
+  friendRequests  : [{
+    fromId    : String,
+    fromName  : String
   }]
 });
 
