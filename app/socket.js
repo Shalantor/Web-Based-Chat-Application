@@ -24,6 +24,13 @@ var init = function(app){
       });
     });
 
+    /*Delete a friend request*/
+    socket.on('delete-request',function(data){
+      helper.deleteFriendRequest(data.user._id,data.otherUser,function(){
+        socket.emit('delete-request-response',null);
+      });
+    });
+
     /*User wants to send a friend request to another user*/
     socket.on('send-request',function(info){
       console.log('GOT REQUEST');
