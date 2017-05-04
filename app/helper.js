@@ -498,7 +498,7 @@ class Helper{
   }
 
   /*Function to delete a friend request, either because user accepted it or ignored it*/
-  deleteFriendRequest(thiUserId,fromUserId,callback){
+  deleteFriendRequest(thisUserId,fromUserId,callback){
 
     this.Model.User.findOne({'_id' : thisUserId} , function(err,user){
       /*If there is any error throw it*/
@@ -514,7 +514,15 @@ class Helper{
         }
       }
 
-      callback();
+      /*Store user back to database*/
+      user.save(function(err){
+        /*If there is any error throw it*/
+        if (err){
+          throw err;
+        }
+        callback();
+      });
+
     });
 
   }
