@@ -119,6 +119,23 @@
     }
   });
 
+  /*Listener for button to ignore a friend request*/
+  $(function () {
+    $('.dropdown-content').on('click','.ignore',function(){
+      var info = {};
+      info.thisUser = <%- JSON.stringify(user) %>;
+      info.otherUser = $(this).siblings('.id_request').text();
+      socket.emit('delete-request',{'user' : info.thisUser, 'otherUser' : info.otherUser});
+      $(this).closest('li').remove();
+      var value = parseInt($('.num').text());
+      $('.num').text(JSON.stringify(value - 1));
+      if (value === 1){
+        $('.num').css('visibility','hidden');
+        $('.dropdown-content').append('<li><p>No new notifications</p></li>');
+      }
+    });
+  });
+
   /*Listener for button to accept user as friend*/
   $(function () {
     $('.dropdown-content').on('click','.accept',function(){
