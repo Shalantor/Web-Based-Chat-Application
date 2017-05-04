@@ -23,11 +23,9 @@
         <ul class="nav navbar-nav navbar-right">
             <div class="dropdown">
               <span class = "fa fa-bell navbar-brand notif navbar-right" ><span class="badge num">2</span></span>
-               <div class="dropdown-content">
-                 <a href="#">Link 1</a>
-                 <a href="#">Link 2</a>
-                 <a href="#">Link 3</a>
-               </div>
+               <ul class="dropdown-content">
+                 <li><a href="#">No new notifications</a></li>
+               </ul>
             </div>
           <a href="/logout" class="btn btn-default navbar-btn navbar-right" href="/logout">Logout</a>
         </ul>
@@ -101,11 +99,36 @@
     /*Disable form if no friend selected to chat with*/
     $('.chatForm :input').prop('disabled', true);
     socket.emit('ehlo-response',<%- JSON.stringify(user) %>);
+    /*Show friends*/
     $.each(<%- JSON.stringify(user.friends) %>,function(key,friend){
         $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + friend.username + '<p id = friendId>' + friend.id +  '</p></div></li>');
     });
+    /*Show groups*/
     $.each(<%- JSON.stringify(user.groups) %>,function(key,group){
         $('#groups').append('<li><div class="group_item"><p class="name">' + ' ' + group.name + ' </p><p class="id">' + group.id +  '</p></div></li>');
+    });
+    /*Show friend requests*/
+    var request_list = <%- JSON.stringify(user.friendRequests) %>;
+    if (request_list.length > 0){
+      $('.dropdown-content').empty();
+      $.each(request_list,function(key,request){
+          $('.dropdown-content').append('<li><p>' + ' <div class="name_request">' + request.fromName + '</div> wants to add you to his friends list.' + ' </p><p class="id_request">' + request.fromId +  '</p><button class = "accept">Accept</button><button class="ignore">Ignore</button></li>');
+      });
+    }
+  });
+
+  /*Listener for button to accept user as friend*/
+  $(function () {
+    $('.dropdown-content').on('click','.accept',function(){
+      var info = {};
+      info.thisUser = <%- JSON.stringify(user) %>;
+      info.otherUser = $(this).siblings('.id_request').text();
+      info.otherUserName = $(this).siblings('.name_request').text();
+      socket.emit('add-user', info );
+      $(this).closest('li').remove();
+    });
+    socket.on('add-user-response',function(user){
+      $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + user.name + '<p id = friendId>' + user.id +  '</p></div></li>');
     });
   });
 
@@ -123,7 +146,7 @@
     });
   });
 
-  /*Send server a specific friend id to add*/
+  /*Send server a a request to add friend request*/
   $(function() {
     $('#users_found').on('click','.found_user_item button',function(){
       var info = {};
