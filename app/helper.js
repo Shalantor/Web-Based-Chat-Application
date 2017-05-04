@@ -497,6 +497,28 @@ class Helper{
     });
   }
 
+  /*Function to delete a friend request, either because user accepted it or ignored it*/
+  deleteFriendRequest(thiUserId,fromUserId,callback){
+
+    this.Model.User.findOne({'_id' : thisUserId} , function(err,user){
+      /*If there is any error throw it*/
+      if (err){
+        throw err;
+      }
+
+      /*Remove that particular friend request*/
+      for (var i=0; i < user.friendRequests.length; i++){
+        if (user.friendRequests[i].fromId == fromUserId){
+          user.friendRequests.splice(i,1);
+          break;
+        }
+      }
+
+      callback();
+    });
+
+  }
+
 }
 
 module.exports = new Helper();
