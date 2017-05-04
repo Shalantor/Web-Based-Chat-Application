@@ -456,17 +456,31 @@ class Helper{
         throw err;
       }
 
-      /*Add friend request to list*/
-      user.friendRequests.push({'fromId':fromUser._id,'fromName':fromUserName});
-
-      /*Store user back to database*/
-      user.save(function(err){
-        /*If there is any error throw it*/
-        if (err){
-          throw err;
+      /*Check if user already got a friend request from that particular user*/
+      var doesExist = false;
+      for (var i=0; i < user.friendRequests.length; i++){
+        if (user.friendRequests[i].fromId == fromUser._id){
+          doesExist = true;
+          break;
         }
-        callback(true);
-      });
+      }
+
+      if(doesExist){
+        callback(false);
+      }
+      else{
+        /*Add friend request to list*/
+        user.friendRequests.push({'fromId':fromUser._id,'fromName':fromUserName});
+
+        /*Store user back to database*/
+        user.save(function(err){
+          /*If there is any error throw it*/
+          if (err){
+            throw err;
+          }
+          callback(true);
+        });
+      }
 
     });
   }
