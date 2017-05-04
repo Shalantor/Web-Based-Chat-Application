@@ -24,6 +24,15 @@ var init = function(app){
       });
     });
 
+    /*User wants to send a friend request to another user*/
+    socket.on('send-request',function(info){
+      console.log('GOT REQUEST');
+      helper.sendFriendRequest(info.thisUser,info.otherUser,function(success){
+        data = {'success' : success};
+        socket.emit('send-request-response',data);
+      });
+    });
+
     /*User wants to add a friend*/
     socket.on('find-user',function(info){
       helper.findUsers(info.id,info.name,function(foundNames){
@@ -33,7 +42,6 @@ var init = function(app){
       });
     });
 
-    /*TODO:As of now , user can add anyone to chat with. Change to friends only*/
     socket.on('add-user-group',function(info){
       helper.findFriends(info.id,info.name,function(foundNames){
         socket.emit('add-user-group-response',foundNames);

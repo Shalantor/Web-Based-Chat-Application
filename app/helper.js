@@ -436,16 +436,28 @@ class Helper{
   }
 
   /*Send user a friend request from another user*/
-  sendFriendRequest(fromUserId,fromUserName,toUserId,callback){
+  sendFriendRequest(fromUser,toUserId,callback){
 
-    this.Model.User.findOne({'_id' : userId} , function(err,user){
+    var fromUserName;
+
+    if(fromUser.local){
+      fromUserName = fromUser.local.username;
+    }
+    else if(fromUser.facebook){
+      fromUserName = fromUser.facebook.name;
+    }
+    else if(fromUser.google){
+      fromUserName = fromUser.google.name;
+    }
+
+    this.Model.User.findOne({'_id' : toUserId} , function(err,user){
       /*If there is any error throw it*/
       if (err){
         throw err;
       }
 
       /*Add friend request to list*/
-      user.friendRequests.push({'fromId':fromUserId,'fromName':fromUserName});
+      user.friendRequests.push({'fromId':fromUser._id,'fromName':fromUserName});
 
       /*Store user back to database*/
       user.save(function(err){
@@ -453,8 +465,9 @@ class Helper{
         if (err){
           throw err;
         }
-        callback();
+        callback(true);
       });
+
     });
   }
 

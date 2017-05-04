@@ -118,7 +118,7 @@
     });
     socket.on('find-user-response', function(users){
       $.each(users,function(index,user){
-          $('#users_found').append('<li><div class="found_user_item"><span class="fa fa-user"></span><p class="name">' + user.name + '</p><button>Add</button><p class="id">' + user.id +  '</p></div></li>');
+          $('#users_found').append('<li><div class="found_user_item"><span class="fa fa-user"></span><p class="name">' + user.name + '</p><button>Send Friend Request</button><p class="id">' + user.id +  '</p></div></li>');
       });
     });
   });
@@ -129,12 +129,19 @@
       var info = {};
       info.otherUser =  $(this).siblings('.id').text();
       info.thisUser = <%- JSON.stringify(user) %>;
-      info.otherUserName = $(this).siblings('.name').text();
-      socket.emit('add-user', info );
+      socket.emit('send-request', info );
       $('#users_found').empty();
     });
-    socket.on('add-user-response',function(user){
-      $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + user.name + '<p id = friendId>' + user.id +  '</p></div></li>');
+    socket.on('send-request-response',function(data){
+      if (data.success === true){
+      //$('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + user.name + '<p id = friendId>' + user.id +  '</p></div></li>');
+        $('#users_found').append('<li class="request_status"><p>Friend request sent</p></li>');
+        $('.request_status').fadeOut(2000, function() { $('.request_status').remove(); });
+      }
+      else{
+        $('#users_found').append('<li class="request_status"><p>You already sent that user a friend request</p></li>');
+        $('.request_status').fadeOut(2000, function() { $('.request_status').remove(); });
+      }
     });
   });
 
@@ -314,7 +321,7 @@
         $('.dropdown-content').css('display','block');
       }
     });
-    
+
   });
 
 
