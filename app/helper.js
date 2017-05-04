@@ -432,9 +432,30 @@ class Helper{
       });
 
       callback(foundUsers);
-
     });
+  }
 
+  /*Send user a friend request from another user*/
+  sendFriendRequest(fromUserId,fromUserName,toUserId,callback){
+
+    this.Model.User.findOne({'_id' : userId} , function(err,user){
+      /*If there is any error throw it*/
+      if (err){
+        throw err;
+      }
+
+      /*Add friend request to list*/
+      user.friendRequests.push({'fromId':fromUserId,'fromName':fromUserName});
+
+      /*Store user back to database*/
+      user.save(function(err){
+        /*If there is any error throw it*/
+        if (err){
+          throw err;
+        }
+        callback();
+      });
+    });
   }
 
 }
