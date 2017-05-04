@@ -24,7 +24,7 @@
             <div class="dropdown">
               <span class = "fa fa-bell navbar-brand notif navbar-right" ><span class="badge num">0</span></span>
                <ul class="dropdown-content">
-                 <li><a href="#">No new notifications</a></li>
+                 <li><p>No new notifications</p></li>
                </ul>
             </div>
           <a href="/logout" class="btn btn-default navbar-btn navbar-right" href="/logout">Logout</a>
@@ -127,14 +127,21 @@
       info.otherUser = $(this).siblings('.id_request').text();
       info.otherUserName = $(this).siblings('.name_request').text();
       socket.emit('add-user', info );
+      socket.emit('delete-request',{'user' : info.thisUser, 'otherUser' : info.otherUser});
       $(this).closest('li').remove();
+      var value = parseInt($('.num').text());
+      $('.num').text(JSON.stringify(value - 1));
+      if (value === 1){
+        $('.num').css('visibility','hidden');
+        $('.dropdown-content').append('<li><p>No new notifications</p></li>');
+      }
     });
     socket.on('add-user-response',function(user){
       $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + user.name + '<p id = friendId>' + user.id +  '</p></div></li>');
     });
   });
 
-  /*Function to send server request for a friend*/
+  /*Function to send server request to find a user*/
   $(function () {
     $('.findUserForm form').submit(function(){
       socket.emit('find-user', { 'id': <%- JSON.stringify(user._id) %> , 'name': $('#search').val() });
@@ -148,7 +155,7 @@
     });
   });
 
-  /*Send server a a request to add friend request*/
+  /*Send server a request to add friend request*/
   $(function() {
     $('#users_found').on('click','.found_user_item button',function(){
       var info = {};
