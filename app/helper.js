@@ -466,11 +466,23 @@ class Helper{
       }
 
       if(doesExist){
-        callback(false);
+        callback(false,null);
       }
       else{
         /*Add friend request to list*/
         user.friendRequests.push({'fromId':fromUser._id,'fromName':fromUserName});
+
+        /*Get socket Id*/
+        var socketID;
+        if(user.local.username){
+          socketID = user.local.socketID;
+        }
+        else if(user.facebook.id){
+          socketID = user.facebook.socketID;
+        }
+        else if(user.google.id){
+          socketID = user.google.socketID;
+        }
 
         /*Store user back to database*/
         user.save(function(err){
@@ -478,7 +490,7 @@ class Helper{
           if (err){
             throw err;
           }
-          callback(true);
+          callback(true,socketID);
         });
       }
 

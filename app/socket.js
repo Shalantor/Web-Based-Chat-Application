@@ -27,9 +27,26 @@ var init = function(app){
     /*User wants to send a friend request to another user*/
     socket.on('send-request',function(info){
       console.log('GOT REQUEST');
-      helper.sendFriendRequest(info.thisUser,info.otherUser,function(success){
-        data = {'success' : success};
+      helper.sendFriendRequest(info.thisUser,info.otherUser,function(success,socketID){
+        var data = {'success' : success, 'isMine': true};
         socket.emit('send-request-response',data);
+
+        /*Must create array because of how function works*/
+        if (success === true){
+          var name;
+          if (info.thisUser.local){
+            name = info.thisUser.local.username;
+          }
+          else if(info.thisUser.facebook){
+            name = info.thisUser.facebook.name;
+          }
+          else if(info.thisUser.google){
+            name = info.thisUser.google.name;
+          }
+          console.log('Sending to socketId ' + socketID);
+          var otherData = {'isMine' : false, 'fromId': info.thisUser._id, 'fromName': name};
+          io.to(socketID).emit('send-request-response', otherData);
+        }
       });
     });
 
@@ -55,7 +72,6 @@ var init = function(app){
     /*The user wants to search for another user based on the name he typed
     So search the database for the name and return the users that were found*/
     socket.on('add-user', function(info){
-      console.log('GOT ADD USER');
       helper.addFriends(info.thisUser,info.otherUser,info.otherUserName,function(thisUserName,thisUserID,socketID){
         /*Inform client that everything went alright*/
         var data = {'id':info.otherUser, 'name' : info.otherUserName};
