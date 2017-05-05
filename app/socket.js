@@ -170,6 +170,22 @@ var init = function(app){
       });
     });
 
+    /*user wants to leave a group conversation*/
+    socket.on('leave-group',function(data){
+      helper.leaveGroup(data.userId,data.groupId,function(users){
+        helper.getSocketIds(users,function(socketIDs){
+          socketIDs.forEach(function(element){
+            if(element !== ''){
+              var dataToSend = {};
+              dataToSend.groupId= data.groupId;
+              data.userThatLeft = data.userId;
+              io.to(element).emit('leave-group-response', dataToSend);
+            }
+          });
+        });
+      });
+    });
+
   });
 
   return server;
