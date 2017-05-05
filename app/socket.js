@@ -160,6 +160,16 @@ var init = function(app){
       });
     });
 
+    /*User wants to delete friend*/
+    socket.on('delete-friend',function(data){
+      helper.deleteFriend(info.userId,info.friendId,function(socketID){
+        socket.emit('delete-friend-response',info.userId);
+        helper.deleteFriend(info.friendId,info.userId,function(socketID){
+          io.to(socketID).emit('delete-friend-response',info.userId);
+        });
+      });
+    });
+
   });
 
   return server;

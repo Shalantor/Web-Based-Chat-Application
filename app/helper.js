@@ -514,6 +514,48 @@ class Helper{
         }
       }
 
+      /*Get socket Id*/
+      var socketID;
+      if(user.local.username){
+        socketID = user.local.socketID;
+      }
+      else if(user.facebook.id){
+        socketID = user.facebook.socketID;
+      }
+      else if(user.google.id){
+        socketID = user.google.socketID;
+      }
+
+      /*Store user back to database*/
+      user.save(function(err){
+        /*If there is any error throw it*/
+        if (err){
+          throw err;
+        }
+        callback(socketID);
+      });
+
+    });
+
+  }
+
+  /*Delete user from friend list*/
+  deleteFriend(userId,friendId,callback){
+
+    this.Model.User.findOne({'_id' : thisUserId} , function(err,user){
+      /*If there is any error throw it*/
+      if (err){
+        throw err;
+      }
+
+      /*Remove that particular friend*/
+      for (var i=0; i < user.friends.length; i++){
+        if (user.friends[i].fromId == friendId){
+          user.friends.splice(i,1);
+          break;
+        }
+      }
+
       /*Store user back to database*/
       user.save(function(err){
         /*If there is any error throw it*/
@@ -524,7 +566,6 @@ class Helper{
       });
 
     });
-
   }
 
 }
