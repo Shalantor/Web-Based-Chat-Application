@@ -514,25 +514,13 @@ class Helper{
         }
       }
 
-      /*Get socket Id*/
-      var socketID;
-      if(user.local.username){
-        socketID = user.local.socketID;
-      }
-      else if(user.facebook.id){
-        socketID = user.facebook.socketID;
-      }
-      else if(user.google.id){
-        socketID = user.google.socketID;
-      }
-
       /*Store user back to database*/
       user.save(function(err){
         /*If there is any error throw it*/
         if (err){
           throw err;
         }
-        callback(socketID);
+        callback();
       });
 
     });
@@ -556,16 +544,33 @@ class Helper{
         }
       }
 
+      /*Get socket Id*/
+      var socketID;
+      if(user.local.username){
+        socketID = user.local.socketID;
+      }
+      else if(user.facebook.id){
+        socketID = user.facebook.socketID;
+      }
+      else if(user.google.id){
+        socketID = user.google.socketID;
+      }
+
       /*Store user back to database*/
       user.save(function(err){
         /*If there is any error throw it*/
         if (err){
           throw err;
         }
-        callback();
+        callback(socketID);
       });
 
     });
+  }
+
+  /*User wants to leave a group conversation*/
+  leaveGroup(userId,groupId,callback){
+
   }
 
 }
