@@ -538,7 +538,7 @@ class Helper{
 
       /*Remove that particular friend*/
       for (var i=0; i < user.friends.length; i++){
-        if (user.friends[i].fromId == friendId){
+        if (user.friends[i].id == friendId){
           user.friends.splice(i,1);
           break;
         }
@@ -570,6 +570,58 @@ class Helper{
 
   /*User wants to leave a group conversation*/
   leaveGroup(userId,groupId,callback){
+
+    var groupModel = this.Model.Groups;
+
+    this.Model.User.findOne({'_id' : thisUserId} , function(err,user){
+      /*If there is any error throw it*/
+      if (err){
+        throw err;
+      }
+
+      /*Remove that particular group from list of groups*/
+      for (var i=0; i < user.groups.length; i++){
+        if (user.groups[i].id == groupId){
+          user.groups.splice(i,1);
+          break;
+        }
+      }
+
+      /*Store user back to database*/
+      user.save(function(err){
+        /*If there is any error throw it*/
+        if (err){
+          throw err;
+        }
+
+        /*Delete user from groups*/
+        groupModel.findOne({'_id' : groupId},function(err,group){
+          /*If there is any error throw it*/
+          if (err){
+            throw err;
+          }
+
+          /*Remove that particular user from list of groups*/
+          for (var i=0; i < group.users.length; i++){
+            if (group.users[i] == userId){
+              group.users.splice(i,1);
+              break;
+            }
+          }
+
+          /*Store group back to database*/
+          group.save(function(err){
+            /*If there is any error throw it*/
+            if (err){
+              throw err;
+            }
+            callback(group.users);
+          });
+
+        });
+      });
+
+    });
 
   }
 
