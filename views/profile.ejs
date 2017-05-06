@@ -246,10 +246,11 @@
       data.isGroup = false;
       socket.emit('get-chat-history',data);
     });
-    $('#groups').on('click','li',function(){
+    $('#groups').on('click','li .group_item',function(){
+      var parent_li = $(this).closest('li');
       $('.chatForm :input').prop('disabled', false);
       $('.active_chat').removeClass('active_chat');
-      $(this).addClass('active_chat');
+      parent_li.addClass('active_chat');
       $('.chat_history').empty();
       var data = {};
       data.isGroup = true;
@@ -416,6 +417,20 @@
   $(function (){
     $('#friends').on('click','.delete_friend_icon',function(){
       var clicked_item = $(this).siblings('.dropdown-content_delete_friend');
+      if (clicked_item .css('display') == 'block'){
+        clicked_item .css('display','none');
+      }
+      else{
+        clicked_item .css('display','block');
+      }
+    });
+
+  });
+
+  /*Toggle dropdown menu in delete friend list item*/
+  $(function (){
+    $('#groups').on('click','.leave-group_icon',function(){
+      var clicked_item = $(this).siblings('.dropdown-content_leave_group');
       if (clicked_item .css('display') == 'block'){
         clicked_item .css('display','none');
       }
