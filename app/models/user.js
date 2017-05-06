@@ -49,7 +49,10 @@ var userSchema = mongoose.Schema({
 
 var groupSchema = mongoose.Schema({
   name      : String,
-  users     : [String],
+  users     : [{
+    id      : String,
+    name    : String
+  }],
   messages  : [{
     from    : String,
     message : String
