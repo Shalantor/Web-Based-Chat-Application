@@ -6,6 +6,7 @@
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="/css/chat.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 
 <body>
@@ -101,7 +102,7 @@
     socket.emit('ehlo-response',<%- JSON.stringify(user) %>);
     /*Show friends*/
     $.each(<%- JSON.stringify(user.friends) %>,function(key,friend){
-        $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + friend.username + '<p id = friendId>' + friend.id +  '</p></div></li>');
+        $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + friend.username + '<span class="fa fa-close"></span><p id = friendId>' + friend.id +  '</p></div></li>');
     });
     /*Show groups*/
     $.each(<%- JSON.stringify(user.groups) %>,function(key,group){
