@@ -113,7 +113,14 @@
     });
     /*Show groups*/
     $.each(<%- JSON.stringify(user.groups) %>,function(key,group){
-        $('#groups').append('<li><div class="group_item"><p class="name">' + ' ' + group.name + ' </p><p class="id">' + group.id +  '</p></div></li>');
+        $('#groups').append('<li><div class="group_item"><p class="name">' + ' ' + group.name + ' </p></div>\
+        <div class="dropdown_leave_group">\
+          <span class="fa fa-close leave-group_icon"></span>\
+           <ul class="dropdown-content_leave_group">\
+             <li><p>Leave group?</p></li>\
+             <li><button>Yes</button></li>\
+           </ul>\
+        </div><p class="id">' + group.id +  '</p></li>');
     });
     /*Show friend requests*/
     var request_list = <%- JSON.stringify(user.friendRequests) %>;
