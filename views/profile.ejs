@@ -102,12 +102,12 @@
     socket.emit('ehlo-response',<%- JSON.stringify(user) %>);
     /*Show friends*/
     $.each(<%- JSON.stringify(user.friends) %>,function(key,friend){
-        $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + friend.username + '</div>\
+        $('#friends').append('<li class="friend_list_item"><div class="friend"><span class="fa fa-user"></span>' + ' ' + friend.username + '</div>\
         <div class="dropdown_delete_friend">\
           <span class="fa fa-close delete_friend_icon"></span>\
            <ul class="dropdown-content_delete_friend">\
              <li><p>Delete friend?</p></li>\
-             <li><button>Yes</button></li>\
+             <li><button  class="delete_friend_button">Yes</button></li>\
            </ul>\
         </div><p id = friendId>' + friend.id +  '</p></li>');
     });
@@ -174,7 +174,14 @@
       }
     });
     socket.on('add-user-response',function(user){
-      $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + user.name + '<p id = friendId>' + user.id +  '</p></div></li>');
+      $('#friends').append('<li class="friend_list_item"><div class="friend"><span class="fa fa-user"></span>' + ' ' + user.name + '</div>\
+      <div class="dropdown_delete_friend">\
+        <span class="fa fa-close delete_friend_icon"></span>\
+         <ul class="dropdown-content_delete_friend">\
+           <li><p>Delete friend?</p></li>\
+           <li><button  class="delete_friend_button">Yes</button></li>\
+         </ul>\
+      </div><p id = friendId>' + user.id +  '</p></li>');
     });
     socket.on('delete-request-response',function(data){
       item_to_remove.remove();
@@ -437,6 +444,30 @@
       else{
         clicked_item .css('display','block');
       }
+    });
+
+  });
+
+  /*Listener for button to delete a friend*/
+  $(function (){
+    $('#friends').on('click','.delete_friend_button',function(){
+      var list_item = $(this).closest('.friend_list_item');
+      data = {};
+      data.userId = <%- JSON.stringify(user._id) %>;
+      data.friendId = list_item.find('#friendId').text();
+      socket.emit('delete-friend',data);
+    });
+    socket.on('delete-friend-response',function(data){
+      $('#friends').each(function(index){
+        console.log(data);
+        if (data == $(this).find('#friendId').text()){
+          if ($(this).hasClass('.active_chat')){
+            $('.chatForm :input').prop('disabled', true);
+            $('.chat_history').empty();
+          }
+          $(this).remove();
+        }
+      });
     });
 
   });
