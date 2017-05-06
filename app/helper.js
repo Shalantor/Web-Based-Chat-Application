@@ -304,20 +304,46 @@ class Helper{
   }
 
   /*Add group to database*/
-  createGroup(groupName,groupMembers,callback){
+  createGroup(groupName,users,callback){
 
-    /*Create new group*/
-    var group = new this.Model.Groups({
-      name : groupName,
-      users : groupMembers,
-      messages : []
-    });
+    var groupMembers = [];
+    var userModel = this.Model.User;
+    var groupModel = this.Model.Groups;
 
-    group.save(function(err,newGroup){
-      if(err){
-        throw err;
-      }
-      callback(newGroup._id);
+    /*Find out usernames of users*/
+    var counter = 0;
+    users.forEach(function(element){
+      userModel.findOne({'_id' : element},function(err,user){
+        if(err){
+          throw err;
+        }
+
+        if(user.local.username){
+          groupMembers.push({'id': element,'name':user.local.username});
+        }
+        else if(user.facebook.id){
+          groupMembers.push({'id': element,'name':user.facebook.name});
+        }
+        else if(user.google.id){
+          groupMembers.push({'id': element,'name':user.google.name});
+        }
+        counter ++;
+        if (counter == users.length){
+          /*Create new group*/
+          var group = new groupModel({
+            name : groupName,
+            users : groupMembers,
+            messages : []
+          });
+
+          group.save(function(err,newGroup){
+            if(err){
+              throw err;
+            }
+            callback(newGroup._id);
+          });
+        }
+      });
     });
   }
 
