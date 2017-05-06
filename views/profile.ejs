@@ -102,7 +102,14 @@
     socket.emit('ehlo-response',<%- JSON.stringify(user) %>);
     /*Show friends*/
     $.each(<%- JSON.stringify(user.friends) %>,function(key,friend){
-        $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + friend.username + '<span class="fa fa-close"></span><p id = friendId>' + friend.id +  '</p></div></li>');
+        $('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + friend.username + '</div>\
+        <div class="dropdown_delete_friend">\
+          <span class="fa fa-close delete_friend_icon"></span>\
+           <ul class="dropdown-content_delete_friend">\
+             <li><p>Delete friend?</p></li>\
+             <li><button>Yes</button></li>\
+           </ul>\
+        </div><p id = friendId>' + friend.id +  '</p></li>');
     });
     /*Show groups*/
     $.each(<%- JSON.stringify(user.groups) %>,function(key,group){
@@ -220,10 +227,11 @@
 
   /*Make the clicked group or friend the active one the user is chatting with and also show chat history*/
   $(function(){
-    $('#friends').on('click','li',function(){
+    $('#friends').on('click','li .friend',function(){
+      var parent_li = $(this).closest('li');
       $('.chatForm :input').prop('disabled', false);
       $('.active_chat').removeClass('active_chat');
-      $(this).addClass('active_chat');
+      parent_li.addClass('active_chat');
       $('.chat_history').empty();
       var data = {};
       data.userId = <%- JSON.stringify(user._id) %>;
@@ -384,7 +392,7 @@
     });
   });
 
-  /*Toggle dropdown menu*/
+  /*Toggle dropdown menu in navigation bar*/
   $(function (){
     $('.notif').click(function(){
       if ($('.dropdown-content').css('display') == 'block'){
@@ -392,6 +400,20 @@
       }
       else{
         $('.dropdown-content').css('display','block');
+      }
+    });
+
+  });
+
+  /*Toggle dropdown menu in delete friend list item*/
+  $(function (){
+    $('#friends').on('click','.delete_friend_icon',function(){
+      var clicked_item = $(this).siblings('.dropdown-content_delete_friend');
+      if (clicked_item .css('display') == 'block'){
+        clicked_item .css('display','none');
+      }
+      else{
+        clicked_item .css('display','block');
       }
     });
 
