@@ -172,6 +172,7 @@ var init = function(app){
 
     /*user wants to leave a group conversation*/
     socket.on('leave-group',function(data){
+      console.log(data);
       helper.leaveGroup(data.userId,data.groupId,function(users){
         helper.getSocketIds(users,function(socketIDs){
           socketIDs.forEach(function(element){

@@ -113,12 +113,12 @@
     });
     /*Show groups*/
     $.each(<%- JSON.stringify(user.groups) %>,function(key,group){
-        $('#groups').append('<li><div class="group_item"><p class="name">' + ' ' + group.name + ' </p></div>\
+        $('#groups').append('<li class="group_list_item"><div class="group_item"><p class="name">' + ' ' + group.name + ' </p></div>\
         <div class="dropdown_leave_group">\
           <span class="fa fa-close leave-group_icon"></span>\
            <ul class="dropdown-content_leave_group">\
              <li><p>Leave group?</p></li>\
-             <li><button>Yes</button></li>\
+             <li><button class="leave_group_button">Yes</button></li>\
            </ul>\
         </div><p class="id">' + group.id +  '</p></li>');
     });
@@ -389,7 +389,14 @@
       }
     });
     socket.on('create-group-response', function(data){
-      $('#groups').append('<li><div class="group_item"><p class="name">' + ' ' + data.name + ' </p><p class="id">' + data.id +  '</p></div></li>');
+      $('#groups').append('<li class="group_list_item"><div class="group_item"><p class="name">' + ' ' + data.name + ' </p></div>\
+      <div class="dropdown_leave_group">\
+        <span class="fa fa-close leave-group_icon"></span>\
+         <ul class="dropdown-content_leave_group">\
+           <li><p>Leave group?</p></li>\
+           <li><button class="leave_group_button">Yes</button></li>\
+         </ul>\
+      </div><p class="id">' + data.id +  '</p></li>');
     });
   });
 
@@ -465,6 +472,17 @@
       }
     });
 
+  });
+
+  /*Listener for button to leave group chat*/
+  $(function (){
+    $('#groups').on('click','.leave_group_button',function(){
+      var list_item = $(this).closest('.group_list_item');
+      data = {};
+      data.userId = <%- JSON.stringify(user._id) %>;
+      data.groupId = list_item.find('.id').text();
+      socket.emit('leave-group',data);
+    });
   });
 
 

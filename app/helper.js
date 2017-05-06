@@ -376,6 +376,7 @@ class Helper{
     var model = this.Model.User;
 
     userIds.forEach(function(element,index){
+      console.log('ELEMENT IS ' + element);
       model.findOne({'_id' : element} , function(err,user){
           if(err){
             throw err;
@@ -599,7 +600,7 @@ class Helper{
 
     var groupModel = this.Model.Groups;
 
-    this.Model.User.findOne({'_id' : thisUserId} , function(err,user){
+    this.Model.User.findOne({'_id' : userId} , function(err,user){
       /*If there is any error throw it*/
       if (err){
         throw err;
@@ -609,7 +610,6 @@ class Helper{
       for (var i=0; i < user.groups.length; i++){
         if (user.groups[i].id == groupId){
           user.groups.splice(i,1);
-          break;
         }
       }
 
@@ -627,11 +627,14 @@ class Helper{
             throw err;
           }
 
+          var returnData = [];
           /*Remove that particular user from list of groups*/
           for (var i=0; i < group.users.length; i++){
-            if (group.users[i] == userId){
+            if (group.users[i].id == userId){
               group.users.splice(i,1);
-              break;
+            }
+            else{
+              returnData.push(group.users[i].id);
             }
           }
 
@@ -641,7 +644,7 @@ class Helper{
             if (err){
               throw err;
             }
-            callback(group.users);
+            callback(returnData);
           });
 
         });
