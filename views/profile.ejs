@@ -136,16 +136,12 @@
 
   /*Listener for button to ignore a friend request*/
   $(function () {
-    var list_item ;
     $('.dropdown-content').on('click','.ignore',function(){
       var info = {};
       info.thisUser = <%- JSON.stringify(user) %>;
       info.otherUser = $(this).siblings('.id_request').text();
       socket.emit('delete-request',{'user' : info.thisUser, 'otherUser' : info.otherUser});
-      list_item = $(this).closest('li');
-    });
-    socket.on('delete-request-response',function(data){
-      list_item.remove();
+      $(this).closest('li').remove();
       var value = parseInt($('.num').text());
       $('.num').text(JSON.stringify(value - 1));
       if (value === 1){
@@ -157,7 +153,6 @@
 
   /*Listener for button to accept user as friend*/
   $(function () {
-    var item_to_remove;
     $('.dropdown-content').on('click','.accept',function(){
       var info = {};
       info.thisUser = <%- JSON.stringify(user) %>;
@@ -165,7 +160,7 @@
       info.otherUserName = $(this).siblings('.name_request').text();
       socket.emit('add-user', info );
       socket.emit('delete-request',{'user' : info.thisUser, 'otherUser' : info.otherUser});
-      item_to_remove = $(this).closest('li');
+      $(this).closest('li').remove();
       var value = parseInt($('.num').text());
       $('.num').text(JSON.stringify(value - 1));
       if (value === 1){
@@ -182,15 +177,6 @@
            <li><button  class="delete_friend_button">Yes</button></li>\
          </ul>\
       </div><p id = friendId>' + user.id +  '</p></li>');
-    });
-    socket.on('delete-request-response',function(data){
-      item_to_remove.remove();
-      var value = parseInt($('.num').text());
-      $('.num').text(JSON.stringify(value - 1));
-      if (value === 1){
-        $('.num').css('visibility','hidden');
-        $('.dropdown-content').append('<li><p>No new notifications</p></li>');
-      }
     });
   });
 
@@ -467,7 +453,7 @@
         list_item.remove();
       }
       else{
-        $('#friends').each(function(index){
+        $('#friends li').each(function(index){
           if (data.id === $(this).find('#friendId').text()){
             if ($(this).hasClass('.active_chat')){
               $('.chatForm :input').prop('disabled', true);
