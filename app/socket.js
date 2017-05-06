@@ -161,11 +161,11 @@ var init = function(app){
     });
 
     /*User wants to delete friend*/
-    socket.on('delete-friend',function(data){
+    socket.on('delete-friend',function(info){
       helper.deleteFriend(info.userId,info.friendId,function(socketID){
-        socket.emit('delete-friend-response',info.userId);
+        socket.emit('delete-friend-response',{'id':info.friendId,'isMine':true});
         helper.deleteFriend(info.friendId,info.userId,function(socketID){
-          io.to(socketID).emit('delete-friend-response',info.userId);
+          io.to(socketID).emit('delete-friend-response',{'id':info.userId,'isMine':false});
         });
       });
     });

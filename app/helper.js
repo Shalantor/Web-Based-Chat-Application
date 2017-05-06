@@ -530,7 +530,7 @@ class Helper{
   /*Delete user from friend list*/
   deleteFriend(userId,friendId,callback){
 
-    this.Model.User.findOne({'_id' : thisUserId} , function(err,user){
+    this.Model.User.findOne({'_id' : userId} , function(err,user){
       /*If there is any error throw it*/
       if (err){
         throw err;
