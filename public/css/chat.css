@@ -214,8 +214,8 @@
 
 .num {
   position: absolute;
-  right: 11px;
-  top: 6px;
+  right: 3px;
+  top: 3px;
   color: white;
   background: red;
   visibility: hidden;
@@ -327,4 +327,8 @@ li .group_item{
 
 .navbar-brand img{
   height: 35px;
+}
+
+.fa-2x{
+  font-size:1em;
 }
