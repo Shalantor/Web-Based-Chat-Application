@@ -332,3 +332,8 @@ li .group_item{
 .fa-2x{
   font-size:1em;
 }
+
+.user_image{
+  height:35px;
+  width:35px;
+}

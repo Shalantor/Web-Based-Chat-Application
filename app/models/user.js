@@ -46,7 +46,8 @@ var userSchema = mongoose.Schema({
   friendRequests  : [{
     fromId    : String,
     fromName  : String
-  }]
+  }],
+  type        : String
 });
 
 var groupSchema = mongoose.Schema({

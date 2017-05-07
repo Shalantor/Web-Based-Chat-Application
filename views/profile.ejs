@@ -111,7 +111,7 @@
     socket.emit('ehlo-response',<%- JSON.stringify(user) %>);
     /*Show friends*/
     $.each(<%- JSON.stringify(user.friends) %>,function(key,friend){
-        $('#friends').append('<li class="friend_list_item"><div class="friend"><span class="fa fa-user"></span>' + ' ' + friend.username + '</div>\
+        $('#friends').append('<li class="friend_list_item"><div class="friend"><img class="user_image" src="img/user.jpg">' + ' ' + friend.username + '</div>\
         <div class="dropdown_delete_friend">\
           <span class="fa fa-close delete_friend_icon"></span>\
            <ul class="dropdown-content_delete_friend">\
