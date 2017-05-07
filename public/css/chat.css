@@ -324,3 +324,7 @@ li .group_item{
 .first_names{
   display: inline-block;
 }
+
+.navbar-brand img{
+  height: 35px;
+}
