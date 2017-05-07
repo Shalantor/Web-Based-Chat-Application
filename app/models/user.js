@@ -20,6 +20,7 @@ var userSchema = mongoose.Schema({
     name        : String,
     online      : String,
     socketID    : String,
+    img         : Buffer
   },
   google        : {
     id          : String,

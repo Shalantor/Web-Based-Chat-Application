@@ -176,7 +176,7 @@ module.exports = function(passport){
     clientID  : configAuth.facebookAuth.clientID,
     clientSecret : configAuth.facebookAuth.clientSecret,
     callbackURL : configAuth.facebookAuth.callbackURL,
-    profileFields: ['name', 'emails']
+    profileFields: ['name', 'emails' , 'photos']
   },
   /*Facebook sends back token and profile of user*/
   function(token, refreshToken, profile, done) {
@@ -215,6 +215,7 @@ module.exports = function(passport){
           newUser.facebook.online = "Y";
           newUser.facebook.socketID = "";
           newUser.facebook.friends = [];
+          newUser.facebook.img = profile.photos[0].value;
 
           /*Save user to database*/
           newUser.save(function(err) {
