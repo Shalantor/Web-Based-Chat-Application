@@ -377,7 +377,7 @@ class Helper{
 
     userIds.forEach(function(element,index){
       console.log('ELEMENT IS ' + element);
-      model.findOne({'_id' : element} , function(err,user){
+      model.findOne({'_id' : element.id} , function(err,user){
           if(err){
             throw err;
           }
@@ -430,7 +430,8 @@ class Helper{
         throw err;
       }
       for(var i=0; i < group.users.length; i++){
-          if(group.users[i] === userId){
+        console.log(group.users[i].id );
+          if(group.users[i].id === userId){
             group.users.splice(i,1);
             callback(group.users);
           }
