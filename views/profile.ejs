@@ -51,6 +51,8 @@
 
 
     <div class = "middle">
+      <div class="chat_name"><p>Test text</p></div>
+
       <div class="chat_window">
         <ul class="chat_history">
         <ul/>
@@ -233,6 +235,7 @@
       $('.active_chat').removeClass('active_chat');
       parent_li.addClass('active_chat');
       $('.chat_history').empty();
+      $('.chat_name p').text($(this).text());
       var data = {};
       data.userId = <%- JSON.stringify(user._id) %>;
       data.friendId = $('.active_chat #friendId').text();

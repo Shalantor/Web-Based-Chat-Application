@@ -34,7 +34,7 @@
 
 .chat_window{
   overflow-y: scroll;
-  height : 95%;
+  height : 90%;
   z-index: 0;
 }
 
@@ -43,6 +43,7 @@
   bottom : 0;
   background : blue;
   width : 100%;
+  height: 5%;
 }
 
 .chatForm form{
@@ -289,4 +290,13 @@ li .friend{
 
 li .group_item{
   display: inline-block;
+}
+
+.chat_name{
+  background: blue;
+  position : relative;
+  display: block;
+  width : 100%;
+  height: 5%;
+  color: white;
 }
