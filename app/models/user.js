@@ -29,6 +29,7 @@ var userSchema = mongoose.Schema({
     name        : String,
     online      : String,
     socketID    : String,
+    img         : Buffer
   },
   friends     : [{
     id        : String,

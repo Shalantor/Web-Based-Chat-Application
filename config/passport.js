@@ -277,6 +277,8 @@ module.exports = function(passport){
           newUser.google.online = "Y";
           newUser.google.socketID = "";
           newUser.google.friends = [];
+          console.log(profile._json);
+          newUser.google.img = profile._json.image.url;
 
           /*Store user in database*/
           newUser.save(function(err) {
