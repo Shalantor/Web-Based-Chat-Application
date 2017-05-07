@@ -252,7 +252,18 @@
       data.isGroup = true;
       data.groupId = $('.active_chat .id').text();
       socket.emit('get-chat-history',data);
+      socket.emit('get-group-members',{'groupId' : data.groupId});
     });
+    /*socket.on('get-group-members-response',function(members){
+      if (members.length <= 3){
+        var chat_name = '';
+        /*TODO: filter out my username
+        $.each(members,function(index,member){
+          chat_name = chat_name + member + ', ';
+        });
+        $('.chat_name p').text(chat_name);
+      }
+    });*/
     socket.on('get-chat-history-response',function(messages){
       $.each(messages,function(index,info){
         if (info.from == 'me'){
