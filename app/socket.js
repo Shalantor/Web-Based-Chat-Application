@@ -187,6 +187,13 @@ var init = function(app){
       });
     });
 
+    /*Request for members of a group*/
+    socket.on('get-group-members',function(data){
+      helper.getGroupMembers(data.groupId,function(usernames){
+        socket.emit('get-group-members-response',usernames);
+      });
+    });
+
   });
 
   return server;

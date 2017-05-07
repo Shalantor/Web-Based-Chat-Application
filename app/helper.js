@@ -654,6 +654,25 @@ class Helper{
 
   }
 
+  /*Get group members (their names)*/
+  getGroupMembers(groupId,callback){
+    this.Model.Groups.findOne({'_id' : groupId} , function(err,group){
+      /*If there is any error throw it*/
+      if (err){
+        throw err;
+      }
+
+      /*Create array with names of group members to return*/
+      var groupMembers = [];
+      for (var i=0;i < group.users.length; i++){
+        groupMembers.push(group.users[i].name);
+      }
+
+      callback(groupMembers);
+
+    });
+  }
+
 }
 
 module.exports = new Helper();
