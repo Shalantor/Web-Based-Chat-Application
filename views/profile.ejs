@@ -122,7 +122,7 @@
     });
     /*Show groups*/
     $.each(<%- JSON.stringify(user.groups) %>,function(key,group){
-        $('#groups').append('<li class="group_list_item"><div class="group_item"><p class="name">' + ' ' + group.name + ' </p></div>\
+        $('#groups').append('<li class="group_list_item"><div class="group_item"><img class="user_image" src="img/users.jpg">' + ' ' + group.name + '</div>\
         <div class="dropdown_leave_group">\
           <span class="fa fa-close leave-group_icon"></span>\
            <ul class="dropdown-content_leave_group">\

@@ -336,4 +336,10 @@ li .group_item{
 .user_image{
   height:35px;
   width:35px;
+  display:inline-block;
+}
+
+.group_item .name{
+  display: inline-block;
+  position: relative;
 }
