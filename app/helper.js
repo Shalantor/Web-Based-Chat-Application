@@ -377,7 +377,7 @@ class Helper{
 
     userIds.forEach(function(element,index){
       console.log('ELEMENT IS ' + element);
-      model.findOne({'_id' : element.id} , function(err,user){
+      model.findOne({'_id' : element} , function(err,user){
           if(err){
             throw err;
           }
@@ -628,25 +628,32 @@ class Helper{
             throw err;
           }
 
-          var returnData = [];
           /*Remove that particular user from list of groups*/
           for (var i=0; i < group.users.length; i++){
             if (group.users[i].id == userId){
               group.users.splice(i,1);
             }
-            else{
-              returnData.push(group.users[i].id);
-            }
           }
 
+          /*Delete group if 0 users*/
+          if (group.users.length == 0){
+            group.remove(function(err){
+              if (err){
+                throw err;
+              }
+              callback();
+            });
+          }
+          else{
           /*Store group back to database*/
           group.save(function(err){
             /*If there is any error throw it*/
             if (err){
               throw err;
             }
-            callback(returnData);
+            callback();
           });
+        }
 
         });
       });
