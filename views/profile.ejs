@@ -476,12 +476,18 @@
 
   /*Listener for button to leave group chat*/
   $(function (){
+    var list_item;
     $('#groups').on('click','.leave_group_button',function(){
-      var list_item = $(this).closest('.group_list_item');
+      list_item = $(this).closest('.group_list_item');
       data = {};
       data.userId = <%- JSON.stringify(user._id) %>;
       data.groupId = list_item.find('.id').text();
       socket.emit('leave-group',data);
+    });
+    socket.on('leave-group-response',function(data){
+      if (data.userThatLeft === <%- JSON.stringify(user._id) %>){
+        list_item.remove();
+      }
     });
   });
 
