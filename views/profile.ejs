@@ -262,7 +262,7 @@
       socket.emit('get-group-members',{'groupId' : data.groupId});
     });
     socket.on('get-group-members-response',function(members){
-      if (members.length <= 2){
+      if (members.length <= 3){
         var chat_name = '';
         /*TODO: filter out my username*/
         $.each(members,function(index,member){
@@ -275,11 +275,11 @@
       }
       else{
         var chat_name;
-        chat_name = members[0] + ', ' + members[1] + ', ' + members[1] + ' ';
+        chat_name = members[0] + ', ' + members[1] + ', ' + members[2] + ' ';
         $('.first_names').text(chat_name);
-        $('.header_chat_names').text('and ' + (members.length - 2) + ' more...');
+        $('.header_chat_names').text('and ' + (members.length - 3) + ' more...');
         $.each(members,function(index,member){
-          if (index >= 2){
+          if (index >= 3){
             $('.dropdown-content_chat_name').append('<li><p> ' + member + '</p></li>');
           }
         });
