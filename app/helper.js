@@ -117,13 +117,13 @@ class Helper{
         if(element.id == userId){
         }
         else if (element.local.username){
-          foundUsers.push({'id':element._id,'name':element.local.username});
+          foundUsers.push({'id':element._id,'name':element.local.username,'img':'img/user.jpg'});
         }
         else if(element.facebook.id){
           foundUsers.push({'id':element._id,'name':element.facebook.name,'img':element.facebook.img});
         }
         else if(element.google.id){
-          foundUsers.push({'id':element._id,'name':element.google.name});
+          foundUsers.push({'id':element._id,'name':element.google.name,'img':element.google.img});
         }
       });
 
