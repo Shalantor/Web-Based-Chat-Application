@@ -382,7 +382,7 @@
     });
     socket.on('add-user-group-response', function(users){
       $.each(users,function(index,user){
-          $('#user_for_group').append('<li><div class="found_user_item"><span class="fa fa-user"></span><p class="name">' + ' ' + user.name + ' </p><button id="delete_button">Delete</button><p class="id">' + user.id +  '</p></div></li>');
+          $('#user_for_group').append('<li><div class="found_user_item"><img class="user_image" src="' + user.pic + '"><p class="name">' + ' ' + user.name + ' </p><button id="delete_button">Delete</button><p class="id">' + user.id +  '</p></div></li>');
       });
     });
   });

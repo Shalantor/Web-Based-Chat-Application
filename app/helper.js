@@ -454,12 +454,12 @@ class Helper{
       }
 
       /*Info to send back to client*/
-      var foundUsers = []
+      var foundUsers = [];
 
       /*Check if users with that name is list*/
       user.friends.forEach(function(element){
         if(element.username === name){
-          foundUsers.push({'id':element.id,'name':element.username});
+          foundUsers.push({'id':element.id,'name':element.username,'pic':element.pic});
         }
       });
 
