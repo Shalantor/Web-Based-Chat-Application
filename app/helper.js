@@ -120,7 +120,7 @@ class Helper{
           foundUsers.push({'id':element._id,'name':element.local.username});
         }
         else if(element.facebook.id){
-          foundUsers.push({'id':element._id,'name':element.facebook.name});
+          foundUsers.push({'id':element._id,'name':element.facebook.name,'img':element.facebook.img});
         }
         else if(element.google.id){
           foundUsers.push({'id':element._id,'name':element.google.name});

@@ -217,17 +217,14 @@ module.exports = function(passport){
           newUser.facebook.online = "Y";
           newUser.facebook.socketID = "";
           newUser.facebook.friends = [];
-          //newUser.facebook.img = profile.photos[0].value;
+          newUser.facebook.img = "http://graph.facebook.com/" + profile.id + "/picture?type=large";
           newUser.type = "facebook";
 
           /*Save user to database*/
-          newUser.save(function(err,updatedUser) {
+          newUser.save(function(err) {
             if (err){
               throw err;
             }
-            var dir = './public/profile_pics/' + updatedUser._id ;
-            fs.mkdirSync(dir);
-
             /*if successfull return user*/
             return done(null, newUser);
           });
@@ -286,13 +283,10 @@ module.exports = function(passport){
           newUser.type = "google";
 
           /*Store user in database*/
-          newUser.save(function(err,updatedUser) {
+          newUser.save(function(err) {
             if(err){
               throw err;
             }
-
-            var dir = './public/profile_pics/' + updatedUser._id ;
-            fs.mkdirSync(dir);
 
             return done(null,newUser);
           });

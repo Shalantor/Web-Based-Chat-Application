@@ -198,7 +198,7 @@
     });
     socket.on('find-user-response', function(users){
       $.each(users,function(index,user){
-          $('#users_found').append('<li><div class="found_user_item"><span class="fa fa-user"></span><p class="name">' + user.name + '</p><button>Send Friend Request</button><p class="id">' + user.id +  '</p></div></li>');
+          $('#users_found').append('<li><div class="found_user_item"><img src="' + user.img + '"><p class="name">' + user.name + '</p><button>Send Friend Request</button><p class="id">' + user.id +  '</p></div></li>');
       });
     });
   });
