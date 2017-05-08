@@ -219,7 +219,7 @@
         if ( value === 0 ){
           $('.dropdown-content').empty();
         }
-        $('.dropdown-content').append('<li><p>' + ' <div class="name_request">' + data.fromName + '</div> wants to add you to his friends list.' + ' </p><p class="id_request">' + data.fromId +  '</p><button class = "accept">Accept</button><button class="ignore">Ignore</button></li>');
+        $('.dropdown-content').append('<li><img class="user_image" src="' + data.picture + '"><p>' + ' <div class="name_request">' + data.fromName + '</div> wants to add you to his friends list.' + ' </p><p class="id_request">' + data.fromId +  '</p><button class = "accept">Accept</button><button class="ignore">Ignore</button></li>');
         $('.num').text(JSON.stringify(value + 1));
         $('.num').css('visibility','visible');
       }

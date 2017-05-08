@@ -54,7 +54,8 @@ var init = function(app){
             name = info.thisUser.google.name;
             picture = info.thisUser.google.img;
           }
-          console.log('Sending to socketId ' + socketID);
+          console.log('Sending to socketId lol ' + socketID);
+          console.log('Picture is ' + picture);
           var otherData = {'isMine' : false, 'fromId': info.thisUser._id, 'fromName': name, 'picture':picture};
           io.to(socketID).emit('send-request-response', otherData);
         }
