@@ -82,6 +82,7 @@ module.exports = function(passport){
           newUser.local.online = "Y";
           newUser.local.socketID = "";
           newUser.local.friends = [];
+          newUser.type = "local";
 
           /*Save the user*/
           newUser.save(function(err){
@@ -216,6 +217,7 @@ module.exports = function(passport){
           newUser.facebook.socketID = "";
           newUser.facebook.friends = [];
           newUser.facebook.img = profile.photos[0].value;
+          newUser.type = "facebook";
 
           /*Save user to database*/
           newUser.save(function(err) {
@@ -277,8 +279,8 @@ module.exports = function(passport){
           newUser.google.online = "Y";
           newUser.google.socketID = "";
           newUser.google.friends = [];
-          console.log(profile._json);
           newUser.google.img = profile._json.image.url;
+          newUser.type = "google";
 
           /*Store user in database*/
           newUser.save(function(err) {

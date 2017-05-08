@@ -47,7 +47,7 @@ var userSchema = mongoose.Schema({
     fromId    : String,
     fromName  : String
   }],
-  type        : String
+  type        : String  /*Is local,facebook or google*/
 });
 
 var groupSchema = mongoose.Schema({
