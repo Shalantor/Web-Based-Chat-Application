@@ -201,7 +201,7 @@ class Helper{
         }
       });
 
-      callback(thisUserName,requestUser._id,socketID);
+      callback(thisUserName,requestUser._id,socketID,thisUserPic);
 
     });
 

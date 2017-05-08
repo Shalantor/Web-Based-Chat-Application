@@ -84,13 +84,13 @@ var init = function(app){
     /*The user wants to search for another user based on the name he typed
     So search the database for the name and return the users that were found*/
     socket.on('add-user', function(info){
-      helper.addFriends(info.thisUser,info.otherUser,info.otherUserName,info.pic,function(thisUserName,thisUserID,socketID){
+      helper.addFriends(info.thisUser,info.otherUser,info.otherUserName,info.pic,function(thisUserName,thisUserID,socketID,thisUserPic){
         /*Inform client that everything went alright*/
-        var data = {'id':info.otherUser, 'name' : info.otherUserName};
+        var data = {'id':info.otherUser, 'name' : info.otherUserName, 'pic': info.pic};
         socket.emit('add-user-response',data);
         /*Update other user if online*/
         if (socketID !== ''){
-          var otherData = {'id':thisUserID, 'name' : thisUserName};
+          var otherData = {'id':thisUserID, 'name' : thisUserName, 'pic':thisUserPic};
           io.to(socketID).emit('add-user-response', otherData);
         }
       });

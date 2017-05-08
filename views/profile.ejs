@@ -179,7 +179,7 @@
       }
     });
     socket.on('add-user-response',function(user){
-      $('#friends').append('<li class="friend_list_item"><div class="friend"><span class="fa fa-user"></span>' + ' ' + user.name + '</div>\
+      $('#friends').append('<li class="friend_list_item"><div class="friend"><img class="user_image" src="' + user.pic + '">' + ' ' + user.name + '</div>\
       <div class="dropdown_delete_friend">\
         <span class="fa fa-close delete_friend_icon"></span>\
          <ul class="dropdown-content_delete_friend">\
