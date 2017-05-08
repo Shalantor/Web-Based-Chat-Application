@@ -467,15 +467,19 @@ class Helper{
   sendFriendRequest(fromUser,toUserId,callback){
 
     var fromUserName;
+    var userImage;
 
     if(fromUser.local){
       fromUserName = fromUser.local.username;
+      userImage = 'img/user.jpg';
     }
     else if(fromUser.facebook){
       fromUserName = fromUser.facebook.name;
+      userImage = fromUser.facebook.img;
     }
     else if(fromUser.google){
       fromUserName = fromUser.google.name;
+      userImage = fromUser.google.img;
     }
 
     this.Model.User.findOne({'_id' : toUserId} , function(err,user){
@@ -498,7 +502,7 @@ class Helper{
       }
       else{
         /*Add friend request to list*/
-        user.friendRequests.push({'fromId':fromUser._id,'fromName':fromUserName});
+        user.friendRequests.push({'fromId':fromUser._id,'fromName':fromUserName,'fromPic':userImage});
 
         /*Get socket Id*/
         var socketID;

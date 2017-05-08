@@ -45,7 +45,8 @@ var userSchema = mongoose.Schema({
   }],
   friendRequests  : [{
     fromId    : String,
-    fromName  : String
+    fromName  : String,
+    fromPic   : String
   }],
   type        : String  /*Is local,facebook or google*/
 });

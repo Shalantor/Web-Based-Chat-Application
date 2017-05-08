@@ -138,7 +138,7 @@
       $('.num').css('visibility','visible');
       $('.num').text(JSON.stringify(request_list.length));
       $.each(request_list,function(key,request){
-          $('.dropdown-content').append('<li><p>' + ' <div class="name_request">' + request.fromName + '</div> wants to add you to his friends list.' + ' </p><p class="id_request">' + request.fromId +  '</p><button class = "accept">Accept</button><button class="ignore">Ignore</button></li>');
+          $('.dropdown-content').append('<li><img class="user_image" src="' + request.fromPic + '"><p>' + ' <div class="name_request">' + request.fromName + '</div> wants to add you to his friends list.' + ' </p><p class="id_request">' + request.fromId +  '</p><button class = "accept">Accept</button><button class="ignore">Ignore</button></li>');
       });
     }
   });

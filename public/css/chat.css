@@ -343,3 +343,11 @@ li .group_item{
   display: inline-block;
   position: relative;
 }
+
+.name{
+  display: inline-block;
+}
+
+.found_user_item button{
+  display: block;
+}
