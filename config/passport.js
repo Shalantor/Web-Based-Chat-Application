@@ -5,6 +5,7 @@
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth2').Strategy;
+var fs = require('fs');
 
 /*User model*/
 var Model = require('../app/models/user');
@@ -216,14 +217,16 @@ module.exports = function(passport){
           newUser.facebook.online = "Y";
           newUser.facebook.socketID = "";
           newUser.facebook.friends = [];
-          newUser.facebook.img = profile.photos[0].value;
+          //newUser.facebook.img = profile.photos[0].value;
           newUser.type = "facebook";
 
           /*Save user to database*/
-          newUser.save(function(err) {
+          newUser.save(function(err,updatedUser) {
             if (err){
               throw err;
             }
+            var dir = './public/profile_pics/' + updatedUser._id ;
+            fs.mkdirSync(dir);
 
             /*if successfull return user*/
             return done(null, newUser);
@@ -279,14 +282,18 @@ module.exports = function(passport){
           newUser.google.online = "Y";
           newUser.google.socketID = "";
           newUser.google.friends = [];
-          newUser.google.img = profile._json.image.url;
+          //newUser.google.img = profile._json.image.url;
           newUser.type = "google";
 
           /*Store user in database*/
-          newUser.save(function(err) {
+          newUser.save(function(err,updatedUser) {
             if(err){
               throw err;
             }
+
+            var dir = './public/profile_pics/' + updatedUser._id ;
+            fs.mkdirSync(dir);
+
             return done(null,newUser);
           });
         }

@@ -19,8 +19,7 @@ var userSchema = mongoose.Schema({
     email       : String,
     name        : String,
     online      : String,
-    socketID    : String,
-    img         : Buffer
+    socketID    : String
   },
   google        : {
     id          : String,
@@ -28,8 +27,7 @@ var userSchema = mongoose.Schema({
     email       : String,
     name        : String,
     online      : String,
-    socketID    : String,
-    img         : Buffer
+    socketID    : String
   },
   friends     : [{
     id        : String,
