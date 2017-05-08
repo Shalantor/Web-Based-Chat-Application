@@ -34,6 +34,7 @@ var userSchema = mongoose.Schema({
   friends     : [{
     id        : String,
     username  : String,
+    pic       : String,
     messages  : [{
       from    : String,
       message : String

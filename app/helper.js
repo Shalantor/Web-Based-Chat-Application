@@ -133,7 +133,7 @@ class Helper{
   }
 
   /*Add two users to each others friends list*/
-  addFriends(requestUser,otherUserId,otherUserName,callback){
+  addFriends(requestUser,otherUserId,otherUserName,otherPic,callback){
 
     /*First find this user and update his friends list*/
     this.Model.User.findOne({'_id' : requestUser._id} , function(err,user){
@@ -144,7 +144,7 @@ class Helper{
       }
 
       /*Add to array of friends*/
-      user.friends.push({'id' : otherUserId,'username' : otherUserName});
+      user.friends.push({'id' : otherUserId,'username' : otherUserName,'pic' : otherPic});
 
       /*Store back into database*/
       user.save(function(err){
@@ -158,14 +158,18 @@ class Helper{
     /*Update the other users friends list*/
     /*Get his name*/
     var thisUserName ;
+    var thisUserPic;
     if (requestUser.local){
       thisUserName = requestUser.local.username;
+      thisUserPic = 'img/user.jpg';
     }
     else if(requestUser.facebook){
       thisUserName = requestUser.facebook.name;
+      thisUserPic = requestUser.facebook.img;
     }
     else if(requestUser.google){
       thisUserName = requestUser.google.name;
+      thisUserPic = requestUser.google.img;
     }
 
     /*Find other user in database*/
@@ -176,7 +180,7 @@ class Helper{
         throw err;
       }
 
-      otherUser.friends.push({'id' : requestUser._id,'username' : thisUserName});
+      otherUser.friends.push({'id' : requestUser._id,'username' : thisUserName,'pic':thisUserPic});
 
       /*Get user socketID*/
       var socketID;

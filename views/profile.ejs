@@ -111,7 +111,7 @@
     socket.emit('ehlo-response',<%- JSON.stringify(user) %>);
     /*Show friends*/
     $.each(<%- JSON.stringify(user.friends) %>,function(key,friend){
-        $('#friends').append('<li class="friend_list_item"><div class="friend"><img class="user_image" src="img/user.jpg">' + ' ' + friend.username + '</div>\
+        $('#friends').append('<li class="friend_list_item"><div class="friend"><img class="user_image" src="' + friend.pic + '">' + ' ' + friend.username + '</div>\
         <div class="dropdown_delete_friend">\
           <span class="fa fa-close delete_friend_icon"></span>\
            <ul class="dropdown-content_delete_friend">\
@@ -167,6 +167,7 @@
       info.thisUser = <%- JSON.stringify(user) %>;
       info.otherUser = $(this).siblings('.id_request').text();
       info.otherUserName = $(this).siblings('.name_request').text();
+      info.pic = $(this).siblings('.user_image').attr('src');
       socket.emit('add-user', info );
       socket.emit('delete-request',{'user' : info.thisUser, 'otherUser' : info.otherUser});
       $(this).closest('li').remove();
@@ -223,7 +224,6 @@
         $('.num').css('visibility','visible');
       }
       else if (data.success === true){
-      //$('#friends').append('<li><div class="friend"><span class="fa fa-user"></span>' + ' ' + user.name + '<p id = friendId>' + user.id +  '</p></div></li>');
         $('#users_found').append('<li class="request_status"><p>Friend request sent</p></li>');
         $('.request_status').fadeOut(2000, function() { $('.request_status').remove(); });
       }

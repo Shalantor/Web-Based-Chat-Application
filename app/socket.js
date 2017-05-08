@@ -41,17 +41,21 @@ var init = function(app){
         /*Must create array because of how function works*/
         if (success === true){
           var name;
+          var picture;
           if (info.thisUser.local){
             name = info.thisUser.local.username;
+            picture = 'img/user.jpg';
           }
           else if(info.thisUser.facebook){
             name = info.thisUser.facebook.name;
+            picture = info.thisUser.facebook.img;
           }
           else if(info.thisUser.google){
             name = info.thisUser.google.name;
+            picture = info.thisUser.google.img;
           }
           console.log('Sending to socketId ' + socketID);
-          var otherData = {'isMine' : false, 'fromId': info.thisUser._id, 'fromName': name};
+          var otherData = {'isMine' : false, 'fromId': info.thisUser._id, 'fromName': name, 'picture':picture};
           io.to(socketID).emit('send-request-response', otherData);
         }
       });
@@ -79,7 +83,7 @@ var init = function(app){
     /*The user wants to search for another user based on the name he typed
     So search the database for the name and return the users that were found*/
     socket.on('add-user', function(info){
-      helper.addFriends(info.thisUser,info.otherUser,info.otherUserName,function(thisUserName,thisUserID,socketID){
+      helper.addFriends(info.thisUser,info.otherUser,info.otherUserName,info.pic,function(thisUserName,thisUserID,socketID){
         /*Inform client that everything went alright*/
         var data = {'id':info.otherUser, 'name' : info.otherUserName};
         socket.emit('add-user-response',data);
