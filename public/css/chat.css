@@ -118,6 +118,7 @@
   overflow-x: hidden;
   white-space: pre-wrap;
   max-width:80%;
+  background: #B1D9E5;
 }
 
 .other_message{
@@ -128,6 +129,7 @@
   overflow-x: hidden;
   white-space: pre-wrap;
   max-width:80%;
+  background:#D3D3D3;
 }
 
 .createGroup{
@@ -350,4 +352,14 @@ li .group_item{
 
 .found_user_item button{
   display: block;
+}
+
+.name_in_chat{
+  float : left;
+  display: block;
+  clear: both;
+  word-wrap: break-word;
+  overflow-x: hidden;
+  white-space: pre-wrap;
+  color: #939393;
 }

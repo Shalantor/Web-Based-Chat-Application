@@ -295,14 +295,19 @@ class Helper{
       }
 
       var messages = [];
+      var friendName;
+      var friendPic;
+
       /*Find friend*/
       user.friends.forEach(function(element){
         if (element.id == friendId){
           messages = element.messages;
+          friendName = element.username;
+          friendPic = element.pic;
         }
       });
 
-      callback(messages);
+      callback({'messages':messages,'name':friendName,'img':friendPic});
 
     });
   }

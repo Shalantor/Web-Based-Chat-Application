@@ -285,13 +285,24 @@
         });
       }
     });
-    socket.on('get-chat-history-response',function(messages){
-      $.each(messages,function(index,info){
+    socket.on('get-chat-history-response',function(data){
+      var previous_message = '';
+      $.each(data.messages,function(index,info){
         if (info.from == 'me'){
-          $('.chat_history').append('<li class="my_message"><p>' + info.message + '</p></li>');
+          $('.chat_history').append('<li class="my_message">' + info.message + '</li>');
+          previous_message = 'me';
         }
         else if (info.from == 'not_me'){
-          $('.chat_history').append('<li class="other_message"><p>' + info.message + '</p></li>');
+          if (previous_message === '' || previous_message === 'me'){
+            $('.chat_history').append('<li class="name_in_chat">' + data.name +'</li>');
+            previous_message = 'not_me';
+          }
+          if (((index < data.messages.length - 1) && data.messages[index+1].from === 'me') || index === data.messages.length - 1 ){
+            $('.chat_history').append('<li class="other_message"><img class="user_image" src="' + data.img + '">' + info.message + '</li>');
+          }
+          else{
+            $('.chat_history').append('<li class="other_message">' + info.message + '</li>');
+          }
         }
         else{
           var me = <%- JSON.stringify(user._id) %>;
