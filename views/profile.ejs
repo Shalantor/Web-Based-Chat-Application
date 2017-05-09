@@ -349,6 +349,9 @@
             alert('yo');
             $('.chat_history li:last-child .user_image').remove();
           }
+          else{
+            $('.chat_history').append('<li class="name_in_chat">' + data.name +'</li>');
+          }
           $('.chat_history').append('<li class="other_message"><img class="user_image" src="' + data.img + '">' + data.message + '</li>');
           var log = $('.chat_window');
           log.animate({ scrollTop: log.prop('scrollHeight')}, 0);

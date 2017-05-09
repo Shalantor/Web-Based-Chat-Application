@@ -104,16 +104,20 @@ var init = function(app){
             /*Send back to verify that message was sent*/
             socket.emit('send-message-response',null);
             var img;
+            var name;
             if(data.thisUser.type === 'local'){
               img = 'img/user.jpg';
+              name = data.thisUser.local.username;
             }
             else if(data.thisUser.type ==='facebook'){
               img = data.thisUser.facebook.img;
+              name = data.thisUser.facebook.name;
             }
             else if(data.thisUser.type === 'google'){
               img = data.thisUser.google.img;
+              name = data.thisUser.google.name;
             }
-            var sendData = {'fromId': data.thisUser._id, 'message': data.message, 'isGroup': false,'img':img};
+            var sendData = {'fromId': data.thisUser._id, 'message': data.message, 'isGroup': false,'img':img,'name':name};
             io.to(socketID).emit('send-message-response', sendData);
           });
         });
