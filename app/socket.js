@@ -99,11 +99,21 @@ var init = function(app){
     /*The user wants to send a message to another user*/
     socket.on('send-message',function(data){
       if (data.isGroup === false){
-        helper.storeAndSendMessage(data.thisUser,data.otherUser,true,data.message,function(socketID){
-          helper.storeAndSendMessage(data.otherUser,data.thisUser,false,data.message,function(socketID){
+        helper.storeAndSendMessage(data.thisUser._id,data.otherUser,true,data.message,function(socketID){
+          helper.storeAndSendMessage(data.otherUser,data.thisUser._id,false,data.message,function(socketID){
             /*Send back to verify that message was sent*/
             socket.emit('send-message-response',null);
-            var sendData = {'fromId': data.thisUser, 'message': data.message, 'isGroup': false};
+            var img;
+            if(data.thisUser.type === 'local'){
+              img = 'img/user.jpg';
+            }
+            else if(data.thisUser.type ==='facebook'){
+              img = data.thisUser.facebook.img;
+            }
+            else if(data.thisUser.type === 'google'){
+              img = data.thisUser.google.img;
+            }
+            var sendData = {'fromId': data.thisUser._id, 'message': data.message, 'isGroup': false,'img':img};
             io.to(socketID).emit('send-message-response', sendData);
           });
         });
