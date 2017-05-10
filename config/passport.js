@@ -83,6 +83,7 @@ module.exports = function(passport){
           newUser.local.online = "Y";
           newUser.local.socketID = "";
           newUser.local.friends = [];
+          newUser.local.img = "img/user.jpg"
           newUser.type = "local";
 
           /*Save the user*/

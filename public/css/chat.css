@@ -328,7 +328,11 @@ li .group_item{
 }
 
 .navbar-brand img{
+  float: left;
+  position: relative;
   height: 35px;
+  width: 35px;
+  top: -10px;
 }
 
 .fa-2x{
@@ -362,4 +366,19 @@ li .group_item{
   overflow-x: hidden;
   white-space: pre-wrap;
   color: #939393;
+}
+
+.user_image_nav_bar{
+  float: left;
+  position: absolute;
+  height: 50px;
+  width: 50px;
+}
+
+.user_info p{
+  display: block;
+  position: absolute;
+  float: left;
+  left: 130px;
+  top: 20px;
 }
