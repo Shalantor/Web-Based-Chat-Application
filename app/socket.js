@@ -135,17 +135,17 @@ var init = function(app){
                   data.userThatSent = data.thisUser._id;
                   var img;
                   var name;
-                  if(data.userThatSent.type === 'local'){
+                  if(data.thisUser.type === 'local'){
                     img = 'img/user.jpg';
-                    name = data.userThatSent.local.username;
+                    name = data.thisUser.local.username;
                   }
-                  else if(data.userThatSent.type ==='facebook'){
-                    img = data.userThatSent.facebook.img;
-                    name = data.userThatSent.facebook.name;
+                  else if(data.thisUser.type ==='facebook'){
+                    img = data.thisUser.facebook.img;
+                    name = data.thisUser.facebook.name;
                   }
-                  else if(data.userThatSent.type === 'google'){
-                    img = data.userThatSent.google.img;
-                    name = data.userThatSent.google.name;
+                  else if(data.thisUser.type === 'google'){
+                    img = data.thisUser.google.img;
+                    name = data.thisUser.google.name;
                   }
                   dataToSend.name = name;
                   dataToSend.img = img;
