@@ -124,7 +124,7 @@ var init = function(app){
       }
       else{
         helper.storeAndSendGroupMessage(data.group,data.thisUser,data.message,function(){
-          helper.getUsers(data.thisUser,data.group,function(users){
+          helper.getUsers(data.thisUser._id,data.group,function(users){
             helper.getSocketIds(users,function(socketIDs){
               socketIDs.forEach(function(element){
                 if(element !== ''){
@@ -132,7 +132,23 @@ var init = function(app){
                   dataToSend.fromId = data.group;
                   dataToSend.message = data.message;
                   dataToSend.isGroup = true;
-                  data.userThatSent = data.thisUser;
+                  data.userThatSent = data.thisUser._id;
+                  var img;
+                  var name;
+                  if(data.userThatSent.type === 'local'){
+                    img = 'img/user.jpg';
+                    name = data.userThatSent.local.username;
+                  }
+                  else if(data.userThatSent.type ==='facebook'){
+                    img = data.userThatSent.facebook.img;
+                    name = data.userThatSent.facebook.name;
+                  }
+                  else if(data.userThatSent.type === 'google'){
+                    img = data.userThatSent.google.img;
+                    name = data.userThatSent.google.name;
+                  }
+                  dataToSend.name = name;
+                  dataToSend.img = img;
                   io.to(element).emit('send-message-response', dataToSend);
                 }
               });
@@ -150,8 +166,9 @@ var init = function(app){
         });
       }
       else{
+        console.log('GOT REQUEST FOR CHAT HISTORY IN GROUP');
         helper.getChatHistoryForGroup(data.groupId,function(messages){
-          socket.emit('get-chat-history-response',messages);
+          socket.emit('get-chat-history-response',{'messages':messages});
         });
       }
     });

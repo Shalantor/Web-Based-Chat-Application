@@ -385,8 +385,14 @@ class Helper{
     var model = this.Model.User;
 
     userIds.forEach(function(element,index){
-      console.log('ELEMENT IS ' + element);
-      model.findOne({'_id' : element} , function(err,user){
+      var lookFor;
+      if (element.id){
+        lookFor = element.id;
+      }
+      else{
+        lookFor = element;
+      }
+      model.findOne({'_id' : lookFor} , function(err,user){
           if(err){
             throw err;
           }
@@ -425,7 +431,22 @@ class Helper{
       if(err){
         throw err;
       }
-      group.messages.push({'from':fromUser, 'message': message});
+
+      var img;
+      var name;
+      if(fromUser.type === 'local'){
+        img = 'img/user.jpg';
+        name = fromUser.local.username;
+      }
+      else if(fromUser.type ==='facebook'){
+        img = fromUser.facebook.img;
+        name = fromUser.facebook.name;
+      }
+      else if(fromUser.type === 'google'){
+        img = fromUser.google.img;
+        name = fromUser.google.name;
+      }
+      group.messages.push({'from':fromUser._id, 'message': message,'fromName':name,'fromPic' : img});
       group.save(function(err){
         callback();
       });

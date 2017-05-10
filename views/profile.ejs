@@ -308,9 +308,19 @@
           var me = <%- JSON.stringify(user._id) %>;
           if (me == info.from){
             $('.chat_history').append('<li class="my_message"><p>' + info.message + '</p></li>');
+            previous_message = info.from;
           }
           else{
-            $('.chat_history').append('<li class="other_message"><p>' + info.message + '</p></li>');
+            if (previous_message === '' || previous_message !== info.from){
+              $('.chat_history').append('<li class="name_in_chat">' + info.fromName +'</li>');
+              previous_message = info.from;
+            }
+            if (((index < data.messages.length - 1) && data.messages[index+1].from !== info.from) || index === data.messages.length - 1 ){
+              $('.chat_history').append('<li class="other_message"><img class="user_image" src="' + info.fromPic + '">' + info.message + '</li>');
+            }
+            else{
+              $('.chat_history').append('<li class="other_message">' + info.message + '</li>');
+            }
           }
         }
       });
@@ -362,7 +372,7 @@
         var groupId = JSON.stringify(data.group);
         var thisUser = <%- JSON.stringify(user._id) %>;
         var activeChat = JSON.stringify($('.active_chat .id').text());
-        if (userThatSent !== thisUser && activeChat !== ''){
+        if (userThatSent !== thisUser && activeChat === groupId){
           $('.chat_history').append('<li class="other_message">' + data.message + '</li>');
           var log = $('.chat_window');
           log.animate({ scrollTop: log.prop('scrollHeight')}, 0);
@@ -442,7 +452,7 @@
       }
     });
     socket.on('create-group-response', function(data){
-      $('#groups').append('<li class="group_list_item"><div class="group_item"><p class="name">' + ' ' + data.name + ' </p></div>\
+      $('#groups').append('<li class="group_list_item"><div class="group_item"><img class="user_image" src="img/users.jpg" >' + ' ' + data.name + '</div>\
       <div class="dropdown_leave_group">\
         <span class="fa fa-close leave-group_icon"></span>\
          <ul class="dropdown-content_leave_group">\

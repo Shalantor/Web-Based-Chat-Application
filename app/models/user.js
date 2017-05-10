@@ -60,7 +60,9 @@ var groupSchema = mongoose.Schema({
   }],
   messages  : [{
     from    : String,
-    message : String
+    message : String,
+    fromPic : String,
+    fromName    : String
   }]
 });
 
