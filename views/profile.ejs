@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <title> Temporary login page to verify login functionality </title>
+  <title> GK Chat </title>
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
   <link rel="stylesheet" type="text/css" href="/css/chat.css">
@@ -73,7 +73,7 @@
       </div>
       <p class="tag">Groups</p>
       <div class="groupsWindow">
-        <ul id=groups>
+        <ul id="groups">
         <ul/>
       </div>
     </div>
@@ -473,6 +473,20 @@
       }
       else{
         $('.dropdown-content').css('display','block');
+      }
+    });
+
+  });
+
+  /*Toggle dropdown menu in group*/
+  $(function (){
+    $('#groups').on('click','.leave-group_icon',function(){
+      var clicked_item = $(this).siblings('.dropdown-content_leave_group');
+      if (clicked_item .css('display') == 'block'){
+        clicked_item .css('display','none');
+      }
+      else{
+        clicked_item .css('display','block');
       }
     });
 
