@@ -23,6 +23,34 @@
         </div>
         <div class="user_info"><img src="<%- user.local.img %><%- user.facebook.img %><%- user.google.img %>" class="user_image_nav_bar"><p><%- user.local.username %><%- user.facebook.name %><%- user.google.name %></p></div>
         <ul class="nav navbar-nav navbar-right">
+            <div class="dropdown_find_user">
+              <p>Add friend</p>
+                 <div class = "findUserForm dropdown-content_find_user">
+                   <form action= "" >
+                     <input id="search" autocomplete="off" /><button>Search</button>
+                   </form>
+                   <ul id="users_found">
+                   <ul/>
+                 </div>
+            </div>
+            <div class="dropdown_create_group">
+              <p>Create Group</p>
+                 <div class = "createGroup dropdown-content_create_group">
+                     <div class = "group_menu_buttons">
+                       <button id="create_group">Create Group</button>
+                     </div>
+                     <div class = "group_menu">
+                     <form class = "group_name" action= "" >
+                       <p>Group Name:</p><input autocomplete="off" />
+                     </form>
+                     <form class = "search_for_group" action= "" >
+                       <input autocomplete="off" /><button>Add</button>
+                     </form>
+                   </div>
+                   <ul id="user_for_group">
+                   <ul/>
+                 </div>
+            </div>
             <div class="dropdown">
               <span class = "fa fa-2x fa-bell navbar-brand notif navbar-right" ><span class="badge num">0</span></span>
                <ul class="dropdown-content">
@@ -74,30 +102,6 @@
     </div>
 
     <div class = "right">
-      <div class = "findUserForm">
-        <form action= "" >
-          <input id="search" autocomplete="off" /><button>Find friend</button>
-        </form>
-        <ul id="users_found">
-        <ul/>
-      </div>
-      <div class = "createGroup">
-        <button id="open_group_menu">Create Group</button>
-          <div class = "group_menu_buttons">
-            <button id="close_menu">Close</button>
-            <button id="create_group">Create Group</button>
-          </div>
-          <div class = "group_menu">
-          <form class = "group_name" action= "" >
-            <p>Group Name:</p><input autocomplete="off" />
-          </form>
-          <form class = "search_for_group" action= "" >
-            <input autocomplete="off" /><button>Add</button>
-          </form>
-        </div>
-        <ul id="user_for_group">
-        <ul/>
-      </div>
   </div>
 
 <!-- Script to send server a request to look for friends-->
@@ -200,7 +204,7 @@
     });
     socket.on('find-user-response', function(users){
       $.each(users,function(index,user){
-          $('#users_found').append('<li><div class="found_user_item"><img src="' + user.img + '"><p class="name">' + user.name + '</p><button>Send Friend Request</button><p class="id">' + user.id +  '</p></div></li>');
+          $('#users_found').append('<li><div class="found_user_item"><img class ="user_image" src="' + user.img + '"><p class="name">' + user.name + '</p><button>Send Friend Request</button><p class="id">' + user.id +  '</p></div></li>');
       });
     });
   });
@@ -392,15 +396,6 @@
     });
   });
 
-  /*Click listener for create group button, to open menu*/
-  $(function () {
-    $('#open_group_menu').click(function(){
-      $('.group_menu').show();
-      $('.group_menu_buttons').show()
-      $(this).hide();
-    });
-  });
-
   /*Close the group menu*/
   $(function () {
     $('#close_menu').click(function(){
@@ -514,18 +509,28 @@
 
   });
 
-  /*Toggle dropdown menu in delete friend list item*/
+  /*Drop down for add friend*/
   $(function (){
-    $('#groups').on('click','.leave-group_icon',function(){
-      var clicked_item = $(this).siblings('.dropdown-content_leave_group');
-      if (clicked_item .css('display') == 'block'){
-        clicked_item .css('display','none');
+    $('.dropdown_find_user p').click(function(){
+      if ($('.dropdown-content_find_user').css('display') == 'block'){
+        $('.dropdown-content_find_user').css('display','none');
       }
       else{
-        clicked_item .css('display','block');
+        $('.dropdown-content_find_user').css('display','block');
       }
     });
+  });
 
+  /*Drop down for create group*/
+  $(function (){
+    $('.dropdown_create_group p').click(function(){
+      if ($('.dropdown-content_create_group').css('display') == 'block'){
+        $('.dropdown-content_create_group').css('display','none');
+      }
+      else{
+        $('.dropdown-content_create_group').css('display','block');
+      }
+    });
   });
 
   /*Listener for button to delete a friend*/
