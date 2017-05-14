@@ -101,9 +101,6 @@
       </div>
     </div>
 
-    <div class = "right">
-  </div>
-
 <!-- Script to send server a request to look for friends-->
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
@@ -269,7 +266,6 @@
     socket.on('get-group-members-response',function(members){
       if (members.length <= 3){
         var chat_name = '';
-        /*TODO: filter out my username*/
         $.each(members,function(index,member){
           chat_name = chat_name + member ;
           if (index !== members.length - 1){
