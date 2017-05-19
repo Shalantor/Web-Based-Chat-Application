@@ -1,4 +1,4 @@
-/*TODO: IMPORTANT: Consider changing user schema , too much time gets lost on searching user type*/
+/*Schemas for database*/
 
 /*Load encryption module and database */
 var mongoose = require('mongoose');

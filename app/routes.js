@@ -1,3 +1,5 @@
+/*Application routes with all the available views*/
+
 var helper = require('./helper');
 
 /*Route configuration*/

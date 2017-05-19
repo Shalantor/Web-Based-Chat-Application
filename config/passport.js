@@ -1,11 +1,10 @@
-/*Load tools we need*/
-/*TODO:In signup check if email has a valid format, use regex preferably*/
-/*TODO:Add messages when fields are empty*/
+/*In this file the user is authenticated using the passport framework*/
 
+/*Load tools we need*/
+/*Strategies for authentication*/
 var LocalStrategy = require('passport-local').Strategy;
 var FacebookStrategy = require('passport-facebook').Strategy;
 var GoogleStrategy = require('passport-google-oauth2').Strategy;
-var fs = require('fs');
 
 /*User model*/
 var Model = require('../app/models/user');

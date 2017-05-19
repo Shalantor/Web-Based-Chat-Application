@@ -1,3 +1,4 @@
+//Packages that are needed for this application
 {
   "name": "node-authentication",
   "main": "server.js",

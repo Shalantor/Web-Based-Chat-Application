@@ -1,12 +1,15 @@
+/*Listen for requests from clients and act accordingly*/
+
 var helper = require('./helper');
 
 /*Initialize socket io server*/
 var init = function(app){
 
+  /*Server and socket io*/
   var server = require('http').Server(app);
   var io = require('socket.io')(server);
 
-
+  /*User connects for first time*/
   io.on('connection', function(socket){
 
     var data = {};
@@ -226,4 +229,5 @@ var init = function(app){
 
 }
 
+/*Export this file*/
 module.exports = init;

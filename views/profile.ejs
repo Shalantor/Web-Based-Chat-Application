@@ -1,3 +1,5 @@
+<!-- This is the main page of the application, here the user can chat and interact with other users. -->
+
 <!doctype html>
 <html>
 
@@ -11,7 +13,7 @@
 
 <body>
 
-  <!-- Navigation bar -->
+  <!-- Navigation bar, with 3 dropdown menus. -->
   <div class="container">
 
     <nav class="navbar navbar-default">
@@ -64,6 +66,7 @@
 
   </div>
 
+  <!-- Column for showing the users contacts -->
   <div class = "content">
     <div class = "left">
       <p class="tag">Friends</p>
@@ -78,7 +81,7 @@
       </div>
     </div>
 
-
+    <!-- Column to show the user the chat messages -->
     <div class = "middle">
       <div class="chat_name">
         <p class="first_names">∙</p>
@@ -101,6 +104,7 @@
       </div>
     </div>
 
+<!-- This is where the script section begins, all jquery scripts that run on this page are below this point. -->
 <!-- Script to send server a request to look for friends-->
 <script src="/socket.io/socket.io.js"></script>
 <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
@@ -111,7 +115,7 @@
     /*Disable form if no friend selected to chat with*/
     $('.chatForm :input').prop('disabled', true);
     socket.emit('ehlo-response',<%- JSON.stringify(user) %>);
-    /*Show friends*/
+    /*Show friends, append list item for each one*/
     $.each(<%- JSON.stringify(user.friends) %>,function(key,friend){
         $('#friends').append('<li class="friend_list_item"><div class="friend"><img class="user_image" src="' + friend.pic + '">' + ' ' + friend.username + '</div>\
         <div class="dropdown_delete_friend">\
@@ -122,7 +126,7 @@
            </ul>\
         </div><p id = friendId>' + friend.id +  '</p></li>');
     });
-    /*Show groups*/
+    /*Show groups, append list item for each one*/
     $.each(<%- JSON.stringify(user.groups) %>,function(key,group){
         $('#groups').append('<li class="group_list_item"><div class="group_item"><img class="user_image" src="img/users.jpg">' + ' ' + group.name + '</div>\
         <div class="dropdown_leave_group">\
@@ -133,7 +137,7 @@
            </ul>\
         </div><p class="id">' + group.id +  '</p></li>');
     });
-    /*Show friend requests*/
+    /*Show friend requests in dropdown menu in navigation bar. Also update notification counter accordingly*/
     var request_list = <%- JSON.stringify(user.friendRequests) %>;
     if (request_list.length > 0){
       $('.dropdown-content').empty();
@@ -148,13 +152,19 @@
   /*Listener for button to ignore a friend request*/
   $(function () {
     $('.dropdown-content').on('click','.ignore',function(){
+
+      /*Get friend info whose request will be ignored and send to server to delete request from database*/
       var info = {};
       info.thisUser = <%- JSON.stringify(user) %>;
       info.otherUser = $(this).siblings('.id_request').text();
       socket.emit('delete-request',{'user' : info.thisUser, 'otherUser' : info.otherUser});
+
+      /*Also remove the corresponding list item from the list*/
       $(this).closest('li').remove();
       var value = parseInt($('.num').text());
       $('.num').text(JSON.stringify(value - 1));
+
+      /*If the list is empty, show message for no notifications*/
       if (value === 1){
         $('.num').css('visibility','hidden');
         $('.dropdown-content').append('<li><p>No new notifications</p></li>');
@@ -165,21 +175,28 @@
   /*Listener for button to accept user as friend*/
   $(function () {
     $('.dropdown-content').on('click','.accept',function(){
+
+      /*Get info of friend to accept*/
       var info = {};
       info.thisUser = <%- JSON.stringify(user) %>;
       info.otherUser = $(this).siblings('.id_request').text();
       info.otherUserName = $(this).siblings('.name_request').text();
       info.pic = $(this).siblings('.user_image').attr('src');
+
+      /*Send server a message for adding that user as a friend and for deleting the friend request*/
       socket.emit('add-user', info );
       socket.emit('delete-request',{'user' : info.thisUser, 'otherUser' : info.otherUser});
       $(this).closest('li').remove();
       var value = parseInt($('.num').text());
       $('.num').text(JSON.stringify(value - 1));
+
+      /*Update notification list*/
       if (value === 1){
         $('.num').css('visibility','hidden');
         $('.dropdown-content').append('<li><p>No new notifications</p></li>');
       }
     });
+    /*After the response from the server, add that user to the friend list*/
     socket.on('add-user-response',function(user){
       $('#friends').append('<li class="friend_list_item"><div class="friend"><img class="user_image" src="' + user.pic + '">' + ' ' + user.name + '</div>\
       <div class="dropdown_delete_friend">\
@@ -192,7 +209,7 @@
     });
   });
 
-  /*Function to send server request to find a user*/
+  /*Function to send server request to find a user, based on the name that was typed in the search box*/
   $(function () {
     $('.findUserForm form').submit(function(){
       socket.emit('find-user', { 'id': <%- JSON.stringify(user._id) %> , 'name': $('#search').val() });
@@ -200,6 +217,7 @@
       return false;
     });
     socket.on('find-user-response', function(users){
+      /*Display users found*/
       $.each(users,function(index,user){
           $('#users_found').append('<li><div class="found_user_item"><img class ="user_image" src="' + user.img + '"><p class="name">' + user.name + '</p><button>Send Friend Request</button><p class="id">' + user.id +  '</p></div></li>');
       });
@@ -209,6 +227,7 @@
   /*Send server a request to add friend request*/
   $(function() {
     $('#users_found').on('click','.found_user_item button',function(){
+      /*Get info and send to server*/
       var info = {};
       info.otherUser =  $(this).siblings('.id').text();
       info.thisUser = <%- JSON.stringify(user) %>;
@@ -216,6 +235,7 @@
       $('#users_found').empty();
     });
     socket.on('send-request-response',function(data){
+      /*Update notification counter, if the request wasn't from the user that sent it*/
       if (data.isMine === false){
         var value = parseInt($('.num').text());
         if ( value === 0 ){
@@ -225,6 +245,7 @@
         $('.num').text(JSON.stringify(value + 1));
         $('.num').css('visibility','visible');
       }
+      /*Check if that user is already in friend list*/
       else if (data.success === true){
         $('#users_found').append('<li class="request_status"><p>Friend request sent</p></li>');
         $('.request_status').fadeOut(2000, function() { $('.request_status').remove(); });
@@ -238,6 +259,7 @@
 
   /*Make the clicked group or friend the active one the user is chatting with and also show chat history*/
   $(function(){
+    /*Listener for friend items in list, to get chat history from server*/
     $('#friends').on('click','li .friend',function(){
       var parent_li = $(this).closest('li');
       $('.chatForm :input').prop('disabled', false);
@@ -251,6 +273,8 @@
       data.isGroup = false;
       socket.emit('get-chat-history',data);
     });
+    /*Listener for group items in list, to get chat history from server*/
+    /*In this case also get the group members to show them at the chat window header*/
     $('#groups').on('click','li .group_item',function(){
       var parent_li = $(this).closest('li');
       $('.chatForm :input').prop('disabled', false);
@@ -263,6 +287,9 @@
       socket.emit('get-chat-history',data);
       socket.emit('get-group-members',{'groupId' : data.groupId});
     });
+    /*Got server answer, show group members. If more that 3, show first three and
+     *add a dropdown menu to chat header, where user can hover his mouse to show
+     *the remaining group members*/
     socket.on('get-group-members-response',function(members){
       if (members.length <= 3){
         var chat_name = '';
@@ -286,8 +313,10 @@
         });
       }
     });
+    /*Server response with the chat history for the requested conversation*/
     socket.on('get-chat-history-response',function(data){
       var previous_message = '';
+      /*Based on the info for each message, add the corresponding css class for better display*/
       $.each(data.messages,function(index,info){
         if (info.from == 'me'){
           $('.chat_history').append('<li class="my_message">' + info.message + '</li>');
@@ -332,6 +361,7 @@
 
   /*Function so send message to server from chat window*/
   $(function () {
+    /*Also check if it was a group chat or not*/
     $('.chatForm form').submit(function(){
       var thisUser = <%- JSON.stringify(user) %>;
       var otherUser = $('.active_chat #friendId').text();
@@ -435,10 +465,12 @@
   /*Send server data for group to be created*/
   $(function (){
     $('#create_group').click(function(){
+      /*Check if group name is empty*/
       if ( $('.group_name input').val() === '' ){
         $('.group_name input').attr('placeholder','Group name can\'t be empty');
         $('.group_name input').addClass('warning');
       }
+      /*Get group info and send to server*/
       else if ( !($('#user_for_group li').length === 0) ){
         var data = {};
         data.groupName = $('.group_name input').val();
@@ -553,6 +585,7 @@
       data.friendId = list_item.find('#friendId').text();
       socket.emit('delete-friend',data);
     });
+    /*Because server sends the same message to both users, check if this user was the one deleting the friend*/
     socket.on('delete-friend-response',function(data){
       if (data.isMine === true){
         if (list_item.hasClass('.active_chat')){

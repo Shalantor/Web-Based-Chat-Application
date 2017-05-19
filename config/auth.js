@@ -1,4 +1,4 @@
-/* expose module to our app for facebook login */
+/* expose module to our app for facebook and google+ login */
 module.exports = {
 
   'facebookAuth' : {
