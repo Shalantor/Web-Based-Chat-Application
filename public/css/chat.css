@@ -4,6 +4,7 @@
     height: 95%;
 }
 
+/*Left is the column for groups and friends*/
 .left {
     float: left;
     width: 35%;
@@ -13,6 +14,7 @@
     border-left: thick double #B1D9E5;
 }
 
+/*middle is the column for the chat window and other chat info*/
 .middle {
   position: relative;
   float : left;
@@ -29,6 +31,7 @@
   z-index: 0;
 }
 
+/*contains form for input and a send button*/
 .chatForm{
   position: relative;
   bottom : 0;
@@ -49,6 +52,8 @@
   width: 20%;
 }
 
+/*form to type a name of a user into and then search for him in the database*/
+/*Contains an input form and a button*/
 .findUserForm{
   overflow-y: scroll;
   border-bottom: thick solid #B1D9E5;
@@ -66,6 +71,7 @@
   width : 65%;
 }
 
+/*The window which displays the friends of the user*/
 .friendsWindow{
   height : 43%;
   overflow-y: scroll;
@@ -73,6 +79,7 @@
   overflow-x: hidden;
 }
 
+/*Friends and Groups tag*/
 .tag{
   text-align: center;
   height: 5%;
@@ -80,12 +87,14 @@
   background: #27779A;
 }
 
+/*Window that shows the groups the user is a part of*/
 .groupsWindow{
   height : 43%;
   overflow-y: scroll;
   border-bottom: thick solid #B1D9E5;
 }
 
+/*list of users found for a given name*/
 #usersFound li {
   display: inline-block;
 }
@@ -94,6 +103,7 @@
   display: block;
 }
 
+/*list of friends*/
 #friends li {
   cursor: pointer;
   width: 100%;
@@ -105,6 +115,7 @@
   margin-left: 0px;
 }
 
+/*determines the active chat*/
 .active_chat{
   background:  #B1D9E5;
 }
@@ -113,6 +124,7 @@
   list-style-type: none;
 }
 
+/*Message the user sent*/
 .my_message{
   float : right;
   display: block;
@@ -130,6 +142,7 @@
   padding: 2px;
 }
 
+/*message the user got*/
 .other_message{
   float : left;
   display: block;
@@ -144,6 +157,7 @@
   margin-bottom: 2px;
 }
 
+/*drop down menu to create group*/
 .createGroup{
   border-bottom: thick solid #B1D9E5;
   cursor: pointer;
@@ -189,6 +203,7 @@
   display: inline;
 }
 
+/*Red text for warnings*/
 .warning {
   color: red;
 }
@@ -207,6 +222,7 @@
   cursor: pointer;
 }
 
+/*notification icon*/
 .notif {
   height: 50px;
   width: 50px;
@@ -214,6 +230,7 @@
   cursor: pointer;
 }
 
+/*numbers of notifications*/
 .num {
   position: absolute;
   right: 3px;
@@ -334,6 +351,7 @@ li .group_item{
   display: inline-block;
 }
 
+/*Node js image in nav bar*/
 .navbar-brand img{
   float: left;
   position: relative;
@@ -352,6 +370,7 @@ li .group_item{
   display:inline-block;
 }
 
+/*Group item represents one group*/
 .group_item .name{
   display: inline-block;
   position: relative;
@@ -365,6 +384,7 @@ li .group_item{
   display: block;
 }
 
+/*Names are displayed next to users in chat*/
 .name_in_chat{
   float : left;
   display: block;
