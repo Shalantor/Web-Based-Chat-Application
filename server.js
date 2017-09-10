@@ -46,7 +46,7 @@ app.use(bodyParser());          //Get data from html forms
 
 app.set('view engine','ejs');   //User ejs views
 
-app.use(session({secret: 'random'}));  //Random session secret
+app.use(session({secret: 'random'}));  //TODO:Change secret later
 app.use(passport.initialize());
 app.use(passport.session());          //persistent login
 app.use(flash());

@@ -36,6 +36,7 @@ var init = function(app){
 
     /*User wants to send a friend request to another user*/
     socket.on('send-request',function(info){
+      console.log('GOT REQUEST');
       helper.sendFriendRequest(info.thisUser,info.otherUser,function(success,socketID){
         var data = {'success' : success, 'isMine': true};
         socket.emit('send-request-response',data);
@@ -56,6 +57,8 @@ var init = function(app){
             name = info.thisUser.google.name;
             picture = info.thisUser.google.img;
           }
+          console.log('Sending to socketId lol ' + socketID);
+          console.log('Picture is ' + picture);
           var otherData = {'isMine' : false, 'fromId': info.thisUser._id, 'fromName': name, 'picture':picture};
           io.to(socketID).emit('send-request-response', otherData);
         }
@@ -71,7 +74,6 @@ var init = function(app){
       });
     });
 
-    /*Used is being added to a group*/
     socket.on('add-user-group',function(info){
       helper.findFriends(info.id,info.name,function(foundNames){
         socket.emit('add-user-group-response',foundNames);
@@ -97,8 +99,7 @@ var init = function(app){
       });
     });
 
-    /*The user wants to send a message to another user
-    The message is either sent to a group or another single user*/
+    /*The user wants to send a message to another user*/
     socket.on('send-message',function(data){
       if (data.isGroup === false){
         helper.storeAndSendMessage(data.thisUser._id,data.otherUser,true,data.message,function(socketID){
@@ -168,6 +169,7 @@ var init = function(app){
         });
       }
       else{
+        console.log('GOT REQUEST FOR CHAT HISTORY IN GROUP');
         helper.getChatHistoryForGroup(data.groupId,function(messages){
           socket.emit('get-chat-history-response',{'messages':messages});
         });

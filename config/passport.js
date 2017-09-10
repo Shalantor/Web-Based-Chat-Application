@@ -92,10 +92,15 @@ module.exports = function(passport){
             }
             return done(null, newUser);
           });
+
         });
+
       }
+
     });
-  });
+
+    });
+
   }));
 
 
@@ -162,6 +167,7 @@ module.exports = function(passport){
           return done(null, user);
         });
       }
+
     });
   }));
 
@@ -223,8 +229,11 @@ module.exports = function(passport){
             return done(null, newUser);
           });
         }
+
       });
+
     });
+
   }));
 
   /*GOOGLE+ LOGIN*/
