@@ -4,6 +4,7 @@ class Helper{
 
   constructor(){
     this.Model = require('./models/user');
+    this.sanitize = require('mongo-sanitize');
   }
 
   /*Add a socket id to specific user*/
@@ -100,9 +101,9 @@ class Helper{
   /*Find user by name, return all users with that name*/
   findUsers(userId,name,callback){
     /*Search all 3 user types*/
-    this.Model.User.find({ $or:[{ 'local.username': name},
-                                   { 'facebook.name': name },
-                                   { 'google.name': name}] }, function(err,users) {
+    this.Model.User.find({ $or:[{ 'local.username': sanitize(name)},
+                                   { 'facebook.name': sanitize(name) },
+                                   { 'google.name': sanitize(name)}] }, function(err,users) {
 
       /*If there is any error, throw it */
       if (err){
@@ -144,7 +145,7 @@ class Helper{
       }
 
       /*Add to array of friends*/
-      user.friends.push({'id' : otherUserId,'username' : otherUserName,'pic' : otherPic});
+      user.friends.push({'id' : otherUserId,'username' : sanitize(otherUserName),'pic' : otherPic});
 
       /*Store back into database*/
       user.save(function(err){
@@ -180,7 +181,7 @@ class Helper{
         throw err;
       }
 
-      otherUser.friends.push({'id' : requestUser._id,'username' : thisUserName,'pic':thisUserPic});
+      otherUser.friends.push({'id' : requestUser._id,'username' : sanitize(thisUserName),'pic':thisUserPic});
 
       /*Get user socketID*/
       var socketID;
@@ -201,7 +202,7 @@ class Helper{
         }
       });
 
-      callback(thisUserName,requestUser._id,socketID,thisUserPic);
+      callback(sanitize(thisUserName),requestUser._id,socketID,thisUserPic);
 
     });
 
@@ -234,8 +235,6 @@ class Helper{
     });
   }
 
-  /*TODO: Doesnt work when friend was just added , check what is error,
-  seems that '' userId gets sent */
   /*Store message , to keep chat history between two users*/
   storeAndSendMessage(userId,friendId,isSendingUser,message,callback){
     this.Model.User.findOne({'_id' : userId} , function(err,user){
@@ -268,7 +267,7 @@ class Helper{
       /*Add to list of messages*/
       user.friends.forEach(function(element){
         if (element.id == friendId){
-          element.messages.push({ 'from' : from, 'message' : message });
+          element.messages.push({ 'from' : from, 'message' : sanitize(message) });
         }
       });
 
@@ -340,7 +339,7 @@ class Helper{
         if (counter == users.length){
           /*Create new group*/
           var group = new groupModel({
-            name : groupName,
+            name : sanitize(groupName),
             users : groupMembers,
             messages : []
           });
@@ -366,7 +365,7 @@ class Helper{
       }
 
       /*Update array of groups that user is a member of*/
-      user.groups.push({'id' : groupId, 'name' : groupName});
+      user.groups.push({'id' : groupId, 'name' : sanitize(groupName)});
 
       user.save(function(err){
         if(err){
@@ -446,7 +445,7 @@ class Helper{
         img = fromUser.google.img;
         name = fromUser.google.name;
       }
-      group.messages.push({'from':fromUser._id, 'message': message,'fromName':name,'fromPic' : img});
+      group.messages.push({'from':fromUser._id, 'message': sanitize(message),'fromName':name,'fromPic' : img});
       group.save(function(err){
         callback();
       });
