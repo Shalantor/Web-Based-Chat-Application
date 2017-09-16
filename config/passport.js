@@ -12,6 +12,9 @@ var Model = require('../app/models/user');
 /*Load authentication variables*/
 var configAuth = require('./auth');
 
+/*Sanitize user input*/
+var sanitize = require('mongo-sanitize');
+
 /*Export function*/
 module.exports = function(passport){
 
@@ -41,7 +44,7 @@ module.exports = function(passport){
 
 
     /*Find user whose username is same as the forms username*/
-    Model.User.findOne({ 'local.username' : username}, function(err,user) {
+    Model.User.findOne({ 'local.username' : sanitize(username)}, function(err,user) {
 
 
       /*If there are errors, return errors*/
@@ -61,7 +64,7 @@ module.exports = function(passport){
       else{
 
         /*Check if user with same email exists*/
-        Model.User.findOne({ 'local.email' : req.body.email}, function(err,user){
+        Model.User.findOne({ 'local.email' : sanitize(req.body.email)}, function(err,user){
 
           /*If there are errors, return errors*/
           if (err){
@@ -76,8 +79,8 @@ module.exports = function(passport){
           var newUser = new Model.User();
 
           /*Get user login credentials*/
-          newUser.local.username = username;
-          newUser.local.email = req.body.email;
+          newUser.local.username = sanitize(username);
+          newUser.local.email = sanitize(req.body.email);
           newUser.local.password = newUser.generateHash(password);
           newUser.local.online = "Y";
           newUser.local.socketID = "";
@@ -113,7 +116,7 @@ module.exports = function(passport){
   function(req, username, password, done) {
 
     /*Find a user with the same username as the one in the input field*/
-    Model.User.findOne({ 'local.username' : username }, function(err,user) {
+    Model.User.findOne({ 'local.username' : sanitize(username) }, function(err,user) {
 
       /*If there are any errros , return the error*/
       if (err){
@@ -124,7 +127,7 @@ module.exports = function(passport){
       if (!user){
         console.log('DIDNT FIND USER');
         /*Check if user entered email*/
-        Model.User.findOne({ 'local.email' : username }, function(err,user) {
+        Model.User.findOne({ 'local.email' : sanitize(username) }, function(err,user) {
 
           /*If there are any errros , return the error*/
           if (err){
