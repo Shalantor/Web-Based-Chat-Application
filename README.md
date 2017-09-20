@@ -1,4 +1,4 @@
-# Web-Browser-Chat
+# Web Based Chat Application
 A chat service build with node js
 
 ## Description
